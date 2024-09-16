@@ -1,9 +1,8 @@
 const routes = {
     home: '/',
-    following: '/following',
+    courses: '/courses',
     profile: '/@:nickname',
-    upload: '/upload',
-    search: '/search',
+    login: '/login',
 };
 
 export default routes;

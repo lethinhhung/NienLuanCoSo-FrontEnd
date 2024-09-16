@@ -4,16 +4,16 @@ import config from '~/config';
 import { HeaderOnly } from '~/layouts';
 
 import Home from '~/pages/Home';
-import Following from '~/pages/Following';
+import Courses from '~/pages/Courses';
 import Profile from '~/pages/Profile';
-import Upload from '~/pages/Upload';
+import Login from '~/pages/Login';
 
 // Public routes
 const publicRoutes = [
     { path: config.routes.home, component: Home },
-    { path: config.routes.following, component: Following },
+    { path: config.routes.courses, component: Courses },
     { path: config.routes.profile, component: Profile },
-    { path: config.routes.upload, component: Upload, layout: HeaderOnly },
+    { path: config.routes.login, component: Login, layout: HeaderOnly },
 ];
 
 const privateRoutes = [];
