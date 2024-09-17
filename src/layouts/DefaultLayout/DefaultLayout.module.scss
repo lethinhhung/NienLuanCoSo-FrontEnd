@@ -3,11 +3,6 @@
 
 .header {
     padding: 0;
-    position: fixed;
-    left: 0;
-    top: 0;
-    right: 0;
-    z-index: 10;
     background-color: transparent;
 }
 
@@ -18,15 +13,25 @@
 }
 
 .content-wrapper {
-    margin-top: var(--default-layout-header-height);
 }
 
 .slider {
 }
 
 .content {
-    height: 1000px;
 }
 
 .footer {
+    padding: 0;
+}
+
+.to-home-btn {
+    // margin-bottom: 10px;
+}
+
+.to-top-btn {
+    // text-align: center;
+    margin-top: 15px;
+    // width: 70px;
+    // height: 70px;
 }
