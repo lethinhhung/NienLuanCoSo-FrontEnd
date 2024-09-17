@@ -16,7 +16,7 @@ function LoginForm() {
     return (
         <Form
             className={cx('form')}
-            name="basic"
+            name="login"
             labelCol={{
                 span: 8,
             }}

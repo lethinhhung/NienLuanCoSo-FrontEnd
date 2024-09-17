@@ -16,7 +16,7 @@ function RegisterForm() {
     return (
         <Form
             className={cx('form')}
-            name="basic"
+            name="register"
             labelCol={{
                 span: 8,
             }}

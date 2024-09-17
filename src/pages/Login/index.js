@@ -1,4 +1,4 @@
-import { Tabs, Typography, Flex, Button, Form, Image, Row, Col, Input } from 'antd';
+import { Tabs, Flex, Image, Row, Col } from 'antd';
 import classNames from 'classnames/bind';
 
 import logo from '~/assets/images/logo.png';
@@ -7,8 +7,6 @@ import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 
 function Login() {
-    const { Title } = Typography;
-
     const cx = classNames.bind(styles);
 
     const items = [
