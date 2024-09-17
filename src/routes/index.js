@@ -13,7 +13,7 @@ const publicRoutes = [
     { path: config.routes.home, component: Home },
     { path: config.routes.courses, component: Courses },
     { path: config.routes.profile, component: Profile },
-    { path: config.routes.login, component: Login, layout: HeaderOnly },
+    { path: config.routes.login, component: Login, layout: null },
 ];
 
 const privateRoutes = [];
