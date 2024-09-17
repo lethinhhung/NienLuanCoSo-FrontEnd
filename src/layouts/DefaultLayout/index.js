@@ -1,20 +1,39 @@
+import { Flex, Layout } from 'antd';
 import classNames from 'classnames/bind';
-import Header from '~/layouts/components/Header';
-import styles from './DefaultLayout.module.scss';
-import Sidebar from './Sidebar';
+import { Link } from 'react-router-dom';
 
-const cx = classNames.bind(styles);
+import styles from './DefaultLayout1.module.scss';
+import CustomHeader from './Header';
+import logo from '~/assets/images/logo.png';
 
-function DefaultLayout({ children }) {
+function DefaultLayou1({ children }) {
+    const cx = classNames.bind(styles);
+
+    const { Header, Footer, Sider, Content } = Layout;
+
+    const layoutStyle = {
+        overflow: 'hidden',
+    };
+
     return (
-        <div className={cx('wrapper')}>
-            <Header />
-            <div className={cx('container')}>
-                <Sidebar />
-                <div className={cx('content')}>{children}</div>
-            </div>
-        </div>
+        <Flex gap="middle" wrap>
+            <Layout className={cx('wrapper')} style={layoutStyle}>
+                <Header className={cx('header')}>
+                    <Link to={'/'}>
+                        <img className={cx('logo')} src={logo} alt="logo" />
+                    </Link>
+                    <CustomHeader></CustomHeader>
+                </Header>
+                <Layout className={cx('content-wrapper')}>
+                    <Sider className={cx('slider')} width="20%">
+                        Sider
+                    </Sider>
+                    <Content className={cx('content')}>{children}</Content>
+                </Layout>
+                <Footer className={cx('footer')}>Footer</Footer>
+            </Layout>
+        </Flex>
     );
 }
 
-export default DefaultLayout;
+export default DefaultLayou1;

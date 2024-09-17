@@ -1,4 +1,5 @@
 import { Fragment } from 'react';
+import { ConfigProvider } from 'antd';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { publicRoutes } from './routes';
 import DefaultLayout from '~/layouts';
@@ -24,9 +25,18 @@ function App() {
                                 key={index}
                                 path={route.path}
                                 element={
-                                    <Layout>
-                                        <Page />
-                                    </Layout>
+                                    <ConfigProvider
+                                        theme={{
+                                            token: {
+                                                // Seed Token
+                                                colorPrimary: '#624e88',
+                                            },
+                                        }}
+                                    >
+                                        <Layout>
+                                            <Page />
+                                        </Layout>
+                                    </ConfigProvider>
                                 }
                             />
                         );

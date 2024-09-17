@@ -1,0 +1,32 @@
+.wrapper {
+}
+
+.header {
+    padding: 0;
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    z-index: 10;
+    background-color: transparent;
+}
+
+.logo {
+    position: absolute;
+    background-color: aqua;
+    width: var(--default-layout-header-height);
+}
+
+.content-wrapper {
+    margin-top: var(--default-layout-header-height);
+}
+
+.slider {
+}
+
+.content {
+    height: 1000px;
+}
+
+.footer {
+}
