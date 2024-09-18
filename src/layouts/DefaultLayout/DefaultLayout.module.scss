@@ -8,8 +8,41 @@
 
 .logo {
     position: absolute;
-    background-color: aqua;
     width: var(--default-layout-header-height);
+    padding: 5px;
+    left: 5px;
+}
+
+.account {
+    width: var(--default-layout-header-height);
+    height: var(--default-layout-header-height);
+    position: absolute;
+    // padding: 5px;
+    top: 0;
+    right: 10px;
+}
+
+@media (max-width: 500px) {
+    .account {
+        top: calc(var(--default-layout-header-height) + 10px);
+        box-shadow: rgba(99, 99, 99, 0.8) 0px 2px 8px 0px;
+        border-radius: 50%;
+        width: var(--default-floating-button-size);
+        height: var(--default-floating-button-size);
+        z-index: 10;
+    }
+    .account-btn {
+        width: var(--default-floating-button-size) !important;
+        height: var(--default-floating-button-size) !important;
+    }
+}
+
+.account-btn {
+    width: var(--default-layout-header-height);
+    height: var(--default-layout-header-height);
+    border: none;
+    box-shadow: none;
+    padding: 0;
 }
 
 .content-wrapper {
@@ -25,13 +58,13 @@
     padding: 0;
 }
 
-.to-home-btn {
-    // margin-bottom: 10px;
+.to-top-btn-group {
+    margin-right: 10px;
 }
 
 .to-top-btn {
-    // text-align: center;
     margin-top: 15px;
-    // width: 70px;
-    // height: 70px;
+    width: var(--default-floating-button-size);
+    height: var(--default-floating-button-size);
+    // font-size: 30px;
 }

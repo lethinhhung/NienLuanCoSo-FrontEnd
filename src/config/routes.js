@@ -4,6 +4,7 @@ const routes = {
     dashboard: '/dashboard',
     courses: '/courses',
     profile: '/profile',
+    newCourse: '/courses/newcourse',
 };
 
 export default routes;

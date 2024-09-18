@@ -1,5 +1,12 @@
-import { Flex, Layout, Affix, FloatButton } from 'antd';
-import { CaretUpOutlined, HomeOutlined, PlusOutlined } from '@ant-design/icons';
+import { Flex, Layout, Affix, FloatButton, Button, Dropdown, Space } from 'antd';
+import {
+    CaretUpOutlined,
+    HomeOutlined,
+    PlusOutlined,
+    MehOutlined,
+    SettingOutlined,
+    LogoutOutlined,
+} from '@ant-design/icons';
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
 
@@ -10,6 +17,7 @@ import logo from '~/assets/images/logo.png';
 import { useWindowDimensions } from '~/hooks';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { icon } from '@fortawesome/fontawesome-svg-core';
 
 function DefaultLayout({ children }) {
     const cx = classNames.bind(styles);
@@ -24,6 +32,27 @@ function DefaultLayout({ children }) {
         overflow: 'hidden',
     };
 
+    const items = [
+        {
+            key: 'settings',
+            label: (
+                <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
+                    Settings
+                </a>
+            ),
+            icon: <SettingOutlined />,
+        },
+        {
+            key: 'logout',
+            label: (
+                <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
+                    Logout
+                </a>
+            ),
+            icon: <LogoutOutlined />,
+        },
+    ];
+
     useEffect(() => {
         if (width <= 500) {
             setIsHidden(true);
@@ -36,6 +65,10 @@ function DefaultLayout({ children }) {
         navigate('/');
     };
 
+    const handleToNewCourse = () => {
+        navigate('/course/newcourse');
+    };
+
     return (
         <Flex gap="middle" wrap>
             <Layout className={cx('wrapper')} style={layoutStyle}>
@@ -44,8 +77,22 @@ function DefaultLayout({ children }) {
                         <Link hidden={isHidden} to={'/'}>
                             <img className={cx('logo')} src={logo} alt="logo" />
                         </Link>
-
                         <CustomHeader></CustomHeader>
+                        <Space className={cx('account')} direction="vertical" wrap>
+                            <Dropdown
+                                menu={{
+                                    items,
+                                }}
+                                placement="bottomRight"
+                                arrow
+                            >
+                                <Button className={cx('account-btn')} shape="circle">
+                                    <div>
+                                        <MehOutlined style={{ fontSize: '40px' }} />
+                                    </div>
+                                </Button>
+                            </Dropdown>
+                        </Space>
                     </Header>
                 </Affix>
                 <Layout className={cx('content-wrapper')}>
@@ -54,25 +101,29 @@ function DefaultLayout({ children }) {
                     </Sider> */}
                     <Content className={cx('content')}>{children}</Content>
                 </Layout>
-                <Affix offsetBottom={0}>
-                    <Footer className={cx('footer')}>
-                        <CustomFooter>Footer</CustomFooter>
-                    </Footer>
-                </Affix>
+
+                <Footer className={cx('footer')}>
+                    <CustomFooter>Footer</CustomFooter>
+                </Footer>
             </Layout>
-            <FloatButton.Group>
-                <FloatButton
-                    icon={<PlusOutlined style={{ fontSize: '16px', color: '#08c' }} />}
-                    className={cx('to-top-btn')}
-                ></FloatButton>
-                <div hidden={!isHidden}>
+            <FloatButton.Group className={cx('to-top-btn-group')}>
+                <div>
                     <FloatButton
-                        onClick={handleToHome}
-                        icon={<HomeOutlined />}
-                        className={cx('to-home-btn')}
+                        className={cx('to-top-btn')}
+                        onClick={handleToNewCourse}
+                        icon={<PlusOutlined />}
                     ></FloatButton>
                 </div>
-                <FloatButton.BackTop icon={<CaretUpOutlined />} className={cx('to-top-btn')}></FloatButton.BackTop>
+                <div hidden={!isHidden}>
+                    <FloatButton
+                        className={cx('to-top-btn')}
+                        onClick={handleToHome}
+                        icon={<HomeOutlined />}
+                    ></FloatButton>
+                </div>
+                <div>
+                    <FloatButton.BackTop className={cx('to-top-btn')} icon={<CaretUpOutlined />}></FloatButton.BackTop>
+                </div>
             </FloatButton.Group>
         </Flex>
     );
