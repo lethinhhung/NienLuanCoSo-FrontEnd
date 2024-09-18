@@ -3,6 +3,7 @@ import { Card, Avatar, Popconfirm, Button } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 
 import styles from './CourseItem.module.scss';
+import TagsDrawer from '../TagsDrawer';
 
 function CourseItem({ data }) {
     const cx = classNames.bind(styles);
@@ -43,6 +44,9 @@ function CourseItem({ data }) {
                 title="Card title"
                 description="This is the description"
             />
+            <div className={cx('tags-drawer')}>
+                <TagsDrawer></TagsDrawer>
+            </div>
         </Card>
     );
 }
