@@ -1,5 +1,6 @@
 import { Tabs, Flex, Image, Row, Col } from 'antd';
 import classNames from 'classnames/bind';
+import { useNavigate } from 'react-router-dom';
 
 import logo from '~/assets/images/logo.png';
 import styles from './Login.module.scss';
@@ -8,6 +9,12 @@ import RegisterForm from './RegisterForm';
 
 function Login() {
     const cx = classNames.bind(styles);
+
+    const naviagte = useNavigate();
+
+    const handleToHome = () => {
+        naviagte('/');
+    };
 
     const items = [
         {
@@ -27,7 +34,14 @@ function Login() {
             <Row>
                 <Col span={9}></Col>
                 <Col className={cx('logo-wrapper')} span={6}>
-                    <Image className={cx('logo')} preview={false} width={150} src={logo} alt="hehe" />
+                    <Image
+                        onClick={handleToHome}
+                        className={cx('logo')}
+                        preview={false}
+                        width={150}
+                        src={logo}
+                        alt="hehe"
+                    />
                 </Col>
                 <Col span={9}></Col>
             </Row>
@@ -35,7 +49,6 @@ function Login() {
                 <Col span={8}></Col>
                 <Col className={cx('form-wrapper')} span={8}>
                     <Tabs
-                        tabBarStyle={{ color: 'red' }}
                         size="large"
                         animated
                         centered

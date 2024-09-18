@@ -4,11 +4,13 @@ import { useState } from 'react';
 
 import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
-import { Link } from 'react-router-dom';
-
-const cx = classNames.bind(styles);
+import { Link, useLocation } from 'react-router-dom';
 
 function Header() {
+    const cx = classNames.bind(styles);
+
+    const location = useLocation();
+
     const items = [
         {
             label: <Link to={'/dashboard'}>Dashboard</Link>,
@@ -26,10 +28,10 @@ function Header() {
             icon: <ProfileOutlined />,
         },
     ];
+    const currentPath = location.pathname.replace(/^\//, '');
 
-    const [current, setCurrent] = useState('mail');
+    const [current, setCurrent] = useState(currentPath);
     const onClick = (e) => {
-        console.log('click ', e);
         setCurrent(e.key);
     };
 

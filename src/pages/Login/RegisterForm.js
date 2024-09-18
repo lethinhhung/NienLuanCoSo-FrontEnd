@@ -1,4 +1,5 @@
 import { Form, Input, Button, Flex } from 'antd';
+import { RightOutlined } from '@ant-design/icons';
 import classNames from 'classnames/bind';
 
 import styles from './Login.module.scss';
@@ -85,8 +86,8 @@ function RegisterForm() {
                 }}
             >
                 <Flex justify="flex-end">
-                    <Button className={cx('submit-btn')} type="primary" htmlType="submit">
-                        0
+                    <Button shape="circle" className={cx('submit-btn')} type="primary" htmlType="submit">
+                        <RightOutlined />
                     </Button>
                 </Flex>
             </Form.Item>

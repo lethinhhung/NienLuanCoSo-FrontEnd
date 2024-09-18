@@ -17,14 +17,13 @@ import logo from '~/assets/images/logo.png';
 import { useWindowDimensions } from '~/hooks';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { icon } from '@fortawesome/fontawesome-svg-core';
 
 function DefaultLayout({ children }) {
     const cx = classNames.bind(styles);
 
-    const { Header, Sider, Content, Footer } = Layout;
+    const { Header, Content, Footer } = Layout;
     const navigate = useNavigate();
-    const { height, width } = useWindowDimensions();
+    const { width } = useWindowDimensions();
 
     const [isHidden, setIsHidden] = useState(true);
 
