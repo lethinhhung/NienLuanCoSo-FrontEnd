@@ -4,7 +4,7 @@ const routes = {
     dashboard: '/dashboard',
     courses: '/courses',
     profile: '/profile',
-    newCourse: '/courses/newcourse',
+    newCourse: '/create-new-course',
 };
 
 export default routes;

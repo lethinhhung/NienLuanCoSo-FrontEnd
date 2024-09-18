@@ -66,7 +66,7 @@ function DefaultLayout({ children }) {
     };
 
     const handleToNewCourse = () => {
-        navigate('/course/newcourse');
+        navigate('/create-new-course');
     };
 
     return (
@@ -86,7 +86,7 @@ function DefaultLayout({ children }) {
                                 placement="bottomRight"
                                 arrow
                             >
-                                <Button className={cx('account-btn')} shape="circle">
+                                <Button type="text" className={cx('account-btn')} shape="circle">
                                     <div>
                                         <MehOutlined style={{ fontSize: '40px' }} />
                                     </div>

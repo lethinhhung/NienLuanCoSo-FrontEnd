@@ -40,8 +40,8 @@
 .account-btn {
     width: var(--default-layout-header-height);
     height: var(--default-layout-header-height);
-    border: none;
-    box-shadow: none;
+    // border: none;
+    // box-shadow: none;
     padding: 0;
 }
 
@@ -66,5 +66,4 @@
     margin-top: 15px;
     width: var(--default-floating-button-size);
     height: var(--default-floating-button-size);
-    // font-size: 30px;
 }
