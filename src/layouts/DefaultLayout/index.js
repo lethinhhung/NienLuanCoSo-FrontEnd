@@ -34,7 +34,7 @@ function DefaultLayout({ children }) {
     const items = [
         {
             key: 'settings',
-            label: <Link to="/profile">Settings</Link>,
+            label: <Link>Settings</Link>,
             icon: <SettingOutlined />,
         },
         {
@@ -108,31 +108,34 @@ function DefaultLayout({ children }) {
             <FloatButton.Group className={cx('to-top-btn-group')}>
                 <div>
                     <Tooltip placement="left" title="Create a new course">
-                        <FloatButton
-                            className={cx('to-top-btn')}
-                            onClick={handleToNewCourse}
-                            icon={<PlusOutlined />}
-                        ></FloatButton>
+                        <div>
+                            <FloatButton
+                                className={cx('to-top-btn')}
+                                onClick={handleToNewCourse}
+                                icon={<PlusOutlined />}
+                            ></FloatButton>
+                        </div>
                     </Tooltip>
                 </div>
 
                 <div hidden={!isHidden}>
                     <Tooltip placement="left" title="Home">
-                        <FloatButton
-                            className={cx('to-top-btn')}
-                            onClick={handleToHome}
-                            icon={<HomeOutlined />}
-                        ></FloatButton>
+                        <div>
+                            <FloatButton
+                                className={cx('to-top-btn')}
+                                onClick={handleToHome}
+                                icon={<HomeOutlined />}
+                            ></FloatButton>
+                        </div>
                     </Tooltip>
                 </div>
 
                 <div>
-                    <Tooltip placement="left" title="Back to top">
-                        <FloatButton.BackTop
-                            className={cx('to-top-btn')}
-                            icon={<CaretUpOutlined />}
-                        ></FloatButton.BackTop>
-                    </Tooltip>
+                    {/* <Tooltip placement="left" title="Back to top">
+                        <div> */}
+                    <FloatButton.BackTop className={cx('to-top-btn')} icon={<CaretUpOutlined />}></FloatButton.BackTop>
+                    {/* </div>
+                    </Tooltip> */}
                 </div>
             </FloatButton.Group>
         </Flex>

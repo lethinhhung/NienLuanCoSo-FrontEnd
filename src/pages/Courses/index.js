@@ -30,6 +30,28 @@ function Courses() {
             <CourseItem loading={debounced}></CourseItem>
             <CourseItem loading={debounced}></CourseItem>
             <CourseItem loading={debounced}></CourseItem>
+            <CourseItem loading={debounced}></CourseItem>
+            <CourseItem loading={debounced}></CourseItem>
+            <CourseItem loading={debounced}></CourseItem>
+            <CourseItem loading={debounced}></CourseItem>
+            <CourseItem loading={debounced}></CourseItem>
+            <CourseItem loading={debounced}></CourseItem>
+            <CourseItem loading={debounced}></CourseItem>
+            <CourseItem loading={debounced}></CourseItem>
+            <CourseItem loading={debounced}></CourseItem>
+            <CourseItem loading={debounced}></CourseItem>
+            <CourseItem loading={debounced}></CourseItem>
+            <CourseItem loading={debounced}></CourseItem>
+            <CourseItem loading={debounced}></CourseItem>
+            <CourseItem loading={debounced}></CourseItem>
+            <CourseItem loading={debounced}></CourseItem>
+            <CourseItem loading={debounced}></CourseItem>
+            <CourseItem loading={debounced}></CourseItem>
+            <CourseItem loading={debounced}></CourseItem>
+            <CourseItem loading={debounced}></CourseItem>
+            <CourseItem loading={debounced}></CourseItem>
+            <CourseItem loading={debounced}></CourseItem>
+            <CourseItem loading={debounced}></CourseItem>
         </Flex>
     );
 }
