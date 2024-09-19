@@ -1,5 +1,11 @@
 .large-wrapper {
-    padding: 20px;
+    padding: 20px 250px;
+}
+
+@media (max-width: 1500px) {
+    .large-wrapper {
+        padding: 20px 50px;
+    }
 }
 
 .large-col {

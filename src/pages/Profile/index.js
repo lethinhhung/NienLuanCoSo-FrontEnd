@@ -1,11 +1,9 @@
 import { Card, Row, Col, Flex, Image } from 'antd';
-import classNames from 'classnames/bind';
+// import classNames from 'classnames/bind';
 
-import styles from './Profile.module.scss';
+// import styles from './Profile.module.scss';
 
 function Profile() {
-    const { Meta } = Card;
-
     return (
         <Flex vertical>
             <Row style={{ height: '20px' }}></Row>
@@ -15,6 +13,14 @@ function Profile() {
                     <Card
                         title="Account information"
                         bordered={false}
+                        extra={
+                            <a
+                                style={{ color: 'blue' }}
+                                href="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+                            >
+                                Edit
+                            </a>
+                        }
                         style={{
                             width: '100%',
                         }}

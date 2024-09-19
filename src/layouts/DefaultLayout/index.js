@@ -1,4 +1,4 @@
-import { Flex, Layout, Affix, FloatButton, Button, Dropdown, Space } from 'antd';
+import { Flex, Layout, Affix, FloatButton, Button, Dropdown, Space, Tooltip } from 'antd';
 import {
     CaretUpOutlined,
     HomeOutlined,
@@ -34,11 +34,7 @@ function DefaultLayout({ children }) {
     const items = [
         {
             key: 'settings',
-            label: (
-                <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
-                    Settings
-                </a>
-            ),
+            label: <Link to="/profile">Settings</Link>,
             icon: <SettingOutlined />,
         },
         {
@@ -60,6 +56,8 @@ function DefaultLayout({ children }) {
         }
     }, [width]);
 
+    useEffect(() => {});
+
     const handleToHome = () => {
         navigate('/');
     };
@@ -67,6 +65,8 @@ function DefaultLayout({ children }) {
     const handleToNewCourse = () => {
         navigate('/create-new-course');
     };
+
+    ///
 
     return (
         <Flex gap="middle" wrap>
@@ -107,21 +107,32 @@ function DefaultLayout({ children }) {
             </Layout>
             <FloatButton.Group className={cx('to-top-btn-group')}>
                 <div>
-                    <FloatButton
-                        className={cx('to-top-btn')}
-                        onClick={handleToNewCourse}
-                        icon={<PlusOutlined />}
-                    ></FloatButton>
+                    <Tooltip placement="left" title="Create a new course">
+                        <FloatButton
+                            className={cx('to-top-btn')}
+                            onClick={handleToNewCourse}
+                            icon={<PlusOutlined />}
+                        ></FloatButton>
+                    </Tooltip>
                 </div>
+
                 <div hidden={!isHidden}>
-                    <FloatButton
-                        className={cx('to-top-btn')}
-                        onClick={handleToHome}
-                        icon={<HomeOutlined />}
-                    ></FloatButton>
+                    <Tooltip placement="left" title="Home">
+                        <FloatButton
+                            className={cx('to-top-btn')}
+                            onClick={handleToHome}
+                            icon={<HomeOutlined />}
+                        ></FloatButton>
+                    </Tooltip>
                 </div>
+
                 <div>
-                    <FloatButton.BackTop className={cx('to-top-btn')} icon={<CaretUpOutlined />}></FloatButton.BackTop>
+                    <Tooltip placement="left" title="Back to top">
+                        <FloatButton.BackTop
+                            className={cx('to-top-btn')}
+                            icon={<CaretUpOutlined />}
+                        ></FloatButton.BackTop>
+                    </Tooltip>
                 </div>
             </FloatButton.Group>
         </Flex>

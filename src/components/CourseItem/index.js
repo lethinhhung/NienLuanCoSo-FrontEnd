@@ -1,11 +1,12 @@
 import classNames from 'classnames/bind';
-import { Card, Avatar, Popconfirm, Button } from 'antd';
+import { Card, Avatar, Popconfirm, Button, Spin } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 
 import styles from './CourseItem.module.scss';
 import TagsDrawer from '../TagsDrawer';
+import { useEffect, useState } from 'react';
 
-function CourseItem({ data }) {
+function CourseItem({ data, loading }) {
     const cx = classNames.bind(styles);
 
     const handleEdit = () => {
@@ -16,12 +17,36 @@ function CourseItem({ data }) {
         console.log('Delete course');
     };
 
+    const img = (
+        <Spin
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+            className={cx('cover-img')}
+            size="large"
+        />
+    );
+
+    const [coverImg, setCoverImg] = useState(img);
+
+    useEffect(() => {
+        if (loading === false) {
+            setCoverImg(
+                <img
+                    className={cx('cover-img')}
+                    alt="example"
+                    src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                />,
+            );
+        }
+    }, [loading]);
+
     const { Meta } = Card;
     return (
         <Card
+            hoverable
+            loading={loading}
             bordered={false}
             className={cx('wrapper')}
-            cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
+            cover={coverImg}
             actions={[
                 <Button type="text" onClick={handleEdit}>
                     <EditOutlined />
