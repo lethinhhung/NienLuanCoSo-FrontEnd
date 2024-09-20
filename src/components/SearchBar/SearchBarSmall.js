@@ -8,7 +8,7 @@ function SearchBarSmall() {
     const cx = classNames.bind(styles);
     return (
         // <div className="wrapper" style={{ display: 'flex' }}>
-        <Flex vertical className={cx('wrapper')} style={{ margin: '0 20px' }}>
+        <Flex vertical className={cx('wrapper')} style={{ margin: '10px 80px 0 80px' }}>
             {/* <Row>
                 <Col className={cx('search-input-wrapper')} offset={1} span={20}>
                     <Input placeholder="Search for courses..." className={cx('search-input')}></Input>

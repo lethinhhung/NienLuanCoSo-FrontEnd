@@ -49,6 +49,7 @@ function TagsDrawerClosable(props) {
             tagRender={tagRender}
             defaultValue={['gold', 'cyan']}
             options={options}
+            variant="border: none"
         />
     );
 }
