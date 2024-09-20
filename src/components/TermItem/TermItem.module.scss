@@ -1,0 +1,15 @@
+.wrapper {
+    margin-bottom: 10px;
+    max-width: 450px;
+}
+
+.cover-img {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+}
+
+.tags-drawer {
+    padding: 20px 5px 0 5px;
+    text-align: center;
+}

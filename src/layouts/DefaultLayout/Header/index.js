@@ -23,8 +23,8 @@ function Header() {
             icon: <AppstoreOutlined />,
         },
         {
-            label: <Link to={'/profile'}>Profile</Link>,
-            key: 'profile',
+            label: <Link to={'/terms'}>Terms</Link>,
+            key: 'term',
             icon: <ProfileOutlined />,
         },
     ];

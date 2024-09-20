@@ -34,7 +34,7 @@ function DefaultLayout({ children }) {
     const items = [
         {
             key: 'settings',
-            label: <Link>Settings</Link>,
+            label: <Link to={'/profile'}>Settings</Link>,
             icon: <SettingOutlined />,
         },
         {
