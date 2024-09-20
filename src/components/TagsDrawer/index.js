@@ -1,6 +1,5 @@
 import classNames from 'classnames/bind';
-import { Card, Avatar, Popconfirm, Button, Tag, Flex } from 'antd';
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { Tag, Flex } from 'antd';
 
 import styles from './TagsDrawer.module.scss';
 

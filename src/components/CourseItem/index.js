@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import { Card, Avatar, Popconfirm, Button, Spin } from 'antd';
+import { Card, Avatar, Popconfirm, Button, Spin, Tooltip } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 
 import styles from './CourseItem.module.scss';
@@ -48,9 +48,11 @@ function CourseItem({ data, loading }) {
             className={cx('wrapper')}
             cover={coverImg}
             actions={[
-                <Button type="text" onClick={handleEdit}>
-                    <EditOutlined />
-                </Button>,
+                <Tooltip title="Edit this course" placement="bottom">
+                    <Button type="text" onClick={handleEdit}>
+                        <EditOutlined />
+                    </Button>
+                </Tooltip>,
                 <Popconfirm
                     title="Delete the course"
                     description="Are you sure to delete this course?"
@@ -58,9 +60,11 @@ function CourseItem({ data, loading }) {
                     okText="Yes"
                     cancelText="No"
                 >
-                    <Button type="text">
-                        <DeleteOutlined />
-                    </Button>
+                    <Tooltip title="Delete this course" placement="bottom">
+                        <Button type="text">
+                            <DeleteOutlined />
+                        </Button>
+                    </Tooltip>
                 </Popconfirm>,
             ]}
         >
