@@ -87,7 +87,12 @@ function DefaultLayout({ children }) {
                             >
                                 <Button type="text" className={cx('account-btn')} shape="circle">
                                     <div>
-                                        <MehOutlined style={{ fontSize: '40px' }} />
+                                        {/* <MehOutlined style={{ fontSize: '40px' }} /> */}
+                                        <img
+                                            style={{ width: '100%', borderRadius: '9999px' }}
+                                            src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                                            alt="avatar"
+                                        />
                                     </div>
                                 </Button>
                             </Dropdown>

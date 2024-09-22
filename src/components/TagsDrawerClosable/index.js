@@ -3,7 +3,7 @@ import { Tag, Flex, Select } from 'antd';
 
 import styles from './TagsDrawerClosable.module.scss';
 
-function TagsDrawerClosable(props) {
+function TagsDrawerClosable({ border = true }) {
     const cx = classNames.bind(styles);
 
     const options = [
