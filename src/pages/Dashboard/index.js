@@ -5,7 +5,7 @@ import { useWindowDimensions } from '~/hooks';
 function Dashboard() {
     const { width } = useWindowDimensions();
 
-    if (width > 700) {
+    if (width > 1150) {
         return <DashboardLarge />;
     } else {
         return <DashboardSmall />;

@@ -46,6 +46,14 @@ function Terms() {
                                 { value: '2026', label: '2026' },
                             ]}
                         />
+                        <Select
+                            placeholder="Status"
+                            style={{ width: 120 }}
+                            options={[
+                                { value: 'completed', label: 'Completed' },
+                                { value: 'onprogress', label: 'On Progress' },
+                            ]}
+                        />
                     </Flex>
                 </Col>
             </Row>
