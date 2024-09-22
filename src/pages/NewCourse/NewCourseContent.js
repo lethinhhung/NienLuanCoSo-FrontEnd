@@ -25,9 +25,7 @@ import { PlusOutlined, CheckOutlined } from '@ant-design/icons';
 import EmojiPicker from 'emoji-picker-react';
 
 import styles from './NewCourse.module.scss';
-import Title from 'antd/es/typography/Title';
-import TagsDrawerClosable from '~/components/TagsDrawerClosable';
-import { useReRender } from '~/hooks';
+import ImageUpload from '~/components/ImageUpload';
 
 function NewCourseContent() {
     const cx = classNames.bind(styles);
@@ -74,6 +72,7 @@ function NewCourseContent() {
     //Duration
     const [isTerm, setIsTerm] = useState(true);
     const [emoji, setEmoji] = useState();
+    const [cover, setCover] = useState();
 
     const handleSelectEmoji = (emoji) => {
         console.log(emoji.emoji);
@@ -95,7 +94,9 @@ function NewCourseContent() {
 
     const handleCover = (checked) => {
         if (checked) {
+            setCover(<ImageUpload />);
         } else {
+            setCover();
         }
     };
 
@@ -103,20 +104,21 @@ function NewCourseContent() {
         <Flex vertical className={cx('content')}>
             <h1>Create a new course</h1>
             <Divider></Divider>
-            <Flex align="center" style={{ padding: '10px 0 5px 0' }}>
+            <Flex className={cx('title-switch')} align="center">
                 <h2>Emoji</h2>
 
                 <Switch onChange={handleEmoji} checkedChildren="Custom" unCheckedChildren="Default" />
             </Flex>
-            {emoji}
-            <Flex align="center" style={{ padding: '10px 0 5px 0' }}>
+            <Flex justify="center">{emoji}</Flex>
+            <Flex className={cx('title-switch')} align="center">
                 <h2>Cover</h2>
 
                 <Switch onChange={handleCover} checkedChildren="Custom" unCheckedChildren="Default" />
             </Flex>
-            <h2 style={{ padding: '10px 0' }}>Name</h2>
+            <Flex justify="center">{cover}</Flex>
+            <h2 className={cx('title-alone')}>Name</h2>
             <Input></Input>
-            <h2 style={{ padding: '10px 0' }}>Tags</h2>
+            <h2 className={cx('title-alone')}>Tags</h2>
             <Flex justify="space-between" align="center">
                 <Select
                     style={{ width: '100%' }}
@@ -127,11 +129,11 @@ function NewCourseContent() {
                     defaultValue={[]}
                     options={options}
                 />
-                <Button>
+                <Button type="dashed" style={{ marginLeft: '5px' }}>
                     <PlusOutlined />
                 </Button>
             </Flex>
-            <Flex align="center" style={{ padding: '10px 0 5px 0' }}>
+            <Flex className={cx('title-switch')} align="center">
                 <h2>Duration</h2>
                 <Switch onChange={handleDuration} checkedChildren="Term" unCheckedChildren="Time" defaultChecked />
             </Flex>
@@ -152,8 +154,8 @@ function NewCourseContent() {
                     <RangePicker />
                 </Flex>
             </div>
-            <Flex style={{ marginTop: '5px' }} justify="flex-end">
-                <Button style={{ backgroundColor: '#333' }}>
+            <Flex style={{ marginTop: '30px' }} justify="flex-end">
+                <Button size="large" style={{ backgroundColor: '#cb80ab', width: '100px' }}>
                     <CheckOutlined />
                 </Button>
             </Flex>

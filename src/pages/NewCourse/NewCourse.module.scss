@@ -58,14 +58,24 @@ h2 {
 }
 
 .content-wrapper {
+    margin: auto;
     padding: 20px;
 }
 
 .content {
+    max-width: 700px;
     background-color: #fff;
     padding: 20px;
     border-radius: 20px;
     box-shadow: var(--box-shadow);
+}
+
+.title-switch {
+    padding: 10px 0 5px 0;
+}
+
+.title-alone {
+    padding: 10px 0;
 }
 
 .footer {
