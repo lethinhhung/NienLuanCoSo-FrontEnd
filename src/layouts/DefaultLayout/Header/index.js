@@ -1,6 +1,6 @@
 import { AppstoreOutlined, DashboardOutlined, ProfileOutlined } from '@ant-design/icons';
 import { Menu } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
@@ -29,8 +29,14 @@ function Header() {
         },
     ];
     const currentPath = location.pathname.replace(/^\//, '');
-
     const [current, setCurrent] = useState(currentPath);
+
+    useEffect(() => {
+        if (currentPath === 'profile') {
+            setCurrent('none');
+        }
+    }, [currentPath]);
+
     const onClick = (e) => {
         setCurrent(e.key);
     };

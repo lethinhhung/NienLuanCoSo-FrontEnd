@@ -1,23 +1,4 @@
-import {
-    Tag,
-    Steps,
-    Row,
-    Col,
-    Flex,
-    Layout,
-    Affix,
-    FloatButton,
-    Button,
-    Dropdown,
-    Space,
-    Tooltip,
-    Input,
-    Select,
-    Switch,
-    DatePicker,
-    Divider,
-    Spin,
-} from 'antd';
+import { Tag, Flex, Button, Input, Select, Switch, DatePicker, Divider } from 'antd';
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
@@ -66,8 +47,6 @@ function NewCourseContent() {
             </Tag>
         );
     };
-
-    const handleCreateNewTerm = () => {};
 
     //Duration
     const [isTerm, setIsTerm] = useState(true);
@@ -143,7 +122,9 @@ function NewCourseContent() {
                     <Select style={{ minWidth: '150px', marginTop: '5px' }}></Select>
                     <Flex align="center" style={{ marginTop: '5px' }}>
                         <p>or</p>
-                        <Button onClick={handleCreateNewTerm}>Create a new Term</Button>
+                        <Button>
+                            <Link to="/create-new-term">Create a new Term</Link>
+                        </Button>
                     </Flex>
                 </Flex>
             </div>
