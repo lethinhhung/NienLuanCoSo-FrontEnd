@@ -89,6 +89,7 @@ function NewCourseContent() {
                 <Switch onChange={handleEmoji} checkedChildren="Custom" unCheckedChildren="Default" />
             </Flex>
             <Flex justify="center">{emoji}</Flex>
+            {/* Color picker */}
             <Flex className={cx('title-switch')} align="center">
                 <h2>Cover</h2>
 

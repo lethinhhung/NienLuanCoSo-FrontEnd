@@ -81,6 +81,21 @@ function RegisterForm() {
             </Form.Item>
 
             <Form.Item
+                name="repassword"
+                wrapperCol={{
+                    span: 24,
+                }}
+                rules={[
+                    {
+                        required: true,
+                        message: 'Passwords not match',
+                    },
+                ]}
+            >
+                <Input.Password className={cx('input')} placeholder="Retype your password" />
+            </Form.Item>
+
+            <Form.Item
                 wrapperCol={{
                     span: 24,
                 }}

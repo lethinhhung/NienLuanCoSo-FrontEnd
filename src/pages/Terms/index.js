@@ -1,4 +1,4 @@
-import { Row, Col, Flex, Space, Select } from 'antd';
+import { Row, Col, Flex, Space, Select, DatePicker } from 'antd';
 import classNames from 'classnames/bind';
 import { useDebounce, useWindowDimensions } from '~/hooks';
 import { useEffect, useState } from 'react';
@@ -16,19 +16,23 @@ function Terms() {
 
     const debounced = useDebounce(loading, 1000);
 
+    const { RangePicker } = DatePicker;
+
     useEffect(() => {
         setLoading(false);
     }, [debounced]);
 
     const { width } = useWindowDimensions();
 
+    const onOk = () => {};
+
     return (
         <div>
             <Row>
                 <Col offset={6} span={12}>
                     {/* Select Component */}
-                    <Flex justify="center" wrap>
-                        <Select
+                    <Flex className={cx('select-wrapper')} justify="center" wrap>
+                        {/* <Select
                             placeholder="From"
                             style={{ width: 120 }}
                             options={[
@@ -45,15 +49,20 @@ function Terms() {
                                 { value: '2024', label: '2025' },
                                 { value: '2026', label: '2026' },
                             ]}
-                        />
-                        <Select
-                            placeholder="Status"
-                            style={{ width: 120 }}
-                            options={[
-                                { value: 'completed', label: 'Completed' },
-                                { value: 'onprogress', label: 'On Progress' },
-                            ]}
-                        />
+                        /> */}
+                        <div className={cx('time-select')}>
+                            <RangePicker onOk={onOk} />
+                        </div>
+                        <div className={cx('status-select')}>
+                            <Select
+                                placeholder="Status"
+                                style={{ width: 120 }}
+                                options={[
+                                    { value: 'completed', label: 'Completed' },
+                                    { value: 'onprogress', label: 'On Progress' },
+                                ]}
+                            />
+                        </div>
                     </Flex>
                 </Col>
             </Row>
