@@ -1,4 +1,4 @@
-import { Flex, Layout, Affix, FloatButton, Button, Dropdown, Space, Tooltip } from 'antd';
+import { Image, Flex, Layout, Affix, FloatButton, Button, Dropdown, Space, Tooltip } from 'antd';
 import {
     CaretUpOutlined,
     HomeOutlined,
@@ -77,9 +77,6 @@ function CourseLayout({ children }) {
                     </Header>
                 </Affix>
                 <Layout className={cx('content-wrapper')}>
-                    {/* <Sider className={cx('slider')} width="20%">
-                        Sider
-                    </Sider> */}
                     <Content className={cx('content')}>{children}</Content>
                 </Layout>
 

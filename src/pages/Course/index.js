@@ -1,4 +1,4 @@
-import { Avatar, Card, Flex, Divider, Progress, Select, Row, Col, Button, Input } from 'antd';
+import { Image, Avatar, Card, Flex, Divider, Progress, Select, Row, Col, Button, Input } from 'antd';
 import classNames from 'classnames/bind';
 
 import styles from './Course.module.scss';
@@ -25,6 +25,22 @@ function Course() {
 
     return (
         <Flex className={cx('wrapper')} wrap vertical align="center">
+            <div className={cx('image-wrapper')}>
+                <div className={cx('image')}>
+                    <Image
+                        style={{
+                            aspectRatio: '16/9',
+                            objectFit: 'cover',
+                            borderRadius: '20px',
+                            boxShadow: 'rgba(99, 99, 99, 0.8) 0px 2px 8px 0px',
+                            border: 'solid #624e88',
+                        }}
+                        width={'100%'}
+                        preview={false}
+                        src="https://img.freepik.com/premium-photo/grainy-gradient-background-red-white-blue-colors-with-soft-faded-watercolor-border-texture_927344-24167.jpg"
+                    />
+                </div>
+            </div>
             <Card
                 className={cx('overview')}
                 hoverable

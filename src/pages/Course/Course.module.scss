@@ -1,6 +1,19 @@
 .wrapper {
 }
 
+.image-wrapper {
+    padding: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image {
+    width: 100%;
+    max-width: 1000px;
+}
+
 .overview {
     max-width: 1000px;
     margin: 20px;
@@ -30,4 +43,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.overview {
+    margin-top: -300px;
+}
+
+@media (max-width: 950px) {
+    .overview {
+        margin-top: 0;
+    }
 }
