@@ -1,4 +1,4 @@
-import { Card, Flex, Divider, Progress, Select, Row, Col, Button } from 'antd';
+import { Avatar, Card, Flex, Divider, Progress, Select, Row, Col, Button, Input } from 'antd';
 import classNames from 'classnames/bind';
 
 import styles from './Course.module.scss';
@@ -8,6 +8,10 @@ import LessionsList from '~/components/LessionsList';
 
 function Course() {
     const cx = classNames.bind(styles);
+
+    const { Meta } = Card;
+
+    const { TextArea } = Input;
 
     const [loading, setLoading] = useState(true);
 
@@ -28,11 +32,18 @@ function Course() {
                 bordered={false}
                 extra={<a href="#">Edit description</a>}
             >
+                <Meta
+                    avatar={<Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=8" />}
+                    title="Description"
+                    description="This is the description"
+                />
+
+                <Divider />
                 <Row>
-                    <h4>Description</h4>
+                    <h4>Infomations</h4>
                 </Row>
                 <Row>
-                    <p style={{ padding: '10px' }}>This is the description...</p>
+                    <p style={{ padding: '10px' }}>Term, Tags</p>
                 </Row>
                 <Divider />
 
@@ -62,6 +73,17 @@ function Course() {
                     <Button>Edit/Add</Button>
                 </Row>
             </Card>
+
+            <div className={cx('notes-wrapper')}>
+                <Card hoverable className={cx('notes')} title="Notes">
+                    <TextArea
+                        placeholder="Course notes..."
+                        autoSize={{
+                            minRows: 2,
+                        }}
+                    />
+                </Card>
+            </div>
 
             <div className={cx('lessions-list-wrapper')}>
                 <LessionsList />

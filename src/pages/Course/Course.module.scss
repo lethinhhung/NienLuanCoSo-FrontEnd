@@ -11,6 +11,19 @@
     padding: 10px;
 }
 
+.notes-wrapper {
+    padding: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.notes {
+    width: 100%;
+    max-width: 888px;
+}
+
 .lessions-list-wrapper {
     padding: 20px;
     width: 100%;
