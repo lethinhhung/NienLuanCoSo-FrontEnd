@@ -1,4 +1,4 @@
-import { Tag, Flex, Button, Input, Select, Switch, DatePicker, Divider } from 'antd';
+import { ColorPicker, Tag, Flex, Button, Input, Select, Switch, DatePicker, Divider } from 'antd';
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
@@ -7,6 +7,7 @@ import EmojiPicker from 'emoji-picker-react';
 
 import styles from './NewCourse.module.scss';
 import ImageUpload from '~/components/ImageUpload';
+import { useReRender } from '~/hooks';
 
 function NewCourseContent() {
     const cx = classNames.bind(styles);
@@ -50,8 +51,9 @@ function NewCourseContent() {
 
     //Duration
     const [isTerm, setIsTerm] = useState(true);
-    const [emoji, setEmoji] = useState();
-    const [cover, setCover] = useState();
+    const [isEmojiDisabled, setIsEmojiDisabled] = useState(true);
+    const [isCoverDisabled, setIsCoverDisabled] = useState(true);
+    const [isColorDisabled, setIsColorDisabled] = useState(true);
 
     const handleSelectEmoji = (emoji) => {
         console.log(emoji.emoji);
@@ -61,21 +63,28 @@ function NewCourseContent() {
         if (checked) {
             setIsTerm(true);
         } else setIsTerm(false);
-        console.log(isTerm);
     };
     const handleEmoji = (checked) => {
-        if (checked) {
-            setEmoji(<EmojiPicker onEmojiClick={handleSelectEmoji} width={'295px'}></EmojiPicker>);
+        if (!checked) {
+            setIsEmojiDisabled(true);
         } else {
-            setEmoji();
+            setIsEmojiDisabled(false);
         }
     };
 
     const handleCover = (checked) => {
-        if (checked) {
-            setCover(<ImageUpload />);
+        if (!checked) {
+            setIsCoverDisabled(true);
         } else {
-            setCover();
+            setIsCoverDisabled(false);
+        }
+    };
+
+    const handleColor = (checked) => {
+        if (!checked) {
+            setIsColorDisabled(true);
+        } else {
+            setIsColorDisabled(false);
         }
     };
 
@@ -88,16 +97,38 @@ function NewCourseContent() {
 
                 <Switch onChange={handleEmoji} checkedChildren="Custom" unCheckedChildren="Default" />
             </Flex>
-            <Flex justify="center">{emoji}</Flex>
-            {/* Color picker */}
+            <Flex justify="center">
+                <div style={isEmojiDisabled ? { pointerEvents: 'none', opacity: '0.4' } : {}}>
+                    <EmojiPicker onEmojiClick={handleSelectEmoji} width={'295px'}></EmojiPicker>
+                </div>
+            </Flex>
+            <Flex className={cx('title-switch')} align="center">
+                <h2>Card color</h2>
+
+                <Switch
+                    style={{ marginRight: '10px' }}
+                    onChange={handleColor}
+                    checkedChildren="Custom"
+                    unCheckedChildren="Default"
+                />
+                <div style={isColorDisabled ? { pointerEvents: 'none', opacity: '0.4' } : {}}>
+                    <ColorPicker defaultValue={'#624e88'} />
+                </div>
+            </Flex>
+            <Flex justify="center"></Flex>
+
             <Flex className={cx('title-switch')} align="center">
                 <h2>Cover</h2>
 
                 <Switch onChange={handleCover} checkedChildren="Custom" unCheckedChildren="Default" />
             </Flex>
-            <Flex justify="center">{cover}</Flex>
+            <Flex justify="center">
+                <div style={isCoverDisabled ? { pointerEvents: 'none', opacity: '0.4' } : {}}>
+                    <ImageUpload />
+                </div>
+            </Flex>
             <h2 className={cx('title-alone')}>Name</h2>
-            <Input></Input>
+            <Input required></Input>
             <h2 className={cx('title-alone')}>Tags</h2>
             <Flex justify="space-between" align="center">
                 <Select
@@ -120,7 +151,7 @@ function NewCourseContent() {
             <div hidden={!isTerm}>
                 <Flex wrap align="center">
                     <p style={{ minWidth: '80px', marginTop: '5px' }}>Pick a term</p>
-                    <Select style={{ minWidth: '150px', marginTop: '5px' }}></Select>
+                    <Select required style={{ minWidth: '150px', marginTop: '5px' }}></Select>
                     <Flex align="center" style={{ marginTop: '5px' }}>
                         <p>or</p>
                         <Button>
@@ -133,7 +164,7 @@ function NewCourseContent() {
             <div hidden={isTerm}>
                 <Flex align="center">
                     <p style={{ minWidth: '80px', marginTop: '5px' }}>Pick a time</p>
-                    <RangePicker />
+                    <RangePicker required />
                 </Flex>
             </div>
             <Flex style={{ marginTop: '30px' }} justify="flex-end">

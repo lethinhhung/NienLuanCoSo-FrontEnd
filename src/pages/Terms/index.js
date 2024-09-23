@@ -55,9 +55,11 @@ function Terms() {
                         </div>
                         <div className={cx('status-select')}>
                             <Select
+                                defaultValue={'all'}
                                 placeholder="Status"
                                 style={{ width: 120 }}
                                 options={[
+                                    { value: 'all', label: 'All' },
                                     { value: 'completed', label: 'Completed' },
                                     { value: 'onprogress', label: 'On Progress' },
                                 ]}
