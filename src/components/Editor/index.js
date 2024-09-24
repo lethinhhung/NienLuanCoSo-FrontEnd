@@ -22,6 +22,7 @@ function Editor() {
                 onSave={handleOnChange}
                 onChange={handleOnChange}
                 setOptions={{
+                    minHeight: '300px',
                     mode: 'classic',
                     rtl: false,
                     katex: 'window.katex',
@@ -39,6 +40,8 @@ function Editor() {
                         [
                             'undo',
                             'redo',
+                            'save',
+                            'fullScreen',
                             'font',
                             'fontSize',
                             'formatBlock',
@@ -65,12 +68,11 @@ function Editor() {
                             'image',
                             'math',
                             'imageGallery',
-                            'fullScreen',
+
                             'showBlocks',
                             'codeView',
                             'preview',
                             'print',
-                            'save',
                         ],
                     ],
                 }}

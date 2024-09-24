@@ -10,11 +10,11 @@ function TermItem({ data, loading }) {
     const cx = classNames.bind(styles);
 
     const handleEdit = () => {
-        console.log('Edit course');
+        console.log('Edit term');
     };
 
     const handleDelete = () => {
-        console.log('Delete course');
+        console.log('Delete term');
     };
 
     const img = (
@@ -47,19 +47,19 @@ function TermItem({ data, loading }) {
             bordered={false}
             className={cx('wrapper')}
             actions={[
-                <Tooltip title="Edit this course" placement="bottom">
+                <Tooltip title="Edit this term" placement="bottom">
                     <Button type="text" onClick={handleEdit}>
                         <EditOutlined />
                     </Button>
                 </Tooltip>,
                 <Popconfirm
-                    title="Delete the course"
-                    description="Are you sure to delete this course?"
+                    title="Delete the term"
+                    description="Are you sure to delete this term?"
                     onConfirm={handleDelete}
                     okText="Yes"
                     cancelText="No"
                 >
-                    <Tooltip title="Delete this course" placement="bottom">
+                    <Tooltip title="Delete this term" placement="bottom">
                         <Button type="text">
                             <DeleteOutlined />
                         </Button>

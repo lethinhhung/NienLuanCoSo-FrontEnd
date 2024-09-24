@@ -73,6 +73,7 @@ function Header() {
             <Breadcrumb
                 className={cx('bread-crumb')}
                 style={{}}
+                separator=">"
                 items={[
                     {
                         title: (
