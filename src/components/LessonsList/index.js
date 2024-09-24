@@ -4,6 +4,7 @@ import classNames from 'classnames/bind';
 import styles from './LessonsList.module.scss';
 import { useDebounce, useWindowDimensions } from '~/hooks';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 function LessonsList() {
     const cx = classNames.bind(styles);
 
@@ -32,7 +33,7 @@ function LessonsList() {
                     <List.Item>
                         <List.Item.Meta
                             avatar={<Avatar src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${index}`} />}
-                            title={<a href="https://ant.design">{item.title}</a>}
+                            title={<Link to="/course/hehe/lesson">{item.title}</Link>}
                             description="Ant Design, a design language for background applications, is refined by Ant UED Team"
                         />
                     </List.Item>

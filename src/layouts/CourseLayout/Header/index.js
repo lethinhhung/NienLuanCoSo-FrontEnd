@@ -1,15 +1,23 @@
-import { HomeOutlined, UserOutlined, AppstoreOutlined, DashboardOutlined, ProfileOutlined } from '@ant-design/icons';
-import { Breadcrumb, Flex, Menu } from 'antd';
+import {
+    LeftOutlined,
+    HomeOutlined,
+    UserOutlined,
+    AppstoreOutlined,
+    DashboardOutlined,
+    ProfileOutlined,
+} from '@ant-design/icons';
+import { Breadcrumb, Flex, Menu, Button, ConfigProvider } from 'antd';
 import { useEffect, useState } from 'react';
 
+import { useGetBrighterColor, useGetTextColorFromBackground } from '~/hooks';
 import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Header() {
     const cx = classNames.bind(styles);
 
-    const location = useLocation();
+    const navigate = useNavigate();
 
     const items = [
         {
@@ -28,24 +36,36 @@ function Header() {
             icon: <ProfileOutlined />,
         },
     ];
-    const currentPath = location.pathname.replace(/^\//, '');
-    const [current, setCurrent] = useState(currentPath);
 
-    useEffect(() => {
-        if (currentPath === 'profile') {
-            setCurrent('none');
-        }
-    }, [currentPath]);
+    const cardColor = '#624e88';
 
-    const onClick = (e) => {
-        setCurrent(e.key);
+    const textColor = useGetTextColorFromBackground(cardColor);
+
+    const handleBackClick = () => {
+        navigate(-1);
     };
 
     return (
         <Flex className={cx('wrapper')} vertical>
-            <Menu className={cx('menu')} onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} />
+            <Flex
+                style={{ backgroundColor: cardColor }}
+                justify="space-between"
+                align="center"
+                wrap
+                className={cx('menu')}
+            >
+                <Button type="text" className={cx('btn')} size="large" shape="circle" onClick={handleBackClick}>
+                    <LeftOutlined />
+                </Button>
+                <h1 style={{ color: textColor }}>This is the course name</h1>
+                {/* <Button className={cx('btn')} size="large" shape="circle">
+                    More
+                </Button> */}
+            </Flex>
+
             <Breadcrumb
                 className={cx('bread-crumb')}
+                style={{}}
                 items={[
                     {
                         title: (
