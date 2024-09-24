@@ -1,10 +1,10 @@
-import { Card, Flex, Divider, Progress, Select, Row, Col, List, Avatar } from 'antd';
+import { Card, List, Avatar } from 'antd';
 import classNames from 'classnames/bind';
 
-import styles from './LessionsList.module.scss';
+import styles from './LessonsList.module.scss';
 import { useDebounce, useWindowDimensions } from '~/hooks';
 import { useEffect, useState } from 'react';
-function LessionsList() {
+function LessonsList() {
     const cx = classNames.bind(styles);
 
     const data = [
@@ -24,7 +24,7 @@ function LessionsList() {
 
     const { width } = useWindowDimensions();
     return (
-        <Card className={cx('lessions-list')} hoverable title="Lessions" bordered={false}>
+        <Card className={cx('lessons-list')} hoverable title="Lessons" bordered={false}>
             <List
                 itemLayout="horizontal"
                 dataSource={data}
@@ -42,4 +42,4 @@ function LessionsList() {
     );
 }
 
-export default LessionsList;
+export default LessonsList;

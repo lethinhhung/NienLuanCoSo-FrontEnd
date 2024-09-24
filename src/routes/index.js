@@ -12,6 +12,7 @@ import Profile from '~/pages/Profile';
 import NewCourse from '~/pages/NewCourse';
 import NewTerm from '~/pages/NewTerm';
 import Course from '~/pages/Course';
+import Lesson from '~/pages/Lesson';
 
 // Public routes
 const publicRoutes = [
@@ -24,6 +25,7 @@ const publicRoutes = [
     { path: config.routes.newCourse, component: NewCourse, layout: null },
     { path: config.routes.newTerm, component: NewTerm, layout: null },
     { path: config.routes.course, component: Course, layout: CourseLayout },
+    { path: config.routes.lesson, component: Lesson, layout: CourseLayout },
 ];
 
 const privateRoutes = [];

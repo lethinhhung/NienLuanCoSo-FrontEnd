@@ -4,7 +4,7 @@ import classNames from 'classnames/bind';
 import styles from './Course.module.scss';
 import { useDebounce, useWindowDimensions } from '~/hooks';
 import { useEffect, useState } from 'react';
-import LessionsList from '~/components/LessionsList';
+import LessonsList from '~/components/LessonsList';
 
 function Course() {
     const cx = classNames.bind(styles);
@@ -102,7 +102,7 @@ function Course() {
             </div>
 
             <div className={cx('lessions-list-wrapper')}>
-                <LessionsList />
+                <LessonsList />
             </div>
         </Flex>
     );

@@ -8,6 +8,7 @@ const routes = {
     newCourse: '/create-new-course',
     newTerm: '/create-new-term',
     course: '/course/:name',
+    lesson: '/course/:name/:lesson',
 };
 
 export default routes;

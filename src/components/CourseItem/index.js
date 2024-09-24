@@ -1,16 +1,19 @@
 import classNames from 'classnames/bind';
 import { Card, Avatar, Popconfirm, Button, Spin, Tooltip } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import styles from './CourseItem.module.scss';
 import TagsDrawer from '../TagsDrawer';
-import { useEffect, useState } from 'react';
 
 function CourseItem({ data, loading }) {
     const cx = classNames.bind(styles);
+    const navigate = useNavigate();
 
     const handleEdit = () => {
         console.log('Edit course');
+        navigate('/course/hehe');
     };
 
     const handleDelete = () => {
