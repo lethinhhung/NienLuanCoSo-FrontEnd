@@ -54,7 +54,14 @@ function Header() {
                 wrap
                 className={cx('menu')}
             >
-                <Button type="text" className={cx('btn')} size="large" shape="circle" onClick={handleBackClick}>
+                <Button
+                    style={{ color: textColor }}
+                    type="text"
+                    className={cx('btn')}
+                    size="large"
+                    shape="circle"
+                    onClick={handleBackClick}
+                >
                     <LeftOutlined />
                 </Button>
                 <h1 style={{ color: textColor }}>This is the course name</h1>
