@@ -2,46 +2,25 @@ import classNames from 'classnames/bind';
 import { Tag, Flex } from 'antd';
 
 import styles from './TagsDrawer.module.scss';
+import defaultTagColor from '../DefaultTagColor';
 
-function TagsDrawer(data) {
+function TagsDrawer({ data, isClickable = false, onTagClick }) {
     const cx = classNames.bind(styles);
 
-    const tags = [
-        {
-            key: '1',
-            name: 'English',
-            color: 'red',
-        },
-        {
-            key: '2',
-            name: 'Math',
-            color: 'green',
-        },
-        {
-            key: '3',
-            name: 'Physic',
-            color: 'blue',
-        },
-        {
-            key: '4',
-            name: 'Science',
-            color: 'yellow',
-        },
-        {
-            key: '5',
-            name: 'History',
-            color: 'grey',
-        },
-        {
-            key: '6',
-            name: 'Music',
-            color: 'black',
-        },
-    ];
+    const handleClicked = (e) => {
+        if (isClickable) {
+            const tagName = e.currentTarget.innerText.toLowerCase();
+            console.log(tagName);
+            if (onTagClick) {
+                onTagClick(tagName);
+            }
+        }
+    };
+
     return (
         <Flex justify="flex-end" wrap gap="5px 0" className={cx('wrapper')}>
-            {tags.map((result) => (
-                <Tag key={result.key} color={result.color}>
+            {data.map((result) => (
+                <Tag onClick={handleClicked} key={result.key} color={result.color}>
                     {result.name}
                 </Tag>
             ))}

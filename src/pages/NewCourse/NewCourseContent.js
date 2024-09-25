@@ -8,6 +8,7 @@ import EmojiPicker from 'emoji-picker-react';
 import styles from './NewCourse.module.scss';
 import ImageUpload from '~/components/ImageUpload';
 import { useReRender } from '~/hooks';
+import NewTag from '~/components/NewTag';
 
 function NewCourseContent() {
     const cx = classNames.bind(styles);
@@ -59,16 +60,19 @@ function NewCourseContent() {
         console.log(emoji.emoji);
     };
 
-    const handleDuration = (checked) => {
-        if (checked) {
-            setIsTerm(true);
-        } else setIsTerm(false);
-    };
     const handleEmoji = (checked) => {
         if (!checked) {
             setIsEmojiDisabled(true);
         } else {
             setIsEmojiDisabled(false);
+        }
+    };
+
+    const handleColor = (checked) => {
+        if (!checked) {
+            setIsColorDisabled(true);
+        } else {
+            setIsColorDisabled(false);
         }
     };
 
@@ -80,12 +84,12 @@ function NewCourseContent() {
         }
     };
 
-    const handleColor = (checked) => {
-        if (!checked) {
-            setIsColorDisabled(true);
-        } else {
-            setIsColorDisabled(false);
-        }
+    const handleAddTags = () => {};
+
+    const handleDuration = (checked) => {
+        if (checked) {
+            setIsTerm(true);
+        } else setIsTerm(false);
     };
 
     return (
@@ -140,9 +144,12 @@ function NewCourseContent() {
                     defaultValue={[]}
                     options={options}
                 />
-                <Button type="dashed" style={{ marginLeft: '5px' }}>
+                {/* <Button onClick={handleAddTags} type="dashed" style={{ marginLeft: '5px' }}>
                     <PlusOutlined />
-                </Button>
+                </Button> */}
+                <div style={{ marginLeft: '5px' }}>
+                    <NewTag />
+                </div>
             </Flex>
             <Flex className={cx('title-switch')} align="center">
                 <h2>Duration</h2>

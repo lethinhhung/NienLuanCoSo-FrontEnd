@@ -14,6 +14,7 @@ import styles from './DefaultLayout.module.scss';
 import CustomHeader from './Header';
 import CustomFooter from './Footer';
 import logo from '~/assets/images/logo.png';
+import defaultAvatar from '~/assets/images/deafult-avatar.png';
 import { useWindowDimensions } from '~/hooks';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -86,11 +87,14 @@ function DefaultLayout({ children }) {
                                 arrow
                             >
                                 <Button type="text" className={cx('account-btn')} shape="circle">
-                                    <div>
+                                    <div style={{ borderRadius: '9999px', padding: '10px' }}>
                                         {/* <MehOutlined style={{ fontSize: '40px' }} /> */}
                                         <img
-                                            style={{ width: '100%', borderRadius: '9999px' }}
-                                            src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                                            style={{
+                                                width: '100%',
+                                                objectFit: 'contain',
+                                            }}
+                                            src={defaultAvatar}
                                             alt="avatar"
                                         />
                                     </div>

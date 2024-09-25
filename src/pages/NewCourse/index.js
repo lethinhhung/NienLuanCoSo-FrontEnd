@@ -92,25 +92,6 @@ function NewCourse() {
                                 </Button>
                             </Dropdown>
                         </Space>
-                        {/* <Steps
-                            className={cx('content-steps')}
-                            current={1}
-                            items={[
-                                {
-                                    title: 'Finished',
-                                    description:'',
-                                },
-                                {
-                                    title: 'In Progress',
-                                    description,
-                                    subTitle: 'Left 00:00:08',
-                                },
-                                {
-                                    title: 'Waiting',
-                                    description,
-                                },
-                            ]}
-                        /> */}
                     </Header>
                 </Affix>
                 <Layout className={cx('content-wrapper')}>
