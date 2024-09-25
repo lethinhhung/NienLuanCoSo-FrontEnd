@@ -5,6 +5,7 @@ import styles from './Course.module.scss';
 import { useDebounce, useWindowDimensions } from '~/hooks';
 import { useEffect, useState } from 'react';
 import CustomList from '~/components/CustomList';
+import TagsDrawer from '~/components/TagsDrawer';
 
 function Course() {
     const cx = classNames.bind(styles);
@@ -24,18 +25,18 @@ function Course() {
     const { width } = useWindowDimensions();
 
     const data = [
-        {
-            title: 'Ant Design Title 1',
-        },
-        {
-            title: 'Ant Design Title 2',
-        },
-        {
-            title: 'Ant Design Title 3',
-        },
-        {
-            title: 'Ant Design Title 4',
-        },
+        // {
+        //     title: 'Ant Design Title 1',
+        // },
+        // {
+        //     title: 'Ant Design Title 2',
+        // },
+        // {
+        //     title: 'Ant Design Title 3',
+        // },
+        // {
+        //     title: 'Ant Design Title 4',
+        // },
     ];
     return (
         <Flex className={cx('wrapper')} wrap vertical align="center">
@@ -73,7 +74,10 @@ function Course() {
                     <h4>Infomations</h4>
                 </Row>
                 <Row>
-                    <p style={{ padding: '10px' }}>Term, Tags</p>
+                    <Flex style={{ width: '100%' }} wrap justify="space-between" align="center">
+                        <p style={{ padding: '10px' }}>Term</p>
+                        <TagsDrawer />
+                    </Flex>
                 </Row>
                 <Divider />
 

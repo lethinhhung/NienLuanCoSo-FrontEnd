@@ -1,18 +1,41 @@
-import { Card, List, Avatar, Button, Popconfirm } from 'antd';
+import { Modal, Card, List, Avatar, Button, Popconfirm, Input } from 'antd';
 import classNames from 'classnames/bind';
 import { DeleteOutlined } from '@ant-design/icons';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 import styles from './LessonsList.module.scss';
 import { useDebounce, useWindowDimensions } from '~/hooks';
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+
 function CustomList({ title = '', data, type = 'term' }) {
     const cx = classNames.bind(styles);
+    const [isModalVisible, setIsModalVisible] = useState(false);
 
     const { width } = useWindowDimensions();
 
-    const handleAdd = () => {
-        console.log('Add');
+    const navigate = useNavigate();
+
+    let handleAdd = () => {
+        if (type === 'term') {
+            navigate('/create-new-course');
+        } else {
+            //goi API
+            navigate('/course/lesson/:name');
+        }
+    };
+
+    const showModal = () => {
+        setIsModalVisible(true);
+    };
+
+    const handleOk = () => {
+        //Goi API
+        setIsModalVisible(false);
+        handleAdd();
+    };
+
+    const handleCancel = () => {
+        setIsModalVisible(false);
     };
 
     let childType = '';
@@ -27,7 +50,18 @@ function CustomList({ title = '', data, type = 'term' }) {
             hoverable
             title={title}
             bordered={false}
-            extra={<Button onClick={handleAdd}>Add</Button>}
+            extra={
+                type === 'course' ? (
+                    <>
+                        <Button onClick={showModal}>Add</Button>
+                        <Modal title="Add new lesson" open={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+                            <Input placeholder="Enter lesson name..." />
+                        </Modal>
+                    </>
+                ) : (
+                    <Button onClick={handleAdd}>Add</Button>
+                )
+            }
         >
             <List
                 itemLayout="horizontal"
