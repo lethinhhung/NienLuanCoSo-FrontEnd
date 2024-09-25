@@ -1,10 +1,11 @@
-import { Image, Avatar, Card, Flex, Divider, Progress, Select, Row, Col, Button, Input } from 'antd';
+import { Image, Avatar, Card, Flex, Divider, Progress, Select, Row, Col, Button, Input, Modal } from 'antd';
 import classNames from 'classnames/bind';
+import { useEffect, useState } from 'react';
 
 import styles from './Term.module.scss';
 import { useDebounce, useWindowDimensions } from '~/hooks';
-import { useEffect, useState } from 'react';
 import CustomList from '~/components/CustomList';
+import EditDiscription from '~/components/EditDiscription';
 
 function Term() {
     const cx = classNames.bind(styles);
@@ -37,6 +38,21 @@ function Term() {
         },
     ];
 
+    //Modal
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const showModal = () => {
+        setIsModalVisible(true);
+    };
+
+    const handleOk = () => {
+        //Goi API
+        setIsModalVisible(false);
+    };
+
+    const handleCancel = () => {
+        setIsModalVisible(false);
+    };
+
     return (
         <Flex className={cx('wrapper')} wrap vertical align="center">
             <div className={cx('image-wrapper')}>
@@ -64,11 +80,11 @@ function Term() {
                     hoverable
                     title="Term overview"
                     bordered={false}
-                    extra={<a href="#">Edit description</a>}
+                    extra={<EditDiscription type="Term" />}
                 >
                     <Meta
                         avatar={<Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=8" />}
-                        title="Description"
+                        title="This is the term name"
                         description="This is the description"
                     />
                 </Card>
@@ -77,7 +93,7 @@ function Term() {
             <div className={cx('component-wrapper')}>
                 <Card hoverable className={cx('notes')} title="Notes">
                     <TextArea
-                        placeholder="Course notes..."
+                        placeholder="Term notes..."
                         autoSize={{
                             minRows: 2,
                         }}

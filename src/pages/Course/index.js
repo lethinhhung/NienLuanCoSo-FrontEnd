@@ -6,6 +6,7 @@ import { useDebounce, useWindowDimensions } from '~/hooks';
 import { useEffect, useState } from 'react';
 import CustomList from '~/components/CustomList';
 import TagsDrawer from '~/components/TagsDrawer';
+import EditDiscription from '~/components/EditDiscription';
 
 function Course() {
     const cx = classNames.bind(styles);
@@ -61,7 +62,7 @@ function Course() {
                 hoverable
                 title="Course overview"
                 bordered={false}
-                extra={<a href="#">Edit description</a>}
+                extra={<EditDiscription type="course" />}
             >
                 <Meta
                     avatar={<Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=8" />}
