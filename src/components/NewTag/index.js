@@ -22,6 +22,9 @@ function NewTag() {
         setTimeout(() => {
             setOpen(false);
             setConfirmLoading(false);
+            setTagPreviewColor('');
+            setTagPreviewName('');
+            setModalText('');
         }, 2000);
     };
     const handleCancel = () => {

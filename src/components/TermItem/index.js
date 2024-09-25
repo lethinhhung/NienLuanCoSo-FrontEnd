@@ -1,6 +1,7 @@
 import classNames from 'classnames/bind';
 import { Card, Avatar, Popconfirm, Button, Spin, Tooltip, Row, Col, Image } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
 
 import styles from './TermItem.module.scss';
 import TagsDrawer from '../TagsDrawer';
@@ -8,9 +9,11 @@ import { useEffect, useState } from 'react';
 
 function TermItem({ data, loading }) {
     const cx = classNames.bind(styles);
+    const navigate = useNavigate();
 
     const handleEdit = () => {
         console.log('Edit term');
+        navigate('/term/hehe');
     };
 
     const handleDelete = () => {

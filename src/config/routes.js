@@ -9,6 +9,7 @@ const routes = {
     newTerm: '/create-new-term',
     course: '/course/:name',
     lesson: '/course/:name/:lesson',
+    term: '/term/:name',
 };
 
 export default routes;

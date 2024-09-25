@@ -1,0 +1,63 @@
+.wrapper {
+}
+
+.image-wrapper {
+    padding: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image {
+    width: 100%;
+    max-width: 1000px;
+}
+
+.overview {
+    max-width: 1000px;
+    margin: 20px;
+}
+
+.progression-wrapper {
+    width: 280px;
+    padding: 10px;
+}
+
+.component-wrapper {
+    padding: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.notes {
+    width: 100%;
+    max-width: 888px;
+}
+
+.lessions-list-wrapper {
+    padding: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -300px;
+}
+
+@media (max-width: 970px) {
+    .lessions-list-wrapper {
+        margin-top: 0;
+    }
+}
+
+.overview {
+    margin-top: -300px;
+}
+
+@media (max-width: 970px) {
+    .overview {
+        margin-top: 0;
+    }
+}

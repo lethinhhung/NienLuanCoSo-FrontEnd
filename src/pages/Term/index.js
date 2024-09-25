@@ -1,12 +1,12 @@
 import { Image, Avatar, Card, Flex, Divider, Progress, Select, Row, Col, Button, Input } from 'antd';
 import classNames from 'classnames/bind';
 
-import styles from './Course.module.scss';
+import styles from './Term.module.scss';
 import { useDebounce, useWindowDimensions } from '~/hooks';
 import { useEffect, useState } from 'react';
 import CustomList from '~/components/CustomList';
 
-function Course() {
+function Term() {
     const cx = classNames.bind(styles);
 
     const { Meta } = Card;
@@ -22,7 +22,6 @@ function Course() {
     }, [debounced]);
 
     const { width } = useWindowDimensions();
-
     const data = [
         {
             title: 'Ant Design Title 1',
@@ -37,6 +36,7 @@ function Course() {
             title: 'Ant Design Title 4',
         },
     ];
+
     return (
         <Flex className={cx('wrapper')} wrap vertical align="center">
             <div className={cx('image-wrapper')}>
@@ -55,56 +55,26 @@ function Course() {
                     />
                 </div>
             </div>
-            <Card
-                className={cx('overview')}
-                hoverable
-                title="Course overview"
-                bordered={false}
-                extra={<a href="#">Edit description</a>}
-            >
-                <Meta
-                    avatar={<Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=8" />}
-                    title="Description"
-                    description="This is the description"
-                />
+            <div className={cx('lessions-list-wrapper')}>
+                <CustomList title="Courses" data={data} />
+            </div>
+            <div className={cx('component-wrapper')}>
+                <Card
+                    className={cx('notes')}
+                    hoverable
+                    title="Term overview"
+                    bordered={false}
+                    extra={<a href="#">Edit description</a>}
+                >
+                    <Meta
+                        avatar={<Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=8" />}
+                        title="Description"
+                        description="This is the description"
+                    />
+                </Card>
+            </div>
 
-                <Divider />
-                <Row>
-                    <h4>Infomations</h4>
-                </Row>
-                <Row>
-                    <p style={{ padding: '10px' }}>Term, Tags</p>
-                </Row>
-                <Divider />
-
-                <Flex wrap justify="space-evenly">
-                    <div className={cx('progression-wrapper')}>
-                        <p>Progression</p>
-                        <Flex justify="center">
-                            <Progress type="circle" percent={75} />
-                        </Flex>
-                    </div>
-                    <div className={cx('progression-wrapper')}>
-                        <p>Tests</p>
-
-                        <Flex justify="center">
-                            <Progress type="circle" percent={75} />
-                        </Flex>
-                    </div>
-                    <div className={cx('progression-wrapper')}>
-                        <p>Projects</p>
-
-                        <Flex justify="center">
-                            <Progress type="circle" percent={75} />
-                        </Flex>
-                    </div>
-                </Flex>
-                <Row>
-                    <Button>Edit/Add</Button>
-                </Row>
-            </Card>
-
-            <div className={cx('notes-wrapper')}>
+            <div className={cx('component-wrapper')}>
                 <Card hoverable className={cx('notes')} title="Notes">
                     <TextArea
                         placeholder="Course notes..."
@@ -114,12 +84,8 @@ function Course() {
                     />
                 </Card>
             </div>
-
-            <div className={cx('lessions-list-wrapper')}>
-                <CustomList title="Lessons" data={data} type="course" />
-            </div>
         </Flex>
     );
 }
 
-export default Course;
+export default Term;
