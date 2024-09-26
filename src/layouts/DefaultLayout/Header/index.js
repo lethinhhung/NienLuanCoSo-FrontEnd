@@ -24,7 +24,7 @@ function Header() {
         },
         {
             label: <Link to={'/terms'}>Terms</Link>,
-            key: 'term',
+            key: 'terms',
             icon: <ProfileOutlined />,
         },
     ];

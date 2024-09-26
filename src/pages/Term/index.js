@@ -80,7 +80,7 @@ function Term() {
                     hoverable
                     title="Term overview"
                     bordered={false}
-                    extra={<EditDiscription type="Term" />}
+                    extra={<EditDiscription type="term" />}
                 >
                     <Meta
                         avatar={<Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=8" />}

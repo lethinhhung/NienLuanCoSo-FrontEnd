@@ -29,7 +29,7 @@ function EditDiscription({ type = 'Empty' }) {
                     <h4>Description</h4>
                     <TextArea
                         autoSize={{ minRows: 2, maxRows: 6 }}
-                        placeholder={'Enter ' + type + 'discription...'}
+                        placeholder={'Enter ' + type + ' discription...'}
                     ></TextArea>
                 </Flex>
             </Modal>

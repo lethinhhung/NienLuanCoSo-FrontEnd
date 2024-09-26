@@ -17,7 +17,7 @@ import logo from '~/assets/images/logo.png';
 import defaultAvatar from '~/assets/images/deafult-avatar.png';
 import { useWindowDimensions } from '~/hooks';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 function DefaultLayout({ children }) {
     const cx = classNames.bind(styles);
@@ -57,7 +57,17 @@ function DefaultLayout({ children }) {
         }
     }, [width]);
 
-    useEffect(() => {});
+    //BTN
+    const location = useLocation();
+    const isCoursePage = location.pathname === '/courses';
+    const isTermPage = location.pathname === '/terms';
+
+    let pageName;
+    if (isCoursePage) {
+        pageName = 'course';
+    } else {
+        pageName = 'term';
+    }
 
     const handleToHome = () => {
         navigate('/');
@@ -67,7 +77,9 @@ function DefaultLayout({ children }) {
         navigate('/create-new-course');
     };
 
-    ///
+    const handleToNewTerm = () => {
+        navigate('/create-new-term');
+    };
 
     return (
         <Flex gap="middle" wrap>
@@ -116,11 +128,11 @@ function DefaultLayout({ children }) {
             </Layout>
             <FloatButton.Group className={cx('to-top-btn-group')}>
                 <div>
-                    <Tooltip placement="left" title="Create a new course">
+                    <Tooltip placement="left" title={'Create a new ' + pageName}>
                         <div>
                             <FloatButton
                                 className={cx('to-top-btn')}
-                                onClick={handleToNewCourse}
+                                onClick={isCoursePage ? handleToNewCourse : isTermPage ? handleToNewTerm : null}
                                 icon={<PlusOutlined />}
                             ></FloatButton>
                         </div>
