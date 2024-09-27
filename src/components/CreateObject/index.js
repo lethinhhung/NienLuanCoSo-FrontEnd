@@ -10,7 +10,7 @@ import ImageUpload from '~/components/ImageUpload';
 import { useReRender } from '~/hooks';
 import NewTag from '~/components/NewTag';
 
-function CreateObject({ type = '' }) {
+function CreateObject({ type = 'course', action = 'create' }) {
     const cx = classNames.bind(styles);
 
     const { TextArea } = Input;
@@ -103,8 +103,10 @@ function CreateObject({ type = '' }) {
 
     return (
         <Flex vertical className={cx('content')}>
-            <h1>{'Create a new ' + type}</h1>
-            <Divider></Divider>
+            <div hidden={action === 'edit'}>
+                <h1>{'Create a new ' + type}</h1>
+                <Divider></Divider>
+            </div>
             <Flex className={cx('title-switch')} align="center">
                 <h2>Emoji</h2>
 
@@ -147,7 +149,7 @@ function CreateObject({ type = '' }) {
                 autoSize={{ minRows: 2, maxRows: 6 }}
                 placeholder={'Enter ' + type + ' discription...'}
             ></TextArea>
-            <div hidden={isType}>
+            <div hidden={type === 'course'}>
                 <h2 className={cx('title-alone')}>Tags</h2>
                 <Flex justify="space-between" align="center">
                     <Select
@@ -199,7 +201,7 @@ function CreateObject({ type = '' }) {
                 </div>
             </div>
 
-            <div hidden={!isType}>
+            <div hidden={type === 'course'}>
                 <div className={cx('title-switch')}>
                     <h2>Duration</h2>
                 </div>
@@ -209,11 +211,13 @@ function CreateObject({ type = '' }) {
                     <RangePicker required />
                 </Flex>
             </div>
-            <Flex style={{ marginTop: '30px' }} justify="flex-end">
-                <Button size="large" style={{ backgroundColor: '#cb80ab', width: '100px' }}>
-                    <CheckOutlined />
-                </Button>
-            </Flex>
+            <div hidden={action === 'edit'}>
+                <Flex style={{ marginTop: '30px' }} justify="flex-end">
+                    <Button size="large" style={{ backgroundColor: '#cb80ab', width: '100px' }}>
+                        <CheckOutlined />
+                    </Button>
+                </Flex>
+            </div>
         </Flex>
     );
 }

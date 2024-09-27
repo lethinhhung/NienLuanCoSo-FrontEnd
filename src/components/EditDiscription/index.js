@@ -16,10 +16,12 @@ import {
 } from 'antd';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
+import EmojiPicker from 'emoji-picker-react';
 
 import styles from './EditDiscription.module.scss';
-import EmojiPicker from 'emoji-picker-react';
-function EditDiscription({ type = 'Empty' }) {
+import CreateObject from '~/components/CreateObject';
+
+function EditDiscription({ type = 'course' }) {
     const cx = classNames.bind(styles);
     const { TextArea } = Input;
 
@@ -52,8 +54,8 @@ function EditDiscription({ type = 'Empty' }) {
     return (
         <div>
             <Button onClick={showModal}>Edit</Button>
-            <Modal title={'Edit this ' + type} open={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-                <Flex vertical wrap gap="small">
+            <Modal title={<h2>{'Edit this ' + type}</h2>} open={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+                {/* <Flex vertical wrap gap="small">
                     <h4>Name</h4>
                     <Input required placeholder={'Enter ' + type + ' name...'} />
                     <h4>Description</h4>
@@ -71,7 +73,8 @@ function EditDiscription({ type = 'Empty' }) {
                             <EmojiPicker onEmojiClick={handleSelectEmoji} width={'295px'}></EmojiPicker>
                         </div>
                     </Flex>
-                </Flex>
+                </Flex> */}
+                <CreateObject type={type} action="edit" />
             </Modal>
         </div>
     );
