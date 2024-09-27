@@ -1,19 +1,11 @@
-import { Image, Flex, Layout, Affix, FloatButton, Button, Dropdown, Space, Tooltip } from 'antd';
-import {
-    CaretUpOutlined,
-    HomeOutlined,
-    PlusOutlined,
-    MehOutlined,
-    SettingOutlined,
-    LogoutOutlined,
-} from '@ant-design/icons';
+import { Flex, Layout, Affix, FloatButton, Tooltip } from 'antd';
+import { CaretUpOutlined, HomeOutlined, SettingOutlined, LogoutOutlined } from '@ant-design/icons';
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
 
 import styles from './CourseLayout.module.scss';
 import CustomHeader from './Header';
 import CustomFooter from './Footer';
-import logo from '~/assets/images/logo.png';
 import { useWindowDimensions } from '~/hooks';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';

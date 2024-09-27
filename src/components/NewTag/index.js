@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Button, Modal, Input, Select, Switch, Flex, ColorPicker, Tag } from 'antd';
+import { Button, Modal, Input, Flex, ColorPicker, Tag } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import classNames from 'classnames/bind';
 

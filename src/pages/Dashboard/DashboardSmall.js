@@ -24,12 +24,6 @@ function DashboardSmall() {
         ],
     };
 
-    const options = {
-        cutout: 70,
-        borderRadius: 50,
-        borderWidth: 0,
-    };
-
     return (
         <div className={cx('small-wrapper')}>
             <Row>

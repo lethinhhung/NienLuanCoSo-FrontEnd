@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import { Tag, Flex, Select } from 'antd';
+import { Tag, Select } from 'antd';
 
 import styles from './TagsDrawerClosable.module.scss';
 

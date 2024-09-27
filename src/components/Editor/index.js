@@ -1,9 +1,7 @@
 import SunEditor from 'suneditor-react';
-import { useState, useRef, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import 'suneditor/dist/css/suneditor.min.css';
 
-import { useWindowDimensions } from '~/hooks';
 import styles from './Editor.module.scss';
 
 function Editor() {

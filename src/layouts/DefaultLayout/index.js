@@ -1,12 +1,5 @@
 import { Flex, Layout, Affix, FloatButton, Button, Dropdown, Space, Tooltip } from 'antd';
-import {
-    CaretUpOutlined,
-    HomeOutlined,
-    PlusOutlined,
-    MehOutlined,
-    SettingOutlined,
-    LogoutOutlined,
-} from '@ant-design/icons';
+import { CaretUpOutlined, HomeOutlined, PlusOutlined, SettingOutlined, LogoutOutlined } from '@ant-design/icons';
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
 

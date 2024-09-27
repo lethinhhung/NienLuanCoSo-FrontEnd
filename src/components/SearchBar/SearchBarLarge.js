@@ -1,4 +1,4 @@
-import { Flex, Input, Row, Col } from 'antd';
+import { Input, Row, Col } from 'antd';
 import classNames from 'classnames/bind';
 
 import TagsDrawerClosable from '../TagsDrawerClosable';

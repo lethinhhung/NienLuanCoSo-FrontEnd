@@ -1,17 +1,14 @@
 import { Modal, Card, List, Avatar, Button, Popconfirm, Input } from 'antd';
 import classNames from 'classnames/bind';
 import { DeleteOutlined } from '@ant-design/icons';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import styles from './LessonsList.module.scss';
-import { useDebounce, useWindowDimensions } from '~/hooks';
 
 function CustomList({ title = '', data, type = 'term' }) {
     const cx = classNames.bind(styles);
     const [isModalVisible, setIsModalVisible] = useState(false);
-
-    const { width } = useWindowDimensions();
 
     const navigate = useNavigate();
 

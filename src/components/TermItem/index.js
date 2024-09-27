@@ -4,7 +4,6 @@ import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 
 import styles from './TermItem.module.scss';
-import TagsDrawer from '../TagsDrawer';
 import { useEffect, useState } from 'react';
 
 function TermItem({ data, loading }) {

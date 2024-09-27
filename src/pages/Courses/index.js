@@ -3,10 +3,8 @@ import classNames from 'classnames/bind';
 import styles from './Courses.module.scss';
 
 import SearchBar from '~/components/SearchBar';
-import SearchBarLarge from '~/components/SearchBar/SearchBarLarge';
-import SearchBarSmall from '~/components/SearchBar/SearchBarSmall';
 import CourseItem from '~/components/CourseItem';
-import { useDebounce, useWindowDimensions } from '~/hooks';
+import { useDebounce } from '~/hooks';
 import { useEffect, useState } from 'react';
 
 function Courses() {
@@ -19,8 +17,6 @@ function Courses() {
     useEffect(() => {
         setLoading(false);
     }, [debounced]);
-
-    const { width } = useWindowDimensions();
 
     return (
         <div>

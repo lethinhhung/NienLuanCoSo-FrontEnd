@@ -1,8 +1,8 @@
-import { Image, Avatar, Card, Flex, Divider, Progress, Select, Row, Col, Button, Input } from 'antd';
+import { Image, Avatar, Card, Flex, Divider, Row, Input } from 'antd';
 import classNames from 'classnames/bind';
 
 import styles from './Course.module.scss';
-import { useDebounce, useWindowDimensions } from '~/hooks';
+import { useDebounce } from '~/hooks';
 import { useEffect, useState } from 'react';
 import CustomList from '~/components/CustomList';
 import TagsDrawer from '~/components/TagsDrawer';
@@ -24,22 +24,7 @@ function Course() {
         setLoading(false);
     }, [debounced]);
 
-    const { width } = useWindowDimensions();
-
-    const data = [
-        // {
-        //     title: 'Ant Design Title 1',
-        // },
-        // {
-        //     title: 'Ant Design Title 2',
-        // },
-        // {
-        //     title: 'Ant Design Title 3',
-        // },
-        // {
-        //     title: 'Ant Design Title 4',
-        // },
-    ];
+    const data = [];
     return (
         <Flex className={cx('wrapper')} wrap vertical align="center">
             <div className={cx('image-wrapper')}>
@@ -83,31 +68,6 @@ function Course() {
                 </Row>
                 <Divider />
 
-                {/* <Flex wrap justify="space-evenly">
-                    <div className={cx('progression-wrapper')}>
-                        <p>Progression</p>
-                        <Flex justify="center">
-                            <Progress type="circle" percent={75} />
-                        </Flex>
-                    </div>
-                    <div className={cx('progression-wrapper')}>
-                        <p>Tests</p>
-
-                        <Flex justify="center">
-                            <Progress type="circle" percent={75} />
-                        </Flex>
-                    </div>
-                    <div className={cx('progression-wrapper')}>
-                        <p>Projects</p>
-
-                        <Flex justify="center">
-                            <Progress type="circle" percent={75} />
-                        </Flex>
-                    </div>
-                </Flex>
-                <Row>
-                    <Button>Edit/Add</Button>
-                </Row> */}
                 <ProgressionOverview></ProgressionOverview>
             </Card>
 

@@ -1,12 +1,5 @@
-import { Steps, Flex, Layout, Affix, FloatButton, Button, Dropdown, Space, Tooltip } from 'antd';
-import {
-    CaretUpOutlined,
-    HomeOutlined,
-    PlusOutlined,
-    MehOutlined,
-    SettingOutlined,
-    LogoutOutlined,
-} from '@ant-design/icons';
+import { Flex, Layout, Affix, FloatButton, Button, Dropdown, Space, Tooltip } from 'antd';
+import { HomeOutlined, SettingOutlined, LogoutOutlined } from '@ant-design/icons';
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
 
@@ -22,7 +15,7 @@ import { useNavigate } from 'react-router-dom';
 function CreateNewObjectLayout({ children }) {
     const cx = classNames.bind(styles);
 
-    const { Header, Content, Footer } = Layout;
+    const { Header, Footer } = Layout;
     const navigate = useNavigate();
     const { width } = useWindowDimensions();
 

@@ -2,7 +2,6 @@ import classNames from 'classnames/bind';
 import { Tag, Flex } from 'antd';
 
 import styles from './TagsDrawer.module.scss';
-import defaultTagColor from '../DefaultTagColor';
 
 function TagsDrawer({ data = [{ key: 1, name: 'Default tag', color: '' }], isClickable = false, onTagClick }) {
     const cx = classNames.bind(styles);

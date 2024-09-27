@@ -1,4 +1,4 @@
-import { Image, Avatar, Card, Flex, Divider, Progress, Select, Row, Col, Button, Input } from 'antd';
+import { Flex, Progress, Row, Button } from 'antd';
 import classNames from 'classnames/bind';
 
 import styles from './ProgressionOverview.module.scss';
