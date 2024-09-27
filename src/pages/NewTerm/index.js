@@ -10,7 +10,7 @@ import logo from '~/assets/images/logo.png';
 import { useWindowDimensions } from '~/hooks';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import NewCourseContent from './NewTermContent';
+import CreateObject from '~/components/CreateObject';
 
 function NewTerm() {
     const cx = classNames.bind(styles);
@@ -88,7 +88,7 @@ function NewTerm() {
                     </Header>
                 </Affix>
                 <Layout className={cx('content-wrapper')}>
-                    <NewCourseContent></NewCourseContent>
+                    <CreateObject type="term"></CreateObject>
                 </Layout>
 
                 <Footer className={cx('footer')}>

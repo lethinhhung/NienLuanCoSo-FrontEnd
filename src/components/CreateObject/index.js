@@ -5,13 +5,15 @@ import { useState } from 'react';
 import { PlusOutlined, CheckOutlined } from '@ant-design/icons';
 import EmojiPicker from 'emoji-picker-react';
 
-import styles from './NewCourse.module.scss';
+import styles from './CreateObject.module.scss';
 import ImageUpload from '~/components/ImageUpload';
 import { useReRender } from '~/hooks';
 import NewTag from '~/components/NewTag';
 
-function NewCourseContent() {
+function CreateObject({ type = '' }) {
     const cx = classNames.bind(styles);
+
+    const { TextArea } = Input;
     const { RangePicker } = DatePicker;
 
     const options = [
@@ -28,6 +30,13 @@ function NewCourseContent() {
             value: 'cyan',
         },
     ];
+
+    let isType = true;
+    if (type === 'course') {
+        isType = false;
+    } else if (type === 'term') {
+        isType = true;
+    }
 
     const tagRender = (props) => {
         const { label, value, closable, onClose } = props;
@@ -133,6 +142,11 @@ function NewCourseContent() {
             </Flex>
             <h2 className={cx('title-alone')}>Name</h2>
             <Input required></Input>
+            <h2 className={cx('title-alone')}>Discription</h2>
+            <TextArea
+                autoSize={{ minRows: 2, maxRows: 6 }}
+                placeholder={'Enter ' + type + ' discription...'}
+            ></TextArea>
             <h2 className={cx('title-alone')}>Tags</h2>
             <Flex justify="space-between" align="center">
                 <Select
@@ -144,31 +158,50 @@ function NewCourseContent() {
                     defaultValue={[]}
                     options={options}
                 />
-                {/* <Button onClick={handleAddTags} type="dashed" style={{ marginLeft: '5px' }}>
-                    <PlusOutlined />
-                </Button> */}
+
                 <div style={{ marginLeft: '5px' }}>
                     <NewTag />
                 </div>
             </Flex>
-            <Flex className={cx('title-switch')} align="center">
-                <h2>Duration</h2>
-                <Switch onChange={handleDuration} checkedChildren="Term" unCheckedChildren="Time" defaultChecked />
-            </Flex>
-            <div hidden={!isTerm}>
-                <Flex wrap align="center">
-                    <p style={{ minWidth: '80px', marginTop: '5px' }}>Pick a term</p>
-                    <Select required style={{ minWidth: '150px', marginTop: '5px' }}></Select>
-                    <Flex align="center" style={{ marginTop: '5px' }}>
-                        <p>or</p>
-                        <Button>
-                            <Link to="/create-new-term">Create a new Term</Link>
-                        </Button>
-                    </Flex>
+
+            <div hidden={isType}>
+                <Flex className={cx('title-switch')} align="center">
+                    <h2>Duration</h2>
+                    <div hidden={isType}>
+                        <Switch
+                            onChange={handleDuration}
+                            checkedChildren="Term"
+                            unCheckedChildren="Time"
+                            defaultChecked
+                        />
+                    </div>
                 </Flex>
+                <div hidden={!isTerm}>
+                    <Flex wrap align="center">
+                        <p style={{ minWidth: '80px', marginTop: '5px' }}>Pick a term</p>
+                        <Select required style={{ minWidth: '150px', marginTop: '5px' }}></Select>
+                        <Flex align="center" style={{ marginTop: '5px' }}>
+                            <p>or</p>
+                            <Button>
+                                <Link to="/create-new-term">Create a new Term</Link>
+                            </Button>
+                        </Flex>
+                    </Flex>
+                </div>
+
+                <div hidden={isTerm}>
+                    <Flex align="center">
+                        <p style={{ minWidth: '80px', marginTop: '5px' }}>Pick a time</p>
+                        <RangePicker required />
+                    </Flex>
+                </div>
             </div>
 
-            <div hidden={isTerm}>
+            <div hidden={!isType}>
+                <div className={cx('title-switch')}>
+                    <h2>Duration</h2>
+                </div>
+
                 <Flex align="center">
                     <p style={{ minWidth: '80px', marginTop: '5px' }}>Pick a time</p>
                     <RangePicker required />
@@ -183,4 +216,4 @@ function NewCourseContent() {
     );
 }
 
-export default NewCourseContent;
+export default CreateObject;

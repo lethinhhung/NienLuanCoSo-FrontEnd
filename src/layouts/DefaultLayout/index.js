@@ -60,13 +60,16 @@ function DefaultLayout({ children }) {
     //BTN
     const location = useLocation();
     const isCoursePage = location.pathname === '/courses';
-    const isTermPage = location.pathname === '/terms';
+    const isTermsPage = location.pathname === '/terms';
 
     let pageName;
+    let isCreate = false;
     if (isCoursePage) {
         pageName = 'course';
-    } else {
+        isCreate = true;
+    } else if (isTermsPage) {
         pageName = 'term';
+        isCreate = true;
     }
 
     const handleToHome = () => {
@@ -127,12 +130,12 @@ function DefaultLayout({ children }) {
                 </Footer>
             </Layout>
             <FloatButton.Group className={cx('to-top-btn-group')}>
-                <div>
+                <div hidden={!isCreate}>
                     <Tooltip placement="left" title={'Create a new ' + pageName}>
                         <div>
                             <FloatButton
                                 className={cx('to-top-btn')}
-                                onClick={isCoursePage ? handleToNewCourse : isTermPage ? handleToNewTerm : null}
+                                onClick={isCoursePage ? handleToNewCourse : isTermsPage ? handleToNewTerm : null}
                                 icon={<PlusOutlined />}
                             ></FloatButton>
                         </div>
