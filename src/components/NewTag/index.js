@@ -45,7 +45,6 @@ function NewTag() {
         setTagPreviewName(e.target.value);
     };
     const handleTagClick = (tag) => {
-        // setTagPreview(<Tag color={tag}>{tagPreviewName}</Tag>);
         setTagPreviewColor(tag);
     };
 
@@ -56,6 +55,7 @@ function NewTag() {
         } else {
             setTagPreview(<Tag color={'#' + value.toHex()}>{tagPreviewName}</Tag>);
             setTagPreviewColor('#' + value);
+            console.log(value.toHex());
         }
     };
 
@@ -80,7 +80,7 @@ function NewTag() {
                 <Flex vertical className={cx('component')}>
                     <h4>Color</h4>
                     <Flex align="center" justify="space-between">
-                        <ColorPicker size="large" onChange={handleTagColorPick} />
+                        <ColorPicker disabledAlpha size="large" onChange={handleTagColorPick} />
                         <TagsDrawer onTagClick={handleTagClick} isClickable={true} data={defaultTagColor} />
                     </Flex>
                 </Flex>

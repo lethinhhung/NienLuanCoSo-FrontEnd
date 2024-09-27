@@ -31,13 +31,6 @@ function CreateObject({ type = 'course', action = 'create' }) {
         },
     ];
 
-    let isType = true;
-    if (type === 'course') {
-        isType = false;
-    } else if (type === 'term') {
-        isType = true;
-    }
-
     const tagRender = (props) => {
         const { label, value, closable, onClose } = props;
         const onPreventMouseDown = (event) => {
@@ -149,7 +142,7 @@ function CreateObject({ type = 'course', action = 'create' }) {
                 autoSize={{ minRows: 2, maxRows: 6 }}
                 placeholder={'Enter ' + type + ' discription...'}
             ></TextArea>
-            <div hidden={type === 'course'}>
+            <div hidden={type === 'term'}>
                 <h2 className={cx('title-alone')}>Tags</h2>
                 <Flex justify="space-between" align="center">
                     <Select
@@ -168,17 +161,10 @@ function CreateObject({ type = 'course', action = 'create' }) {
                 </Flex>
             </div>
 
-            <div hidden={isType}>
+            <div hidden={type === 'term'}>
                 <Flex className={cx('title-switch')} align="center">
                     <h2>Duration</h2>
-                    <div hidden={isType}>
-                        <Switch
-                            onChange={handleDuration}
-                            checkedChildren="Term"
-                            unCheckedChildren="Time"
-                            defaultChecked
-                        />
-                    </div>
+                    <Switch onChange={handleDuration} checkedChildren="Term" unCheckedChildren="Time" defaultChecked />
                 </Flex>
                 <div hidden={!isTerm}>
                     <Flex wrap align="center">
@@ -202,7 +188,7 @@ function CreateObject({ type = 'course', action = 'create' }) {
             </div>
 
             <div hidden={type === 'course'}>
-                <div className={cx('title-switch')}>
+                <div className={cx('title-alone')}>
                     <h2>Duration</h2>
                 </div>
 
