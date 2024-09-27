@@ -74,7 +74,9 @@ function EditDiscription({ type = 'course' }) {
                         </div>
                     </Flex>
                 </Flex> */}
-                <CreateObject type={type} action="edit" />
+                <div className={cx('panel')}>
+                    <CreateObject type={type} action="edit" />
+                </div>
             </Modal>
         </div>
     );

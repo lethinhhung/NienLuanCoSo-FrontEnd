@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import CustomList from '~/components/CustomList';
 import TagsDrawer from '~/components/TagsDrawer';
 import EditDiscription from '~/components/EditDiscription';
+import ProgressionOverview from '~/components/ProgressionOverview';
 
 function Course() {
     const cx = classNames.bind(styles);
@@ -82,7 +83,7 @@ function Course() {
                 </Row>
                 <Divider />
 
-                <Flex wrap justify="space-evenly">
+                {/* <Flex wrap justify="space-evenly">
                     <div className={cx('progression-wrapper')}>
                         <p>Progression</p>
                         <Flex justify="center">
@@ -106,7 +107,8 @@ function Course() {
                 </Flex>
                 <Row>
                     <Button>Edit/Add</Button>
-                </Row>
+                </Row> */}
+                <ProgressionOverview></ProgressionOverview>
             </Card>
 
             <div className={cx('notes-wrapper')}>
