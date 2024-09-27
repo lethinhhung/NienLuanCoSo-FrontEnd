@@ -103,7 +103,7 @@ function CreateObject({ type = '' }) {
 
     return (
         <Flex vertical className={cx('content')}>
-            <h1>Create a new course</h1>
+            <h1>{'Create a new ' + type}</h1>
             <Divider></Divider>
             <Flex className={cx('title-switch')} align="center">
                 <h2>Emoji</h2>
@@ -147,22 +147,24 @@ function CreateObject({ type = '' }) {
                 autoSize={{ minRows: 2, maxRows: 6 }}
                 placeholder={'Enter ' + type + ' discription...'}
             ></TextArea>
-            <h2 className={cx('title-alone')}>Tags</h2>
-            <Flex justify="space-between" align="center">
-                <Select
-                    style={{ width: '100%' }}
-                    className={cx('tags-drawer')}
-                    placeholder="Tags"
-                    mode="multiple"
-                    tagRender={tagRender}
-                    defaultValue={[]}
-                    options={options}
-                />
+            <div hidden={isType}>
+                <h2 className={cx('title-alone')}>Tags</h2>
+                <Flex justify="space-between" align="center">
+                    <Select
+                        style={{ width: '100%' }}
+                        className={cx('tags-drawer')}
+                        placeholder="Tags"
+                        mode="multiple"
+                        tagRender={tagRender}
+                        defaultValue={[]}
+                        options={options}
+                    />
 
-                <div style={{ marginLeft: '5px' }}>
-                    <NewTag />
-                </div>
-            </Flex>
+                    <div style={{ marginLeft: '5px' }}>
+                        <NewTag />
+                    </div>
+                </Flex>
+            </div>
 
             <div hidden={isType}>
                 <Flex className={cx('title-switch')} align="center">

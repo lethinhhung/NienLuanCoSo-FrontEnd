@@ -1,7 +1,7 @@
 import config from '~/config';
 
 // Layouts
-import { CourseLayout } from '~/layouts';
+import { CourseLayout, CreateNewObjectLayout } from '~/layouts';
 
 import Home from '~/pages/Home';
 import Login from '~/pages/Login';
@@ -23,8 +23,8 @@ const publicRoutes = [
     { path: config.routes.courses, component: Courses },
     { path: config.routes.terms, component: Terms },
     { path: config.routes.profile, component: Profile },
-    { path: config.routes.newCourse, component: NewCourse, layout: null },
-    { path: config.routes.newTerm, component: NewTerm, layout: null },
+    { path: config.routes.newCourse, component: NewCourse, layout: CreateNewObjectLayout },
+    { path: config.routes.newTerm, component: NewTerm, layout: CreateNewObjectLayout },
     { path: config.routes.course, component: Course, layout: CourseLayout },
     { path: config.routes.lesson, component: Lesson, layout: CourseLayout },
     { path: config.routes.term, component: Term },

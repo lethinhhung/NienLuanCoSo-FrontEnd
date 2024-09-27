@@ -1,4 +1,4 @@
-import { Flex, Layout, Affix, FloatButton, Button, Dropdown, Space, Tooltip } from 'antd';
+import { Steps, Flex, Layout, Affix, FloatButton, Button, Dropdown, Space, Tooltip } from 'antd';
 import {
     CaretUpOutlined,
     HomeOutlined,
@@ -10,16 +10,16 @@ import {
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
 
-import styles from './DefaultLayout.module.scss';
-import CustomHeader from './Header';
-import CustomFooter from './Footer';
-import logo from '~/assets/images/logo.png';
 import defaultAvatar from '~/assets/images/default-avatar.png';
+import styles from './CreateNewObjectLayout.module.scss';
+import CustomHeader from '~/layouts/DefaultLayout/Header';
+import CustomFooter from '~/layouts/DefaultLayout/Footer';
+import logo from '~/assets/images/logo.png';
 import { useWindowDimensions } from '~/hooks';
 import { useEffect, useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-function DefaultLayout({ children }) {
+function CreateNewObjectLayout({ children }) {
     const cx = classNames.bind(styles);
 
     const { Header, Content, Footer } = Layout;
@@ -57,31 +57,10 @@ function DefaultLayout({ children }) {
         }
     }, [width]);
 
-    //BTN
-    const location = useLocation();
-    const isCoursePage = location.pathname === '/courses';
-    const isTermsPage = location.pathname === '/terms';
-
-    let pageName;
-    let isCreate = false;
-    if (isCoursePage) {
-        pageName = 'course';
-        isCreate = true;
-    } else if (isTermsPage) {
-        pageName = 'term';
-        isCreate = true;
-    }
+    useEffect(() => {});
 
     const handleToHome = () => {
         navigate('/');
-    };
-
-    const handleToNewCourse = () => {
-        navigate('/create-new-course');
-    };
-
-    const handleToNewTerm = () => {
-        navigate('/create-new-term');
     };
 
     return (
@@ -118,30 +97,13 @@ function DefaultLayout({ children }) {
                         </Space>
                     </Header>
                 </Affix>
-                <Layout className={cx('content-wrapper')}>
-                    {/* <Sider className={cx('slider')} width="20%">
-                        Sider
-                    </Sider> */}
-                    <Content className={cx('content')}>{children}</Content>
-                </Layout>
+                <Layout className={cx('content-wrapper')}>{children}</Layout>
 
                 <Footer className={cx('footer')}>
                     <CustomFooter>Footer</CustomFooter>
                 </Footer>
             </Layout>
             <FloatButton.Group className={cx('to-top-btn-group')}>
-                <div hidden={!isCreate}>
-                    <Tooltip placement="left" title={'Create a new ' + pageName}>
-                        <div>
-                            <FloatButton
-                                className={cx('to-top-btn')}
-                                onClick={isCoursePage ? handleToNewCourse : isTermsPage ? handleToNewTerm : null}
-                                icon={<PlusOutlined />}
-                            ></FloatButton>
-                        </div>
-                    </Tooltip>
-                </div>
-
                 <div hidden={!isHidden}>
                     <Tooltip placement="left" title="Home">
                         <div>
@@ -153,17 +115,9 @@ function DefaultLayout({ children }) {
                         </div>
                     </Tooltip>
                 </div>
-
-                <div>
-                    {/* <Tooltip placement="left" title="Back to top">
-                        <div> */}
-                    <FloatButton.BackTop className={cx('to-top-btn')} icon={<CaretUpOutlined />}></FloatButton.BackTop>
-                    {/* </div>
-                    </Tooltip> */}
-                </div>
             </FloatButton.Group>
         </Flex>
     );
 }
 
-export default DefaultLayout;
+export default CreateNewObjectLayout;
