@@ -1,6 +1,7 @@
 import { Tabs, Flex, Image, Row, Col } from 'antd';
 import classNames from 'classnames/bind';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 import logo from '~/assets/images/logo.png';
 import styles from './Login.module.scss';
@@ -9,11 +10,19 @@ import RegisterForm from './RegisterForm';
 
 function Login() {
     const cx = classNames.bind(styles);
+    const [registerSuccess, setRegisterSuccess] = useState(false);
 
     const naviagte = useNavigate();
 
     const handleToHome = () => {
         naviagte('/');
+    };
+
+    const handleRegisterStatus = (status) => {
+        if (status === 'success') {
+            alert('Register Successfully');
+            setRegisterSuccess(!registerSuccess);
+        }
     };
 
     const items = [
@@ -25,7 +34,7 @@ function Login() {
         {
             key: 'register',
             label: 'Register',
-            children: <RegisterForm />,
+            children: <RegisterForm onRegister={handleRegisterStatus} />,
         },
     ];
 
@@ -56,6 +65,7 @@ function Login() {
                         type="card"
                         defaultActiveKey="login"
                         items={items}
+                        key={registerSuccess}
                     />
                 </Col>
                 <Col span={8}></Col>

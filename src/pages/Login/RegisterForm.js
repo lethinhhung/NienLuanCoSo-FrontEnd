@@ -1,17 +1,28 @@
 import { Form, Input, Button, Flex } from 'antd';
 import { RightOutlined } from '@ant-design/icons';
 import classNames from 'classnames/bind';
+import { useState } from 'react';
 
 import styles from './Login.module.scss';
+import { createUserApi } from '~/utils/api';
 
-function RegisterForm() {
+function RegisterForm({ onRegister }) {
     const cx = classNames.bind(styles);
+    const [status, setStatus] = useState(null);
 
-    const onFinish = (values) => {
-        console.log('Success:', values);
+    const onFinish = async (values) => {
+        const { name, email, password, discription } = values;
+
+        const res = await createUserApi(name, email, password, discription);
+
+        console.log('Success:', res);
+        setStatus('success');
+        onRegister('success');
     };
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
+        setStatus('failure');
+        onRegister('failure');
     };
 
     return (
@@ -81,18 +92,28 @@ function RegisterForm() {
             </Form.Item>
 
             <Form.Item
-                name="repassword"
+                name="confirm"
+                hasFeedback
+                dependencies={['password']}
                 wrapperCol={{
                     span: 24,
                 }}
                 rules={[
                     {
                         required: true,
-                        message: 'Passwords not match',
+                        message: 'Please confirm your password!',
                     },
+                    ({ getFieldValue }) => ({
+                        validator(_, value) {
+                            if (!value || getFieldValue('password') === value) {
+                                return Promise.resolve();
+                            }
+                            return Promise.reject(new Error('The new password that you entered do not match!'));
+                        },
+                    }),
                 ]}
             >
-                <Input.Password className={cx('input')} placeholder="Retype your password" />
+                <Input.Password className={cx('input')} placeholder="Retype password" />
             </Form.Item>
 
             <Form.Item
