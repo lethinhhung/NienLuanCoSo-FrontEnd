@@ -1,14 +1,28 @@
 import { Form, Input, Button, Flex } from 'antd';
 import { RightOutlined } from '@ant-design/icons';
 import classNames from 'classnames/bind';
+import { useNavigate } from 'react-router-dom';
 
+import { loginApi } from '~/utils/api';
 import styles from './Login.module.scss';
 
 function LoginForm() {
     const cx = classNames.bind(styles);
+    const navigate = useNavigate();
 
-    const onFinish = (values) => {
-        console.log('Success:', values);
+    const onFinish = async (values) => {
+        const { name, password } = values;
+        const res = await loginApi(name, password);
+
+        if (res.access_token) {
+            localStorage.setItem('access_token', res.access_token);
+            alert('Login successfully!');
+            navigate('/dashboard');
+        } else {
+            alert('Usename/password not valid!');
+        }
+
+        console.log('Success:', res.access_token);
     };
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
@@ -32,7 +46,7 @@ function LoginForm() {
             autoComplete="off"
         >
             <Form.Item
-                name="username"
+                name="name"
                 wrapperCol={{
                     span: 24,
                 }}

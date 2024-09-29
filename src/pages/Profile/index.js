@@ -1,9 +1,16 @@
-import { Card, Row, Col, Flex, Image } from 'antd';
+import { Card, Row, Col, Flex, Image, Button } from 'antd';
 // import classNames from 'classnames/bind';
 
+import { updateUser } from '~/utils/api';
 // import styles from './Profile.module.scss';
+import avatar from '~/assets/images/default-avatar.png';
 
 function Profile() {
+    const handleEdit = async () => {
+        const res = await updateUser('this is the discription', avatar);
+        console.log('Success:', res);
+    };
+
     return (
         <Flex vertical>
             <Row style={{ height: '20px' }}></Row>
@@ -13,14 +20,7 @@ function Profile() {
                     <Card
                         title="Account information"
                         bordered={false}
-                        extra={
-                            <a
-                                style={{ color: 'blue' }}
-                                href="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-                            >
-                                Edit
-                            </a>
-                        }
+                        extra={<Button onClick={handleEdit}>Edit</Button>}
                         style={{
                             width: '100%',
                         }}
