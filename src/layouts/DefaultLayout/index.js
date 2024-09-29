@@ -11,6 +11,7 @@ import defaultAvatar from '~/assets/images/default-avatar.png';
 import { useWindowDimensions } from '~/hooks';
 import { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useAuth } from '~/contexts/Auth';
 
 function DefaultLayout({ children }) {
     const cx = classNames.bind(styles);
@@ -18,11 +19,16 @@ function DefaultLayout({ children }) {
     const { Header, Content, Footer } = Layout;
     const navigate = useNavigate();
     const { width } = useWindowDimensions();
+    const { logout } = useAuth();
 
     const [isHidden, setIsHidden] = useState(true);
 
     const layoutStyle = {
         overflow: 'hidden',
+    };
+
+    const handleLogout = () => {
+        logout();
     };
 
     const items = [
@@ -33,11 +39,7 @@ function DefaultLayout({ children }) {
         },
         {
             key: 'logout',
-            label: (
-                <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
-                    Logout
-                </a>
-            ),
+            label: <a onClick={handleLogout}>Logout</a>,
             icon: <LogoutOutlined />,
         },
     ];

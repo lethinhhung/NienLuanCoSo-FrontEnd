@@ -15,9 +15,20 @@ function RegisterForm({ onRegister }) {
 
         const res = await createUserApi(name, email, password, discription);
 
-        console.log('Success:', res);
-        setStatus('success');
-        onRegister('success');
+        if (res.result) {
+            console.log('Success:', res);
+
+            setStatus('success');
+            onRegister('success');
+        } else if (res.EC === 0) {
+            alert('Duplicated username!');
+        } else {
+            alert('Unknown error!');
+        }
+
+        if (setStatus === 'success') {
+            alert('Register successfully!');
+        }
     };
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
@@ -43,7 +54,7 @@ function RegisterForm({ onRegister }) {
             autoComplete="off"
         >
             <Form.Item
-                name="username"
+                name="name"
                 wrapperCol={{
                     span: 24,
                 }}

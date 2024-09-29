@@ -6,16 +6,20 @@ import { useNavigate } from 'react-router-dom';
 import logo from '~/assets/images/logo.png';
 import styles from './Home.module.scss';
 import book from '~/assets/images/book.svg';
+import { AuthProvider } from '~/contexts/Auth';
 
 function Home() {
     const { Title } = Typography;
+    const { isAuthenticated } = AuthProvider;
 
     const navigate = useNavigate();
 
     const cx = classNames.bind(styles);
 
     const handleNext = () => {
-        navigate('/dashboard');
+        if (isAuthenticated || localStorage.getItem('access_token')) {
+            navigate('/dashboard');
+        } else navigate('/login');
     };
 
     return (

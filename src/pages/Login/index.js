@@ -20,8 +20,8 @@ function Login() {
 
     const handleRegisterStatus = (status) => {
         if (status === 'success') {
-            alert('Register Successfully');
             setRegisterSuccess(!registerSuccess);
+            alert('Register Successfully');
         }
     };
 

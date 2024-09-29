@@ -5,10 +5,12 @@ import { useNavigate } from 'react-router-dom';
 
 import { loginApi } from '~/utils/api';
 import styles from './Login.module.scss';
+import { useAuth } from '~/contexts/Auth';
 
 function LoginForm() {
     const cx = classNames.bind(styles);
     const navigate = useNavigate();
+    const { login } = useAuth();
 
     const onFinish = async (values) => {
         const { name, password } = values;
@@ -16,6 +18,7 @@ function LoginForm() {
 
         if (res.access_token) {
             localStorage.setItem('access_token', res.access_token);
+            login(true);
             alert('Login successfully!');
             navigate('/dashboard');
         } else {
