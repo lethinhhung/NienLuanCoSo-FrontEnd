@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import { UploadOutlined } from '@ant-design/icons';
 
+import { useConvertAvatarPath } from '~/hooks';
 import { updateUserApi, getAccountInfoApi } from '~/utils/api';
 import styles from './Profile.module.scss';
 
@@ -28,6 +29,8 @@ function Profile() {
 
         fetchAccountInfo();
     }, [discription]);
+
+    const avatarPath = useConvertAvatarPath(info.avatarPath);
 
     const handleFileChange = (event) => {
         const selectedFile = event.target.files[0];
@@ -74,16 +77,6 @@ function Profile() {
         setDiscription(e.target.value);
     };
 
-    const convertAvatarPath = (avatarPath) => {
-        // Replace 'src\\' with 'localhost:8080/' and convert backslashes to forward slashes
-        let url = avatarPath.replace(/^src\\public\\/, 'localhost:8080/').replace(/\\/g, '/');
-        // Ensure the URL starts with 'http://'
-        if (!url.startsWith('http://') && !url.startsWith('https://')) {
-            url = 'http://' + url;
-        }
-        return url;
-    };
-
     return (
         <Flex vertical>
             <Row style={{ height: '20px' }}></Row>
@@ -126,7 +119,7 @@ function Profile() {
                         <Row>
                             <Col span={6}>
                                 {' '}
-                                <Image width={'100%'} src={convertAvatarPath(info.avatarPath)} />
+                                <Image width={'100%'} src={avatarPath} />
                             </Col>
                             <Col span={18} style={{ paddingLeft: '20px' }}>
                                 <Card
