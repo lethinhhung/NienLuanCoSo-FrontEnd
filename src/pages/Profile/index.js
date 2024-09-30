@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import { UploadOutlined } from '@ant-design/icons';
 
-import { updateUserApi } from '~/utils/api';
+import { updateUserApi, getAccountInfoApi } from '~/utils/api';
 import styles from './Profile.module.scss';
 
 function Profile() {
@@ -12,6 +12,22 @@ function Profile() {
     const [imagePreview, setImagePreview] = useState(null);
     const cx = classNames.bind(styles);
     const { TextArea } = Input;
+
+    const getAccountInfo = async () => {
+        const account = await getAccountInfoApi();
+        return account.info;
+    };
+
+    const [info, setInfo] = useState({ name: '', discription: '', avatarPath: '' });
+
+    useEffect(() => {
+        const fetchAccountInfo = async () => {
+            const accountInfo = await getAccountInfo();
+            setInfo(accountInfo);
+        };
+
+        fetchAccountInfo();
+    }, [discription]);
 
     const handleFileChange = (event) => {
         const selectedFile = event.target.files[0];
@@ -58,6 +74,16 @@ function Profile() {
         setDiscription(e.target.value);
     };
 
+    const convertAvatarPath = (avatarPath) => {
+        // Replace 'src\\' with 'localhost:8080/' and convert backslashes to forward slashes
+        let url = avatarPath.replace(/^src\\public\\/, 'localhost:8080/').replace(/\\/g, '/');
+        // Ensure the URL starts with 'http://'
+        if (!url.startsWith('http://') && !url.startsWith('https://')) {
+            url = 'http://' + url;
+        }
+        return url;
+    };
+
     return (
         <Flex vertical>
             <Row style={{ height: '20px' }}></Row>
@@ -100,20 +126,17 @@ function Profile() {
                         <Row>
                             <Col span={6}>
                                 {' '}
-                                <Image
-                                    width={'100%'}
-                                    src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-                                />
+                                <Image width={'100%'} src={convertAvatarPath(info.avatarPath)} />
                             </Col>
                             <Col span={18} style={{ paddingLeft: '20px' }}>
                                 <Card
-                                    title="Name"
+                                    title={'Name: ' + info.name}
                                     bordered
                                     style={{
                                         width: '100%',
                                     }}
                                 >
-                                    Discription
+                                    {info.discription}
                                 </Card>
                             </Col>
                         </Row>
