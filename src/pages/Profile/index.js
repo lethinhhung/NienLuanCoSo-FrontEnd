@@ -30,7 +30,6 @@ function Profile() {
 
     const handleOk = async () => {
         const formData = new FormData();
-        formData.append('name', 'admin');
         formData.append('discription', discription);
 
         formData.append('avatar', file);
