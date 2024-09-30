@@ -24,7 +24,7 @@ const loginApi = (name, password) => {
     return axios.post(URL_API, data);
 };
 
-const updateUser = async (formData) => {
+const updateUserApi = async (formData) => {
     const URL_API = '/v1/api/update';
 
     try {
@@ -36,4 +36,4 @@ const updateUser = async (formData) => {
     }
 };
 
-export { createUserApi, loginApi, updateUser };
+export { createUserApi, loginApi, updateUserApi };

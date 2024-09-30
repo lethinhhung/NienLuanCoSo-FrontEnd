@@ -1,36 +1,62 @@
-import { Card, Row, Col, Flex, Image, Button } from 'antd';
-// import classNames from 'classnames/bind';
-import { useState } from 'react';
+import { Card, Row, Col, Flex, Image, Button, Modal, Upload, Input } from 'antd';
+import { useEffect, useState } from 'react';
+import classNames from 'classnames/bind';
+import { UploadOutlined } from '@ant-design/icons';
 
-import { updateUser } from '~/utils/api';
-// import styles from './Profile.module.scss';
-import avatar from '~/assets/images/default-avatar.png';
+import { updateUserApi } from '~/utils/api';
+import styles from './Profile.module.scss';
 
 function Profile() {
     const [file, setFile] = useState(null);
-
-    const handleEdit = async () => {
-        if (!file) {
-            console.error('All fields are required');
-            return;
-        }
-
-        const formData = new FormData();
-        formData.append('name', 'admin');
-        formData.append('discription', 'hehehehe');
-        formData.append('avatar', file);
-
-        try {
-            const response = await updateUser(formData);
-            console.log(response);
-        } catch (error) {
-            console.error(error);
-        }
-    };
+    const [discription, setDiscription] = useState('');
+    const [imagePreview, setImagePreview] = useState(null);
+    const cx = classNames.bind(styles);
+    const { TextArea } = Input;
 
     const handleFileChange = (event) => {
         const selectedFile = event.target.files[0];
         setFile(selectedFile);
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setImagePreview(reader.result);
+        };
+        reader.readAsDataURL(selectedFile);
+    };
+
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const showModal = () => {
+        setIsModalVisible(true);
+    };
+
+    const handleOk = async () => {
+        const formData = new FormData();
+        formData.append('name', 'admin');
+        formData.append('discription', discription);
+
+        formData.append('avatar', file);
+
+        //Goi API
+        try {
+            const res = await updateUserApi(formData);
+            console.log('Update successful:', res);
+            alert('Update successfully!');
+            setFile();
+            setImagePreview();
+            setDiscription();
+        } catch (error) {
+            console.error('Update failed:', error);
+            alert('Unkown error');
+        }
+
+        setIsModalVisible(false);
+    };
+
+    const handleCancel = () => {
+        setIsModalVisible(false);
+    };
+
+    const handleDiscriptionChange = (e) => {
+        setDiscription(e.target.value);
     };
 
     return (
@@ -42,7 +68,32 @@ function Profile() {
                     <Card
                         title="Account information"
                         bordered={false}
-                        extra={<Button onClick={handleEdit}>Edit</Button>}
+                        extra={
+                            <div>
+                                <Button onClick={showModal}>Edit</Button>
+                                <Modal
+                                    title={<h2>{'Edit profile'}</h2>}
+                                    open={isModalVisible}
+                                    onOk={handleOk}
+                                    onCancel={handleCancel}
+                                >
+                                    <Flex vertical className={cx('panel')}>
+                                        <h3 className={cx('title')}>Upload an avatar</h3>
+                                        {imagePreview && <img width={'100px'} src={imagePreview} alt="Preview" />}
+                                        <form>
+                                            <input type="file" alt="upload" onChange={handleFileChange} />
+                                        </form>
+                                        <h3 className={cx('title')}>Discription</h3>
+                                        <TextArea
+                                            autoSize={{ minRows: 2, maxRows: 6 }}
+                                            placeholder={'Enter discription...'}
+                                            onChange={handleDiscriptionChange}
+                                            value={discription}
+                                        ></TextArea>
+                                    </Flex>
+                                </Modal>
+                            </div>
+                        }
                         style={{
                             width: '100%',
                         }}
@@ -65,7 +116,6 @@ function Profile() {
                                 >
                                     Discription
                                 </Card>
-                                <input type="file" onChange={handleFileChange} />
                             </Col>
                         </Row>
                     </Card>
