@@ -1,14 +1,36 @@
 import { Card, Row, Col, Flex, Image, Button } from 'antd';
 // import classNames from 'classnames/bind';
+import { useState } from 'react';
 
 import { updateUser } from '~/utils/api';
 // import styles from './Profile.module.scss';
 import avatar from '~/assets/images/default-avatar.png';
 
 function Profile() {
+    const [file, setFile] = useState(null);
+
     const handleEdit = async () => {
-        const res = await updateUser('this is the discription', avatar);
-        console.log('Success:', res);
+        if (!file) {
+            console.error('All fields are required');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('name', 'admin');
+        formData.append('discription', 'hehehehe');
+        formData.append('avatar', file);
+
+        try {
+            const response = await updateUser(formData);
+            console.log(response);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const handleFileChange = (event) => {
+        const selectedFile = event.target.files[0];
+        setFile(selectedFile);
     };
 
     return (
@@ -43,6 +65,7 @@ function Profile() {
                                 >
                                     Discription
                                 </Card>
+                                <input type="file" onChange={handleFileChange} />
                             </Col>
                         </Row>
                     </Card>

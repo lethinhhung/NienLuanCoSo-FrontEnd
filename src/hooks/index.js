@@ -4,3 +4,4 @@ export { default as useReRender } from './useReRender';
 export { default as useGetTextColorFromBackground } from './useGetTextColorFromBackground';
 export { default as useGetDimmerColor } from './useGetDimmerColor';
 export { default as useGetBrighterColor } from './useGetBrighterColor';
+export { default as useConvertImage } from './useConvertImage';
