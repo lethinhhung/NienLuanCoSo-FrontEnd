@@ -17,6 +17,11 @@ function CreateObject({ type = 'course', action = 'create' }) {
     const { RangePicker } = DatePicker;
 
     const [options, setOptions] = useState([]);
+    const [reRender, setReRender] = useState('');
+
+    const reRenderTags = () => {
+        setReRender(reRender + ' ');
+    };
 
     useEffect(() => {
         const fetchTagsInfo = async () => {
@@ -30,7 +35,7 @@ function CreateObject({ type = 'course', action = 'create' }) {
         };
 
         fetchTagsInfo();
-    });
+    }, [reRender]);
 
     const tagRender = (props) => {
         const { value, closable, onClose } = props;
@@ -151,6 +156,7 @@ function CreateObject({ type = 'course', action = 'create' }) {
                 <h2 className={cx('title-alone')}>Tags</h2>
                 <Flex justify="space-between" align="center">
                     <Select
+                        onClick={reRenderTags}
                         style={{ width: '100%' }}
                         className={cx('tags-drawer')}
                         placeholder="Tags"

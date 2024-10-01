@@ -9,7 +9,6 @@ function TagsDrawer({ data = [{ key: 1, name: 'Default tag', color: '' }], isCli
     const handleClicked = (e) => {
         if (isClickable) {
             const tagName = e.currentTarget.innerText.toLowerCase();
-            console.log(tagName);
             if (onTagClick) {
                 onTagClick(tagName);
             }

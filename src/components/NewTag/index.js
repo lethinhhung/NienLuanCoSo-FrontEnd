@@ -18,9 +18,13 @@ function NewTag() {
         setOpen(true);
     };
     const handleOk = async () => {
+        if (tagPreviewName === 'Preview') {
+            alert('Enter tag name...');
+            return;
+        }
+
         setModalText('Saving...');
         setConfirmLoading(true);
-
         const result = await createNewTagApi(tagPreviewName, tagPreviewColor);
         if (result.EC === 0) {
             alert('Failed. Duplicate tag name.');
@@ -46,7 +50,6 @@ function NewTag() {
     const [tagPreviewColor, setTagPreviewColor] = useState('');
 
     const handleInput = (e) => {
-        console.log(e.target.value);
         setTagPreviewName(e.target.value);
     };
     const handleTagClick = (tag) => {
@@ -60,7 +63,6 @@ function NewTag() {
         } else {
             setTagPreview(<Tag color={'#' + value.toHex()}>{tagPreviewName}</Tag>);
             setTagPreviewColor('#' + value.toHex());
-            console.log(tagPreviewColor);
         }
     };
 
