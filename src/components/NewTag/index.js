@@ -22,23 +22,24 @@ function NewTag() {
         setConfirmLoading(true);
 
         const result = await createNewTagApi(tagPreviewName, tagPreviewColor);
+        if (result.EC === 0) {
+            alert('Failed. Duplicate tag name.');
+            setModalText('');
+            setConfirmLoading(false);
+        } else {
+            console.log(result);
 
-        console.log(result);
-
-        setOpen(false);
-        setConfirmLoading(false);
-        setTagPreviewColor('');
-        setTagPreviewName('');
-        setModalText('');
+            setOpen(false);
+            setConfirmLoading(false);
+            setTagPreviewColor('');
+            setTagPreviewName('');
+            setModalText('');
+        }
     };
     const handleCancel = () => {
         console.log('Clicked cancel button');
         setOpen(false);
     };
-
-    // const handleTagClick = (tag) => {
-    //     console.log('real tag:', tag);
-    // };
 
     const [tagPreviewName, setTagPreviewName] = useState('Preview');
     const [tagPreview, setTagPreview] = useState(<Tag>{tagPreviewName}</Tag>);
@@ -58,8 +59,8 @@ function NewTag() {
             setTagPreviewColor('');
         } else {
             setTagPreview(<Tag color={'#' + value.toHex()}>{tagPreviewName}</Tag>);
-            setTagPreviewColor('#' + value);
-            console.log(value.toHex());
+            setTagPreviewColor('#' + value.toHex());
+            console.log(tagPreviewColor);
         }
     };
 
