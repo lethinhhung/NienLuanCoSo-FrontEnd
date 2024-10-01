@@ -1,48 +1,57 @@
-import { Card, Row, Col, Flex, Image, Button, Modal, Upload, Input } from 'antd';
+import { Card, Row, Col, Flex, Image, Button, Modal, Input } from 'antd';
 import { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
-import { UploadOutlined } from '@ant-design/icons';
 
+import defaultAvatar from '~/assets/images/default-avatar.png';
 import { useConvertAvatarPath } from '~/hooks';
 import { updateUserApi, getAccountInfoApi } from '~/utils/api';
 import styles from './Profile.module.scss';
 
 function Profile() {
+    const cx = classNames.bind(styles);
+    const { TextArea } = Input;
+
+    // edit const
     const [file, setFile] = useState(null);
     const [discription, setDiscription] = useState('');
     const [imagePreview, setImagePreview] = useState(null);
-    const cx = classNames.bind(styles);
-    const { TextArea } = Input;
+    const [isModalVisible, setIsModalVisible] = useState(false);
+
+    // fetch info
+    const [info, setInfo] = useState({ name: '', discription: '' });
+
+    useEffect(() => {
+        const fetchAccountInfo = async () => {
+            const accountInfo = await getAccountInfo();
+
+            setInfo(accountInfo);
+        };
+
+        fetchAccountInfo();
+    }, [isModalVisible]);
 
     const getAccountInfo = async () => {
         const account = await getAccountInfoApi();
         return account.info;
     };
 
-    const [info, setInfo] = useState({ name: '', discription: '', avatarPath: '' });
-
-    useEffect(() => {
-        const fetchAccountInfo = async () => {
-            const accountInfo = await getAccountInfo();
-            setInfo(accountInfo);
-        };
-
-        fetchAccountInfo();
-    }, [discription]);
-
     const avatarPath = useConvertAvatarPath(info.avatarPath);
 
+    // functions
     const handleFileChange = (event) => {
         const selectedFile = event.target.files[0];
-        setFile(selectedFile);
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            setImagePreview(reader.result);
-        };
-        reader.readAsDataURL(selectedFile);
+        if (selectedFile) {
+            setFile(selectedFile);
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImagePreview(reader.result);
+            };
+            reader.readAsDataURL(selectedFile);
+        } else {
+            console.error('No file selected or file is not valid.');
+        }
     };
 
-    const [isModalVisible, setIsModalVisible] = useState(false);
     const showModal = () => {
         setIsModalVisible(true);
     };
@@ -99,7 +108,12 @@ function Profile() {
                                         <h3 className={cx('title')}>Upload an avatar</h3>
                                         {imagePreview && <img width={'100px'} src={imagePreview} alt="Preview" />}
                                         <form>
-                                            <input type="file" alt="upload" onChange={handleFileChange} />
+                                            <input
+                                                type="file"
+                                                alt="upload"
+                                                accept="image/png, image/gif, image/jpeg"
+                                                onChange={handleFileChange}
+                                            />
                                         </form>
                                         <h3 className={cx('title')}>Discription</h3>
                                         <TextArea
@@ -119,7 +133,7 @@ function Profile() {
                         <Row>
                             <Col span={6}>
                                 {' '}
-                                <Image width={'100%'} src={avatarPath} />
+                                <Image width={'100%'} src={avatarPath || defaultAvatar} />
                             </Col>
                             <Col span={18} style={{ paddingLeft: '20px' }}>
                                 <Card
