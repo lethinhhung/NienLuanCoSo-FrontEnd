@@ -1,14 +1,14 @@
 import { ColorPicker, Tag, Flex, Button, Input, Select, Switch, DatePicker, Divider } from 'antd';
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
-import { PlusOutlined, CheckOutlined } from '@ant-design/icons';
+import { useEffect, useState } from 'react';
+import { CheckOutlined } from '@ant-design/icons';
 import EmojiPicker from 'emoji-picker-react';
 
 import styles from './CreateObject.module.scss';
 import ImageUpload from '~/components/ImageUpload';
-import { useReRender } from '~/hooks';
 import NewTag from '~/components/NewTag';
+import { getTagsInfoApi } from '~/utils/api';
 
 function CreateObject({ type = 'course', action = 'create' }) {
     const cx = classNames.bind(styles);
@@ -16,30 +16,37 @@ function CreateObject({ type = 'course', action = 'create' }) {
     const { TextArea } = Input;
     const { RangePicker } = DatePicker;
 
-    const options = [
-        {
-            value: 'gold',
-        },
-        {
-            value: 'lime',
-        },
-        {
-            value: 'green',
-        },
-        {
-            value: 'cyan',
-        },
-    ];
+    const [options, setOptions] = useState([]);
+
+    useEffect(() => {
+        const fetchTagsInfo = async () => {
+            const tagsInfo = await getTagsInfoApi();
+
+            const newOptions = tagsInfo.map((tag) => ({
+                value: tag.name,
+                color: tag.color,
+            }));
+            setOptions(newOptions);
+        };
+
+        fetchTagsInfo();
+    });
 
     const tagRender = (props) => {
-        const { label, value, closable, onClose } = props;
+        const { value, closable, onClose } = props;
+        let color = options.find((option) => option.value === value)?.color;
+
+        if (color === '#ffffff') {
+            color = '';
+        }
+
         const onPreventMouseDown = (event) => {
             event.preventDefault();
             event.stopPropagation();
         };
         return (
             <Tag
-                color={value}
+                color={color}
                 onMouseDown={onPreventMouseDown}
                 closable={closable}
                 onClose={onClose}
@@ -47,7 +54,7 @@ function CreateObject({ type = 'course', action = 'create' }) {
                     marginInlineEnd: 4,
                 }}
             >
-                {label}
+                {value}
             </Tag>
         );
     };
@@ -85,8 +92,6 @@ function CreateObject({ type = 'course', action = 'create' }) {
             setIsCoverDisabled(false);
         }
     };
-
-    const handleAddTags = () => {};
 
     const handleDuration = (checked) => {
         if (checked) {

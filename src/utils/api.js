@@ -52,4 +52,10 @@ const createNewTagApi = async (name, color) => {
     return axios.post(URL_API, data);
 };
 
-export { createUserApi, loginApi, updateUserApi, getAccountInfoApi, createNewTagApi };
+const getTagsInfoApi = async () => {
+    const URL_API = '/v1/api/get-tags-info';
+
+    return axios.get(URL_API);
+};
+
+export { createUserApi, loginApi, updateUserApi, getAccountInfoApi, createNewTagApi, getTagsInfoApi };
