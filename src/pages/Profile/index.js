@@ -13,12 +13,12 @@ function Profile() {
 
     // edit const
     const [file, setFile] = useState(null);
-    const [discription, setDiscription] = useState('');
+    const [description, setDescription] = useState('');
     const [imagePreview, setImagePreview] = useState(null);
     const [isModalVisible, setIsModalVisible] = useState(false);
 
     // fetch info
-    const [info, setInfo] = useState({ name: '', discription: '' });
+    const [info, setInfo] = useState({ name: '', description: '' });
 
     useEffect(() => {
         const fetchAccountInfo = async () => {
@@ -58,7 +58,7 @@ function Profile() {
 
     const handleOk = async () => {
         const formData = new FormData();
-        formData.append('discription', discription);
+        formData.append('description', description);
 
         formData.append('avatar', file);
 
@@ -69,7 +69,7 @@ function Profile() {
             alert('Update successfully!');
             setFile();
             setImagePreview();
-            setDiscription();
+            setDescription();
         } catch (error) {
             console.error('Update failed:', error);
             alert('Unkown error');
@@ -82,8 +82,8 @@ function Profile() {
         setIsModalVisible(false);
     };
 
-    const handleDiscriptionChange = (e) => {
-        setDiscription(e.target.value);
+    const handleDescriptionChange = (e) => {
+        setDescription(e.target.value);
     };
 
     return (
@@ -115,12 +115,12 @@ function Profile() {
                                                 onChange={handleFileChange}
                                             />
                                         </form>
-                                        <h3 className={cx('title')}>Discription</h3>
+                                        <h3 className={cx('title')}>Description</h3>
                                         <TextArea
                                             autoSize={{ minRows: 2, maxRows: 6 }}
-                                            placeholder={'Enter discription...'}
-                                            onChange={handleDiscriptionChange}
-                                            value={discription}
+                                            placeholder={'Enter description...'}
+                                            onChange={handleDescriptionChange}
+                                            value={description}
                                         ></TextArea>
                                     </Flex>
                                 </Modal>
@@ -143,7 +143,7 @@ function Profile() {
                                         width: '100%',
                                     }}
                                 >
-                                    {info.discription}
+                                    {info.description}
                                 </Card>
                             </Col>
                         </Row>

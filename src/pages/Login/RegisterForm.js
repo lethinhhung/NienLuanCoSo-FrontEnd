@@ -11,9 +11,9 @@ function RegisterForm({ onRegister }) {
     const [status, setStatus] = useState(null);
 
     const onFinish = async (values) => {
-        const { name, email, password, discription } = values;
+        const { name, email, password, description } = values;
 
-        const res = await createUserApi(name, email, password, discription);
+        const res = await createUserApi(name, email, password, description);
 
         if (res.result) {
             console.log('Success:', res);

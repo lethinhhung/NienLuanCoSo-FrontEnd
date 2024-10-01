@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import styles from './Term.module.scss';
 import { useDebounce, useWindowDimensions } from '~/hooks';
 import CustomList from '~/components/CustomList';
-import EditDiscription from '~/components/EditDiscription';
+import EditDescription from '~/components/EditDescription';
 
 function Term() {
     const cx = classNames.bind(styles);
@@ -80,7 +80,7 @@ function Term() {
                     hoverable
                     title="Term overview"
                     bordered={false}
-                    extra={<EditDiscription type="term" />}
+                    extra={<EditDescription type="term" />}
                 >
                     <Meta
                         avatar={<Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=8" />}

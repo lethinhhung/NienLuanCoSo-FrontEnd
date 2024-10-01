@@ -142,10 +142,10 @@ function CreateObject({ type = 'course', action = 'create' }) {
             </Flex>
             <h2 className={cx('title-alone')}>Name</h2>
             <Input required></Input>
-            <h2 className={cx('title-alone')}>Discription</h2>
+            <h2 className={cx('title-alone')}>Description</h2>
             <TextArea
                 autoSize={{ minRows: 2, maxRows: 6 }}
-                placeholder={'Enter ' + type + ' discription...'}
+                placeholder={'Enter ' + type + ' description...'}
             ></TextArea>
             <div hidden={type === 'term'}>
                 <h2 className={cx('title-alone')}>Tags</h2>

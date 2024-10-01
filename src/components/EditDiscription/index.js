@@ -2,10 +2,10 @@ import { Button, Modal } from 'antd';
 import classNames from 'classnames/bind';
 import { useState } from 'react';
 
-import styles from './EditDiscription.module.scss';
+import styles from './EditDescription.module.scss';
 import CreateObject from '~/components/CreateObject';
 
-function EditDiscription({ type = 'course' }) {
+function EditDescription({ type = 'course' }) {
     const cx = classNames.bind(styles);
 
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -34,4 +34,4 @@ function EditDiscription({ type = 'course' }) {
     );
 }
 
-export default EditDiscription;
+export default EditDescription;
