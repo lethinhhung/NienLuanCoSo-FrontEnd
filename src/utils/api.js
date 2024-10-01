@@ -41,4 +41,15 @@ const updateUserApi = async (formData) => {
     }
 };
 
-export { createUserApi, loginApi, updateUserApi, getAccountInfoApi };
+const createNewTagApi = async (name, color) => {
+    const URL_API = '/v1/api/create-new-tag';
+
+    const data = {
+        name,
+        color,
+    };
+
+    return axios.post(URL_API, data);
+};
+
+export { createUserApi, loginApi, updateUserApi, getAccountInfoApi, createNewTagApi };

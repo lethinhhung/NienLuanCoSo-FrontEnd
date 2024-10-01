@@ -6,6 +6,7 @@ import classNames from 'classnames/bind';
 import styles from './NewTag.module.scss';
 import defaultTagColor from '../DefaultTagColor';
 import TagsDrawer from '../TagsDrawer';
+import { createNewTagApi } from '~/utils/api';
 
 function NewTag() {
     const cx = classNames.bind(styles);
@@ -16,16 +17,19 @@ function NewTag() {
     const showModal = () => {
         setOpen(true);
     };
-    const handleOk = () => {
+    const handleOk = async () => {
         setModalText('Saving...');
         setConfirmLoading(true);
-        setTimeout(() => {
-            setOpen(false);
-            setConfirmLoading(false);
-            setTagPreviewColor('');
-            setTagPreviewName('');
-            setModalText('');
-        }, 2000);
+
+        const result = await createNewTagApi(tagPreviewName, tagPreviewColor);
+
+        console.log(result);
+
+        setOpen(false);
+        setConfirmLoading(false);
+        setTagPreviewColor('');
+        setTagPreviewName('');
+        setModalText('');
     };
     const handleCancel = () => {
         console.log('Clicked cancel button');
