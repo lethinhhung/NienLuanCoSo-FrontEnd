@@ -64,17 +64,6 @@ const getTagsInfoApi = async () => {
 // Course
 
 const createNewCourseApi = async (formData) => {
-    // const data = {
-    //     emoji,
-    //     color,
-    //     cover,
-    //     name,
-    //     description,
-    //     tags,
-    //     term,
-    //     startDate,
-    //     endDate,
-    // };
     const URL_API = '/v1/api/create-new-course';
 
     try {

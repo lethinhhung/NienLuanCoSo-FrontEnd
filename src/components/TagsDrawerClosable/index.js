@@ -8,27 +8,17 @@ import { getTagsInfoApi } from '~/utils/api';
 function TagsDrawerClosable({ border = true }) {
     const cx = classNames.bind(styles);
 
-    // const options = [
-    //     {
-    //         value: 'gold',
-    //     },
-    //     {
-    //         value: 'lime',
-    //     },
-    //     {
-    //         value: 'green',
-    //     },
-    //     {
-    //         value: 'cyan',
-    //     },
-    // ];
-
     const [options, setOptions] = useState([]);
     const [tagsInfo, setTagsInfo] = useState([]);
+    const [selectClicked, setSelectClicked] = useState(false);
 
+    const handleSelectTags = (dateString) => {
+        console.log(dateString);
+    };
     useEffect(() => {
         const fetchTagsInfo = async () => {
             const data = await getTagsInfoApi();
+            console.log(data);
             setTagsInfo(data);
 
             const newOptions = tagsInfo.map((tag) => ({
@@ -40,7 +30,7 @@ function TagsDrawerClosable({ border = true }) {
         };
 
         fetchTagsInfo();
-    }, []);
+    }, [selectClicked]);
 
     const tagRender = (props) => {
         const { value, closable, onClose } = props;
@@ -69,9 +59,6 @@ function TagsDrawerClosable({ border = true }) {
         );
     };
 
-    const handleSelectTags = (dateString) => {
-        console.log(dateString);
-    };
     return (
         <Select
             className={cx('tags-drawer')}
@@ -82,6 +69,7 @@ function TagsDrawerClosable({ border = true }) {
             options={options}
             variant="border: none"
             onChange={handleSelectTags}
+            onClick={() => setSelectClicked(true)}
         />
     );
 }
