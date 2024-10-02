@@ -77,7 +77,7 @@ function CreateObject({ type = 'course', action = 'create' }) {
     const [submitEmoji, setSubmitEmoji] = useState('📘');
     const [submitColor, setSubmitColor] = useState('#624e88');
     const [submitCover, setSubmitCover] = useState(null);
-    const [submitName, setSubmitName] = useState('Test course');
+    const [submitName, setSubmitName] = useState('');
     const [submitDescription, setSubmitDescription] = useState('');
     const [submitTags, setSubmitTags] = useState([]);
     const [submitTerm, setSubmitTerm] = useState();
@@ -85,20 +85,17 @@ function CreateObject({ type = 'course', action = 'create' }) {
     const [submitEndDate, setSubmitEndDate] = useState('');
 
     const handleSubmit = async () => {
-        const emoji = submitEmoji;
-        const color = submitColor;
-        const cover = submitCover;
-        const name = submitName;
-        const description = submitDescription;
-        const tags = submitTags;
-        const term = submitTerm;
-        const startDate = submitStartDate;
-        const endDate = submitEndDate;
-
+        if (submitName === '') {
+            alert('Enter name...');
+            return;
+        } else if (submitStartDate === '' || submitEndDate === '') {
+            alert('Select time...');
+            return;
+        }
         const formData = new FormData();
-        formData.append('cover', submitEmoji);
-        formData.append('cover', submitColor);
-        formData.append('cover', submitCover); // Giả sử submitCover là file
+        formData.append('emoji', submitEmoji);
+        formData.append('color', submitColor);
+        formData.append('cover', submitCover);
         formData.append('name', submitName);
         formData.append('description', submitDescription);
         submitTags.forEach((tag, index) => {
@@ -160,6 +157,7 @@ function CreateObject({ type = 'course', action = 'create' }) {
     const handleEmoji = (checked) => {
         if (!checked) {
             setIsEmojiDisabled(true);
+            setSubmitEmoji('📘');
         } else {
             setIsEmojiDisabled(false);
         }
@@ -168,6 +166,7 @@ function CreateObject({ type = 'course', action = 'create' }) {
     const handleColor = (checked) => {
         if (!checked) {
             setIsColorDisabled(true);
+            setSubmitColor('#624e88');
         } else {
             setIsColorDisabled(false);
         }
@@ -176,9 +175,14 @@ function CreateObject({ type = 'course', action = 'create' }) {
     const handleCover = (checked) => {
         if (!checked) {
             setIsCoverDisabled(true);
+            setSubmitCover(null);
         } else {
             setIsCoverDisabled(false);
+            if (holdSubmitImage) {
+                setSubmitCover(holdSubmitImage);
+            }
         }
+        console.log(submitCover);
     };
 
     const handleDuration = (checked) => {
@@ -188,11 +192,13 @@ function CreateObject({ type = 'course', action = 'create' }) {
     };
 
     const [imagePreview, setImagePreview] = useState(null);
+    const [holdSubmitImage, setHoldSubmitImage] = useState(null);
     const handleFileChange = (event) => {
         const selectedFile = event.target.files[0];
 
         if (selectedFile) {
             setSubmitCover(selectedFile);
+            setHoldSubmitImage(selectedFile);
             const reader = new FileReader();
             reader.onloadend = () => {
                 setImagePreview(reader.result);
@@ -229,7 +235,12 @@ function CreateObject({ type = 'course', action = 'create' }) {
                     unCheckedChildren="Default"
                 />
                 <div style={isColorDisabled ? { pointerEvents: 'none', opacity: '0.4' } : {}}>
-                    <ColorPicker disabledAlpha defaultValue={'#624e88'} onChange={handleSelectColor} />
+                    <ColorPicker
+                        value={submitColor}
+                        disabledAlpha
+                        defaultValue={'#624e88'}
+                        onChange={handleSelectColor}
+                    />
                 </div>
             </Flex>
             <Flex justify="center"></Flex>
