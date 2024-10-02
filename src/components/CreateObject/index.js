@@ -101,7 +101,10 @@ function CreateObject({ type = 'course', action = 'create' }) {
         formData.append('cover', submitCover); // Giả sử submitCover là file
         formData.append('name', submitName);
         formData.append('description', submitDescription);
-        formData.append('tags', submitTags);
+        submitTags.forEach((tag, index) => {
+            formData.append(`tags[${index}]`, tag);
+        });
+
         // formData.append('term', submitTerm);
         formData.append('startDate', submitStartDate);
         formData.append('endDate', submitEndDate);
@@ -141,8 +144,8 @@ function CreateObject({ type = 'course', action = 'create' }) {
         setSubmitDescription(e.target.value);
     };
 
-    const handleSelectTags = (dateString) => {
-        setSubmitTags(dateString);
+    const handleSelectTags = (value) => {
+        setSubmitTags(value);
     };
 
     const handleSelectTerm = () => {};
@@ -226,7 +229,7 @@ function CreateObject({ type = 'course', action = 'create' }) {
                     unCheckedChildren="Default"
                 />
                 <div style={isColorDisabled ? { pointerEvents: 'none', opacity: '0.4' } : {}}>
-                    <ColorPicker defaultValue={'#624e88'} onChange={handleSelectColor} />
+                    <ColorPicker disabledAlpha defaultValue={'#624e88'} onChange={handleSelectColor} />
                 </div>
             </Flex>
             <Flex justify="center"></Flex>
