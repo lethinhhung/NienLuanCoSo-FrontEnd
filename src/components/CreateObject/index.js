@@ -18,6 +18,7 @@ function CreateObject({ type = 'course', action = 'create' }) {
 
     const [options, setOptions] = useState([]);
     const [reRender, setReRender] = useState('');
+    const [tagsInfo, setTagsInfo] = useState([]);
 
     const reRenderTags = () => {
         setReRender(reRender + ' ');
@@ -25,9 +26,11 @@ function CreateObject({ type = 'course', action = 'create' }) {
 
     useEffect(() => {
         const fetchTagsInfo = async () => {
-            const tagsInfo = await getTagsInfoApi();
+            const data = await getTagsInfoApi();
+            setTagsInfo(data);
 
             const newOptions = tagsInfo.map((tag) => ({
+                id: tag._id,
                 value: tag.name,
                 color: tag.color,
             }));
@@ -74,16 +77,72 @@ function CreateObject({ type = 'course', action = 'create' }) {
     const [submitEmoji, setSubmitEmoji] = useState('📘');
     const [submitColor, setSubmitColor] = useState('#624e88');
     const [submitCover, setSubmitCover] = useState('');
-    const [submitName, setSubmitName] = useState('');
+    const [submitName, setSubmitName] = useState('Test course');
     const [submitDescription, setSubmitDescription] = useState('');
     const [submitTags, setSubmitTags] = useState([]);
-    const [submitTerm, setSubmitTerm] = useState('');
+    const [submitTerm, setSubmitTerm] = useState();
     const [submitStartDate, setSubmitStartDate] = useState('');
     const [submitEndDate, setSubmitEndDate] = useState('');
 
-    const handleSelectEmoji = (emoji) => {
-        console.log(emoji.emoji);
+    const handleSubmit = async () => {
+        const emoji = submitEmoji;
+        const color = submitColor;
+        const cover = submitCover;
+        const name = submitName;
+        const description = submitDescription;
+        const tags = submitTags;
+        const term = submitTerm;
+        // const startDate = submitStartDate;
+        // const endDate = submitEndDate;
+        const startDate = '2020-10-01';
+        const endDate = '2020-11-02';
+
+        //Goi API
+        try {
+            const res = await createNewCourseApi(
+                emoji,
+                color,
+                cover,
+                name,
+                description,
+                tags,
+                term,
+                startDate,
+                endDate,
+            );
+
+            console.log('Update successful:', res);
+            alert('Update successfully!');
+        } catch (error) {
+            console.error('Update failed:', error);
+            alert('Unkown error');
+        }
     };
+    // Select
+
+    const handleSelectEmoji = (emoji) => {
+        setSubmitEmoji(emoji.emoji);
+    };
+
+    const handleSelectColor = (value) => {
+        setSubmitColor('#' + value.toHex());
+    };
+
+    const handleSelectCover = () => {};
+
+    const handleSelectName = (e) => {
+        setSubmitName(e.target.value);
+    };
+
+    const handleSelectDescription = (e) => {
+        setSubmitDescription(e.target.value);
+    };
+
+    const handleSelectTags = (value) => {
+        setSubmitTags(value);
+    };
+
+    const handleSelectTerm = () => {};
 
     const handleEmoji = (checked) => {
         if (!checked) {
@@ -115,8 +174,6 @@ function CreateObject({ type = 'course', action = 'create' }) {
         } else setIsTerm(false);
     };
 
-    const handleSubmit = () => {};
-
     return (
         <Flex vertical className={cx('content')}>
             <div hidden={action === 'edit'}>
@@ -125,8 +182,8 @@ function CreateObject({ type = 'course', action = 'create' }) {
             </div>
             <Flex className={cx('title-switch')} align="center">
                 <h2>Emoji</h2>
-
                 <Switch onChange={handleEmoji} checkedChildren="Custom" unCheckedChildren="Default" />
+                <h2>{submitEmoji}</h2>
             </Flex>
             <Flex justify="center">
                 <div style={isEmojiDisabled ? { pointerEvents: 'none', opacity: '0.4' } : {}}>
@@ -143,7 +200,7 @@ function CreateObject({ type = 'course', action = 'create' }) {
                     unCheckedChildren="Default"
                 />
                 <div style={isColorDisabled ? { pointerEvents: 'none', opacity: '0.4' } : {}}>
-                    <ColorPicker defaultValue={'#624e88'} />
+                    <ColorPicker defaultValue={'#624e88'} onChange={handleSelectColor} />
                 </div>
             </Flex>
             <Flex justify="center"></Flex>
@@ -159,11 +216,13 @@ function CreateObject({ type = 'course', action = 'create' }) {
                 </div>
             </Flex>
             <h2 className={cx('title-alone')}>Name</h2>
-            <Input required></Input>
+            <Input required onChange={handleSelectName} value={submitName}></Input>
             <h2 className={cx('title-alone')}>Description</h2>
             <TextArea
                 autoSize={{ minRows: 2, maxRows: 6 }}
                 placeholder={'Enter ' + type + ' description...'}
+                onChange={handleSelectDescription}
+                value={submitDescription}
             ></TextArea>
             <div hidden={type === 'term'}>
                 <h2 className={cx('title-alone')}>Tags</h2>
@@ -177,6 +236,7 @@ function CreateObject({ type = 'course', action = 'create' }) {
                         tagRender={tagRender}
                         defaultValue={[]}
                         options={options}
+                        onChange={handleSelectTags}
                     />
 
                     <div style={{ marginLeft: '5px' }}>
