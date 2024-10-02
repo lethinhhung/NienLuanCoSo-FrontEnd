@@ -1,5 +1,6 @@
 import axios from './axios.customize';
 
+// Auth
 const createUserApi = (name, email, password, description) => {
     const URL_API = '/v1/api/register';
 
@@ -24,6 +25,7 @@ const loginApi = (name, password) => {
     return axios.post(URL_API, data);
 };
 
+// Account
 const getAccountInfoApi = () => {
     const URL_API = '/v1/api/account';
     return axios.get(URL_API);
@@ -41,6 +43,7 @@ const updateUserApi = async (formData) => {
     }
 };
 
+// Tag
 const createNewTagApi = async (name, color) => {
     const URL_API = '/v1/api/create-new-tag';
 
@@ -58,4 +61,39 @@ const getTagsInfoApi = async () => {
     return axios.get(URL_API);
 };
 
-export { createUserApi, loginApi, updateUserApi, getAccountInfoApi, createNewTagApi, getTagsInfoApi };
+// Course
+
+const createNewCourseApi = async (emoji, color, cover, name, description, tags, startDate, endDate, term) => {
+    const URL_API = '/v1/api/create-new-course';
+
+    const data = {
+        emoji,
+        color,
+        cover,
+        name,
+        description,
+        tags,
+        startDate,
+        endDate,
+        term,
+    };
+
+    return axios.post(URL_API, data);
+};
+
+const getCoursesInfoApi = async () => {
+    const URL_API = '/v1/api/get-courses-info';
+
+    return axios.get(URL_API);
+};
+
+export {
+    createUserApi,
+    loginApi,
+    updateUserApi,
+    getAccountInfoApi,
+    createNewTagApi,
+    getTagsInfoApi,
+    createNewCourseApi,
+    getCoursesInfoApi,
+};

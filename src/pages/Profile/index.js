@@ -32,6 +32,7 @@ function Profile() {
 
     const getAccountInfo = async () => {
         const account = await getAccountInfoApi();
+
         return account.info;
     };
 
@@ -57,6 +58,10 @@ function Profile() {
     };
 
     const handleOk = async () => {
+        if (!file) {
+            alert('Please upload an avatar!');
+            return;
+        }
         const formData = new FormData();
         formData.append('description', description);
 
@@ -65,6 +70,7 @@ function Profile() {
         //Goi API
         try {
             const res = await updateUserApi(formData);
+
             console.log('Update successful:', res);
             alert('Update successfully!');
             setFile();

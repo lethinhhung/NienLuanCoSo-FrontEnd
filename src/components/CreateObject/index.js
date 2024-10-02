@@ -8,7 +8,7 @@ import EmojiPicker from 'emoji-picker-react';
 import styles from './CreateObject.module.scss';
 import ImageUpload from '~/components/ImageUpload';
 import NewTag from '~/components/NewTag';
-import { getTagsInfoApi } from '~/utils/api';
+import { getTagsInfoApi, createNewCourseApi } from '~/utils/api';
 
 function CreateObject({ type = 'course', action = 'create' }) {
     const cx = classNames.bind(styles);
@@ -70,6 +70,17 @@ function CreateObject({ type = 'course', action = 'create' }) {
     const [isCoverDisabled, setIsCoverDisabled] = useState(true);
     const [isColorDisabled, setIsColorDisabled] = useState(true);
 
+    //FormData
+    const [submitEmoji, setSubmitEmoji] = useState('📘');
+    const [submitColor, setSubmitColor] = useState('#624e88');
+    const [submitCover, setSubmitCover] = useState('');
+    const [submitName, setSubmitName] = useState('');
+    const [submitDescription, setSubmitDescription] = useState('');
+    const [submitTags, setSubmitTags] = useState([]);
+    const [submitTerm, setSubmitTerm] = useState('');
+    const [submitStartDate, setSubmitStartDate] = useState('');
+    const [submitEndDate, setSubmitEndDate] = useState('');
+
     const handleSelectEmoji = (emoji) => {
         console.log(emoji.emoji);
     };
@@ -103,6 +114,8 @@ function CreateObject({ type = 'course', action = 'create' }) {
             setIsTerm(true);
         } else setIsTerm(false);
     };
+
+    const handleSubmit = () => {};
 
     return (
         <Flex vertical className={cx('content')}>
@@ -210,7 +223,7 @@ function CreateObject({ type = 'course', action = 'create' }) {
             </div>
             <div hidden={action === 'edit'}>
                 <Flex style={{ marginTop: '30px' }} justify="flex-end">
-                    <Button size="large" style={{ backgroundColor: '#cb80ab', width: '100px' }}>
+                    <Button onClick={handleSubmit} size="large" style={{ backgroundColor: '#cb80ab', width: '100px' }}>
                         <CheckOutlined />
                     </Button>
                 </Flex>
