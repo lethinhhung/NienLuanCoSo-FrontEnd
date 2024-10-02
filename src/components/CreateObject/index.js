@@ -92,10 +92,10 @@ function CreateObject({ type = 'course', action = 'create' }) {
         const description = submitDescription;
         const tags = submitTags;
         const term = submitTerm;
-        // const startDate = submitStartDate;
-        // const endDate = submitEndDate;
-        const startDate = '2020-10-01';
-        const endDate = '2020-11-02';
+        const startDate = submitStartDate;
+        const endDate = submitEndDate;
+        // const startDate = '2020-10-01';
+        // const endDate = '2020-11-02';
 
         //Goi API
         try {
@@ -138,12 +138,19 @@ function CreateObject({ type = 'course', action = 'create' }) {
         setSubmitDescription(e.target.value);
     };
 
-    const handleSelectTags = (value) => {
-        setSubmitTags(value);
+    const handleSelectTags = (dateString) => {
+        setSubmitTags(dateString);
     };
 
     const handleSelectTerm = () => {};
 
+    const handleSelectTime = (date, dateString) => {
+        const [startDate, endDate] = dateString.toString().split(',');
+        setSubmitStartDate(startDate);
+        setSubmitEndDate(endDate);
+    };
+
+    // On off
     const handleEmoji = (checked) => {
         if (!checked) {
             setIsEmojiDisabled(true);
@@ -266,7 +273,7 @@ function CreateObject({ type = 'course', action = 'create' }) {
                 <div hidden={isTerm}>
                     <Flex align="center">
                         <p style={{ minWidth: '80px', marginTop: '5px' }}>Pick a time</p>
-                        <RangePicker required />
+                        <RangePicker required onChange={handleSelectTime} />
                     </Flex>
                 </div>
             </div>
@@ -278,7 +285,7 @@ function CreateObject({ type = 'course', action = 'create' }) {
 
                 <Flex align="center">
                     <p style={{ minWidth: '80px', marginTop: '5px' }}>Pick a time</p>
-                    <RangePicker required />
+                    <RangePicker required onChange={handleSelectTime} />
                 </Flex>
             </div>
             <div hidden={action === 'edit'}>
