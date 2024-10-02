@@ -76,7 +76,7 @@ function CreateObject({ type = 'course', action = 'create' }) {
     //FormData
     const [submitEmoji, setSubmitEmoji] = useState('📘');
     const [submitColor, setSubmitColor] = useState('#624e88');
-    const [submitCover, setSubmitCover] = useState('');
+    const [submitCover, setSubmitCover] = useState(null);
     const [submitName, setSubmitName] = useState('Test course');
     const [submitDescription, setSubmitDescription] = useState('');
     const [submitTags, setSubmitTags] = useState([]);
@@ -94,22 +94,23 @@ function CreateObject({ type = 'course', action = 'create' }) {
         const term = submitTerm;
         const startDate = submitStartDate;
         const endDate = submitEndDate;
+
+        const formData = new FormData();
+        formData.append('cover', submitEmoji);
+        formData.append('cover', submitColor);
+        formData.append('cover', submitCover); // Giả sử submitCover là file
+        formData.append('name', submitName);
+        formData.append('description', submitDescription);
+        formData.append('tags', submitTags);
+        // formData.append('term', submitTerm);
+        formData.append('startDate', submitStartDate);
+        formData.append('endDate', submitEndDate);
         // const startDate = '2020-10-01';
         // const endDate = '2020-11-02';
 
         //Goi API
         try {
-            const res = await createNewCourseApi(
-                emoji,
-                color,
-                cover,
-                name,
-                description,
-                tags,
-                term,
-                startDate,
-                endDate,
-            );
+            const res = await createNewCourseApi(formData);
 
             console.log('Update successful:', res);
             alert('Update successfully!');
@@ -128,7 +129,9 @@ function CreateObject({ type = 'course', action = 'create' }) {
         setSubmitColor('#' + value.toHex());
     };
 
-    const handleSelectCover = () => {};
+    const handleSelectCover = (file) => {
+        setSubmitCover(file);
+    };
 
     const handleSelectName = (e) => {
         setSubmitName(e.target.value);
@@ -181,6 +184,22 @@ function CreateObject({ type = 'course', action = 'create' }) {
         } else setIsTerm(false);
     };
 
+    const [imagePreview, setImagePreview] = useState(null);
+    const handleFileChange = (event) => {
+        const selectedFile = event.target.files[0];
+
+        if (selectedFile) {
+            setSubmitCover(selectedFile);
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImagePreview(reader.result);
+            };
+            reader.readAsDataURL(selectedFile);
+        } else {
+            console.error('No file selected or file is not valid.');
+        }
+    };
+
     return (
         <Flex vertical className={cx('content')}>
             <div hidden={action === 'edit'}>
@@ -219,7 +238,18 @@ function CreateObject({ type = 'course', action = 'create' }) {
             </Flex>
             <Flex justify="center">
                 <div style={isCoverDisabled ? { pointerEvents: 'none', opacity: '0.4' } : {}}>
-                    <ImageUpload />
+                    <div>
+                        <h3 className={cx('title')}>Upload an image</h3>
+                        {imagePreview && <img width={'100px'} src={imagePreview} alt="Preview" />}
+                        <form>
+                            <input
+                                type="file"
+                                alt="upload"
+                                accept="image/png, image/gif, image/jpeg"
+                                onChange={handleFileChange}
+                            />
+                        </form>
+                    </div>
                 </div>
             </Flex>
             <h2 className={cx('title-alone')}>Name</h2>

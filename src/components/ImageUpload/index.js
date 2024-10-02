@@ -1,39 +1,39 @@
 import { InboxOutlined } from '@ant-design/icons';
 import { message, Upload } from 'antd';
+import { useState } from 'react';
+import classNames from 'classnames/bind';
 
-const { Dragger } = Upload;
-const props = {
-    name: 'file',
-    multiple: true,
-    action: 'https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload',
-    onChange(info) {
-        const { status } = info.file;
-        if (status !== 'uploading') {
-            console.log(info.file, info.fileList);
-        }
-        if (status === 'done') {
-            message.success(`${info.file.name} file uploaded successfully.`);
-        } else if (status === 'error') {
-            message.error(`${info.file.name} file upload failed.`);
-        }
-    },
-    onDrop(e) {
-        console.log('Dropped files', e.dataTransfer.files);
-    },
-};
+import styles from './ImageUpload.module.scss';
 
-function ImageUpload() {
+function ImageUpload({ onFileSelect }) {
+    const cx = classNames.bind(styles);
+    const [imagePreview, setImagePreview] = useState(null);
+    const [file, setFile] = useState(null);
+
+    const handleFileChange = (event) => {
+        const selectedFile = event.target.files[0];
+
+        if (selectedFile) {
+            setFile(selectedFile);
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImagePreview(reader.result);
+            };
+            reader.readAsDataURL(selectedFile);
+            onFileSelect(selectedFile);
+        } else {
+            console.error('No file selected or file is not valid.');
+        }
+    };
+
     return (
-        <Dragger {...props}>
-            <p className="ant-upload-drag-icon">
-                <InboxOutlined />
-            </p>
-            <p className="ant-upload-text">Click or drag file to this area to upload</p>
-            <p className="ant-upload-hint">
-                Support for a single or bulk upload. Strictly prohibited from uploading company data or other banned
-                files.
-            </p>
-        </Dragger>
+        <div>
+            <h3 className={cx('title')}>Upload an image</h3>
+            {imagePreview && <img width={'100px'} src={imagePreview} alt="Preview" />}
+            <form>
+                <input type="file" alt="upload" accept="image/png, image/gif, image/jpeg" onChange={handleFileChange} />
+            </form>
+        </div>
     );
 }
 

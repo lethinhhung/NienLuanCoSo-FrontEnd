@@ -63,22 +63,22 @@ const getTagsInfoApi = async () => {
 
 // Course
 
-const createNewCourseApi = async (emoji, color, cover, name, description, tags, term, startDate, endDate) => {
-    const data = {
-        emoji,
-        color,
-        cover,
-        name,
-        description,
-        tags,
-        term,
-        startDate,
-        endDate,
-    };
+const createNewCourseApi = async (formData) => {
+    // const data = {
+    //     emoji,
+    //     color,
+    //     cover,
+    //     name,
+    //     description,
+    //     tags,
+    //     term,
+    //     startDate,
+    //     endDate,
+    // };
     const URL_API = '/v1/api/create-new-course';
 
     try {
-        const res = await axios.post(URL_API, data);
+        const res = await axios.post(URL_API, formData);
         return res;
     } catch (error) {
         console.error(error);
