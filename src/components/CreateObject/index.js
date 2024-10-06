@@ -8,7 +8,7 @@ import EmojiPicker from 'emoji-picker-react';
 import styles from './CreateObject.module.scss';
 import ImageUpload from '~/components/ImageUpload';
 import NewTag from '~/components/NewTag';
-import { getTagsInfoApi, createNewCourseApi } from '~/utils/api';
+import { getTagsInfoApi, getTermsInfoApi, createNewCourseApi, createNewTermApi } from '~/utils/api';
 
 function CreateObject({ type = 'course', action = 'create' }) {
     const cx = classNames.bind(styles);
@@ -16,33 +16,45 @@ function CreateObject({ type = 'course', action = 'create' }) {
     const { TextArea } = Input;
     const { RangePicker } = DatePicker;
 
-    const [options, setOptions] = useState([]);
+    const [tagsOptions, setTagsOptions] = useState([]);
+    const [termsOptions, setTermsOptions] = useState([]);
     const [reRender, setReRender] = useState('');
     const [tagsInfo, setTagsInfo] = useState([]);
+    const [termsInfo, setTermsInfo] = useState([]);
 
-    const reRenderTags = () => {
+    const reRenderTagsAndTerms = () => {
         setReRender(reRender + ' ');
     };
 
     useEffect(() => {
-        const fetchTagsInfo = async () => {
-            const data = await getTagsInfoApi();
-            setTagsInfo(data);
+        const fetchTagsAndTermsInfo = async () => {
+            const tagsData = await getTagsInfoApi();
+            const termsData = await getTermsInfoApi();
+            setTagsInfo(tagsData);
+            setTermsInfo(termsData);
 
-            const newOptions = tagsInfo.map((tag) => ({
+            const newTagsOptions = tagsInfo.map((tag) => ({
                 id: tag._id,
                 value: tag.name,
                 color: tag.color,
             }));
-            setOptions(newOptions);
+
+            const newTermsOptions = termsInfo.map((term) => ({
+                id: term._id,
+                value: term.name,
+            }));
+
+            setTagsOptions(newTagsOptions);
+            setTermsOptions(newTermsOptions);
+            console.log(termsInfo);
         };
 
-        fetchTagsInfo();
+        fetchTagsAndTermsInfo();
     }, [reRender]);
 
     const tagRender = (props) => {
         const { value, closable, onClose } = props;
-        let color = options.find((option) => option.value === value)?.color;
+        let color = tagsOptions.find((option) => option.value === value)?.color;
 
         if (color === '#ffffff') {
             color = '';
@@ -80,16 +92,19 @@ function CreateObject({ type = 'course', action = 'create' }) {
     const [submitName, setSubmitName] = useState('');
     const [submitDescription, setSubmitDescription] = useState('');
     const [submitTags, setSubmitTags] = useState([]);
-    const [submitTerm, setSubmitTerm] = useState();
-    const [submitStartDate, setSubmitStartDate] = useState('');
-    const [submitEndDate, setSubmitEndDate] = useState('');
+    const [submitTerm, setSubmitTerm] = useState('');
+    const [submitStartDate, setSubmitStartDate] = useState('0000-01-02');
+    const [submitEndDate, setSubmitEndDate] = useState('0000-01-01');
 
     const handleSubmit = async () => {
         if (submitName === '') {
             alert('Enter name...');
             return;
-        } else if (submitStartDate === '' || submitEndDate === '') {
+        } else if ((submitStartDate === '' || submitEndDate === '') && !isTerm) {
             alert('Select time...');
+            return;
+        } else if (submitTerm === '' && isTerm && type === 'course') {
+            alert('Select term...');
             return;
         }
         const formData = new FormData();
@@ -102,18 +117,25 @@ function CreateObject({ type = 'course', action = 'create' }) {
             formData.append(`tags[${index}]`, tag);
         });
 
-        // formData.append('term', submitTerm);
+        if (type === 'course') {
+            formData.append('term', submitTerm);
+        }
         formData.append('startDate', submitStartDate);
         formData.append('endDate', submitEndDate);
-        // const startDate = '2020-10-01';
-        // const endDate = '2020-11-02';
 
         //Goi API
         try {
-            const res = await createNewCourseApi(formData);
+            if (type === 'course') {
+                const res = await createNewCourseApi(formData);
 
-            console.log('Update successful:', res);
-            alert('Update successfully!');
+                console.log('Update successful:', res);
+                alert('New ' + type + ' created!');
+            } else {
+                const res = await createNewTermApi(formData);
+
+                console.log('Update successful:', res);
+                alert('New ' + type + ' created!');
+            }
         } catch (error) {
             console.error('Update failed:', error);
             alert('Unkown error');
@@ -129,10 +151,6 @@ function CreateObject({ type = 'course', action = 'create' }) {
         setSubmitColor('#' + value.toHex());
     };
 
-    const handleSelectCover = (file) => {
-        setSubmitCover(file);
-    };
-
     const handleSelectName = (e) => {
         setSubmitName(e.target.value);
     };
@@ -145,7 +163,10 @@ function CreateObject({ type = 'course', action = 'create' }) {
         setSubmitTags(value);
     };
 
-    const handleSelectTerm = () => {};
+    const handleSelectTerm = (value) => {
+        console.log(value);
+        setSubmitTerm(value);
+    };
 
     const handleSelectTime = (date, dateString) => {
         const [startDate, endDate] = dateString.toString().split(',');
@@ -182,13 +203,17 @@ function CreateObject({ type = 'course', action = 'create' }) {
                 setSubmitCover(holdSubmitImage);
             }
         }
-        console.log(submitCover);
     };
 
     const handleDuration = (checked) => {
         if (checked) {
             setIsTerm(true);
-        } else setIsTerm(false);
+            setSubmitStartDate('');
+            setSubmitEndDate('');
+        } else {
+            setIsTerm(false);
+            setSubmitTerm('');
+        }
     };
 
     const [imagePreview, setImagePreview] = useState(null);
@@ -279,14 +304,14 @@ function CreateObject({ type = 'course', action = 'create' }) {
                 <h2 className={cx('title-alone')}>Tags</h2>
                 <Flex justify="space-between" align="center">
                     <Select
-                        onClick={reRenderTags}
+                        onClick={reRenderTagsAndTerms}
                         style={{ width: '100%' }}
                         className={cx('tags-drawer')}
                         placeholder="Tags"
                         mode="multiple"
                         tagRender={tagRender}
                         defaultValue={[]}
-                        options={options}
+                        options={tagsOptions}
                         onChange={handleSelectTags}
                     />
 
@@ -304,7 +329,14 @@ function CreateObject({ type = 'course', action = 'create' }) {
                 <div hidden={!isTerm}>
                     <Flex wrap align="center">
                         <p style={{ minWidth: '80px', marginTop: '5px' }}>Pick a term</p>
-                        <Select required style={{ minWidth: '150px', marginTop: '5px' }}></Select>
+                        <Select
+                            options={termsOptions}
+                            required
+                            style={{ minWidth: '150px', marginTop: '5px' }}
+                            onClick={reRenderTagsAndTerms}
+                            defaultValue={[]}
+                            onChange={handleSelectTerm}
+                        ></Select>
                         <Flex align="center" style={{ marginTop: '5px' }}>
                             <p>or</p>
                             <Button>

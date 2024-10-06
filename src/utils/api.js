@@ -81,6 +81,24 @@ const getCoursesInfoApi = async () => {
     return axios.get(URL_API);
 };
 
+const createNewTermApi = async (formData) => {
+    const URL_API = '/v1/api/create-new-term';
+
+    try {
+        const res = await axios.post(URL_API, formData);
+        return res;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
+const getTermsInfoApi = async () => {
+    const URL_API = '/v1/api/get-terms-info';
+
+    return axios.get(URL_API);
+};
+
 export {
     createUserApi,
     loginApi,
@@ -90,4 +108,6 @@ export {
     getTagsInfoApi,
     createNewCourseApi,
     getCoursesInfoApi,
+    createNewTermApi,
+    getTermsInfoApi,
 };

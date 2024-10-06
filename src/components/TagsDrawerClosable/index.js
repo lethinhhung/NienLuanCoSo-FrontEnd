@@ -18,7 +18,6 @@ function TagsDrawerClosable({ border = true }) {
     useEffect(() => {
         const fetchTagsInfo = async () => {
             const data = await getTagsInfoApi();
-            console.log(data);
             setTagsInfo(data);
 
             const newOptions = tagsInfo.map((tag) => ({
