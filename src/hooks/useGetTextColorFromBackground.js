@@ -1,4 +1,5 @@
 function useGetTextColorFromBackground(bgColor) {
+    if (bgColor === undefined) return;
     const color = bgColor.substring(1); // Remove '#'
     const rgb = parseInt(color, 16); // Convert hex to integer
     const r = (rgb >> 16) & 0xff;

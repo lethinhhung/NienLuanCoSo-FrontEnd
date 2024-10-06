@@ -8,6 +8,8 @@ import SearchBar from '~/components/SearchBar';
 import SearchBarLarge from '~/components/SearchBar/SearchBarLarge';
 import SearchBarSmall from '~/components/SearchBar/SearchBarSmall';
 import TermItem from '~/components/TermItem';
+import { getTermsInfoApi } from '~/utils/api';
+import CourseItem from '~/components/CourseItem';
 
 function Terms() {
     const cx = classNames.bind(styles);
@@ -25,6 +27,22 @@ function Terms() {
     const { width } = useWindowDimensions();
 
     const onOk = () => {};
+
+    const [termsInfo, setTermsInfo] = useState([
+        {
+            name: 'Empty',
+        },
+    ]);
+
+    useEffect(() => {
+        const fetchCoursesInfo = async () => {
+            const coursesData = await getTermsInfoApi();
+
+            setTermsInfo(coursesData);
+        };
+
+        fetchCoursesInfo();
+    }, []);
 
     return (
         <div>
@@ -71,15 +89,13 @@ function Terms() {
             <Row>
                 <Col offset={2} span={20}>
                     <Flex className={cx('wrapper')} wrap gap="small" justify="space-evenly">
-                        <TermItem loading={loading}></TermItem>
-                        <TermItem loading={loading}></TermItem>
-                        <TermItem loading={loading}></TermItem>
-                        <TermItem loading={loading}></TermItem>
-                        <TermItem loading={loading}></TermItem>
-                        <TermItem loading={loading}></TermItem>
-                        <TermItem loading={loading}></TermItem>
-                        <TermItem loading={loading}></TermItem>
-                        <TermItem loading={loading}></TermItem>
+                        {termsInfo.length > 0 ? (
+                            termsInfo.map((data, index) => (
+                                <TermItem key={index} loading={debounced} data={data}></TermItem>
+                            ))
+                        ) : (
+                            <div>No term created...</div>
+                        )}
                     </Flex>
                 </Col>
             </Row>

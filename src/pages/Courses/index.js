@@ -37,9 +37,16 @@ function Courses() {
         <div>
             <SearchBar />
             <Flex className={cx('wrapper')} wrap gap="small" justify="space-evenly" align="center">
-                {coursesInfo.map((data, index) => (
+                {/* {coursesInfo.map((data, index) => (
                     <CourseItem key={index} loading={debounced} data={data}></CourseItem>
-                ))}
+                ))} */}
+                {coursesInfo.length > 0 ? (
+                    coursesInfo.map((data, index) => (
+                        <CourseItem key={index} loading={debounced} data={data}></CourseItem>
+                    ))
+                ) : (
+                    <div>No course created...</div>
+                )}
             </Flex>
         </div>
     );

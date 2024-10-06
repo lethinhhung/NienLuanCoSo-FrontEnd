@@ -51,7 +51,7 @@ function CourseItem({ data, loading }) {
                 </Popconfirm>,
             ]}
         >
-            <Meta avatar={data.emoji} title={data.name} description={data.description} />
+            <Meta avatar={<h1>{data.emoji}</h1>} title={data.name} description={data.description} />
             <div className={cx('tags-drawer')}>
                 <TagsDrawer tagsIds={data.tags} isDefault={false}></TagsDrawer>
             </div>

@@ -22,7 +22,7 @@ function Header() {
 
     const cardColor = '#624e88';
 
-    const textColor = useGetTextColorFromBackground(cardColor);
+    const [textColor, setTextColor] = useState('#ffffff');
 
     const handleBackClick = () => {
         navigate(-1);
@@ -33,7 +33,7 @@ function Header() {
     useEffect(() => {
         const fetchCourseInfo = async () => {
             const courseId = await getCoursesInfoApi();
-            const courseData = await getCourseInfoApi(courseId[0]);
+            const courseData = await getCourseInfoApi(courseId[1]);
 
             setCourseInfo(courseData);
         };
@@ -51,7 +51,7 @@ function Header() {
                 className={cx('menu')}
             >
                 <Button
-                    style={{ color: textColor }}
+                    style={{ color: useGetTextColorFromBackground(courseInfo.color) }}
                     type="text"
                     className={cx('btn')}
                     size="large"
@@ -60,7 +60,7 @@ function Header() {
                 >
                     <LeftOutlined />
                 </Button>
-                <h1 style={{ color: textColor }}>{courseInfo.name}</h1>
+                <h1 style={{ color: useGetTextColorFromBackground(courseInfo.color) }}>{courseInfo.name}</h1>
                 {/* <Button className={cx('btn')} size="large" shape="circle">
                     More
                 </Button> */}

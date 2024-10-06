@@ -8,10 +8,11 @@ import CustomHeader from './Header';
 import CustomFooter from './Footer';
 import logo from '~/assets/images/logo.png';
 import defaultAvatar from '~/assets/images/default-avatar.png';
-import { useWindowDimensions } from '~/hooks';
+import { useConvertAvatarPath, useWindowDimensions } from '~/hooks';
 import { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '~/contexts/Auth';
+import { getAccountInfoApi } from '~/utils/api';
 
 function DefaultLayout({ children }) {
     const cx = classNames.bind(styles);
@@ -79,6 +80,18 @@ function DefaultLayout({ children }) {
         navigate('/create-new-term');
     };
 
+    const [info, setInfo] = useState({ name: '', description: '' });
+
+    useEffect(() => {
+        const fetchAccountInfo = async () => {
+            const accountInfo = await getAccountInfoApi();
+
+            setInfo(accountInfo.info);
+        };
+
+        fetchAccountInfo();
+    }, []);
+
     return (
         <Flex gap="middle" wrap>
             <Layout className={cx('wrapper')} style={layoutStyle}>
@@ -96,19 +109,31 @@ function DefaultLayout({ children }) {
                                 placement="bottomRight"
                                 arrow
                             >
-                                <Button type="text" className={cx('account-btn')} shape="circle">
-                                    <div style={{ borderRadius: '9999px', padding: '10px' }}>
+                                <button
+                                    style={{ backgroundColor: 'transparent' }}
+                                    type="text"
+                                    className={cx('account-btn')}
+                                    shape="circle"
+                                >
+                                    <div
+                                        style={{
+                                            borderRadius: '9999px',
+                                            padding: '10px',
+                                        }}
+                                    >
                                         {/* <MehOutlined style={{ fontSize: '40px' }} /> */}
                                         <img
                                             style={{
                                                 width: '100%',
-                                                objectFit: 'contain',
+                                                height: '100%',
+                                                objectFit: 'cover',
+                                                borderRadius: '9999px',
                                             }}
-                                            src={defaultAvatar}
+                                            src={useConvertAvatarPath(info.avatarPath)}
                                             alt="avatar"
                                         />
                                     </div>
-                                </Button>
+                                </button>
                             </Dropdown>
                         </Space>
                     </Header>

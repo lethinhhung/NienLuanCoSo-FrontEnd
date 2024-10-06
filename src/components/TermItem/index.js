@@ -1,10 +1,11 @@
 import classNames from 'classnames/bind';
-import { Card, Avatar, Popconfirm, Button, Spin, Tooltip, Row, Col, Image } from 'antd';
+import { Card, Avatar, Popconfirm, Button, Spin, Tooltip, Row, Col, Image, Divider } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 
 import styles from './TermItem.module.scss';
 import { useEffect, useState } from 'react';
+import { useConvertAvatarPath } from '~/hooks';
 
 function TermItem({ data, loading }) {
     const cx = classNames.bind(styles);
@@ -19,31 +20,10 @@ function TermItem({ data, loading }) {
         console.log('Delete term');
     };
 
-    const img = (
-        <Spin
-            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-            className={cx('cover-img')}
-            size="large"
-        />
-    );
-
-    const [coverImg, setCoverImg] = useState(img);
-
-    useEffect(() => {
-        if (loading === false) {
-            setCoverImg(
-                <img
-                    className={cx('cover-img')}
-                    alt="example"
-                    src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                />,
-            );
-        }
-    }, [loading]);
-
     const { Meta } = Card;
     return (
         <Card
+            style={{ backgroundColor: data.color }}
             hoverable
             loading={loading}
             bordered={false}
@@ -70,15 +50,14 @@ function TermItem({ data, loading }) {
             ]}
         >
             <Row>
-                <Col span={16}>
-                    <Meta
-                        avatar={<Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=8" />}
-                        title="Card title"
-                        description="This is the description"
-                    />
+                <Col span={24}>
+                    <img width={'100%'} src={useConvertAvatarPath(data.cover)} alt="cover" />
                 </Col>
-                <Col span={8}>
-                    <Image src="https://api.dicebear.com/7.x/miniavs/svg?seed=8" />
+            </Row>
+            <Divider></Divider>
+            <Row>
+                <Col span={24}>
+                    <Meta avatar={<h1>{data.emoji}</h1>} title={data.name} description={data.description} />
                 </Col>
             </Row>
         </Card>

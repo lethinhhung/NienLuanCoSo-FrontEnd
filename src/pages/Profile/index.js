@@ -22,19 +22,13 @@ function Profile() {
 
     useEffect(() => {
         const fetchAccountInfo = async () => {
-            const accountInfo = await getAccountInfo();
+            const accountInfo = await getAccountInfoApi();
 
-            setInfo(accountInfo);
+            setInfo(accountInfo.info);
         };
 
         fetchAccountInfo();
     }, [isModalVisible]);
-
-    const getAccountInfo = async () => {
-        const account = await getAccountInfoApi();
-
-        return account.info;
-    };
 
     const avatarPath = useConvertAvatarPath(info.avatarPath);
 
