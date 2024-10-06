@@ -1,13 +1,15 @@
 import { Image, Avatar, Card, Flex, Divider, Row, Input } from 'antd';
 import classNames from 'classnames/bind';
+import { useEffect, useState } from 'react';
 
 import styles from './Course.module.scss';
-import { useDebounce } from '~/hooks';
-import { useEffect, useState } from 'react';
 import CustomList from '~/components/CustomList';
 import TagsDrawer from '~/components/TagsDrawer';
 import EditDescription from '~/components/EditDescription';
 import ProgressionOverview from '~/components/ProgressionOverview';
+import { getCourseInfoApi, getCoursesInfoApi } from '~/utils/api';
+import defaultTagsData from '~/components/DefaultTagColor';
+import { useConvertAvatarPath } from '~/hooks';
 
 function Course() {
     const cx = classNames.bind(styles);
@@ -16,13 +18,18 @@ function Course() {
 
     const { TextArea } = Input;
 
-    const [loading, setLoading] = useState(true);
-
-    const debounced = useDebounce(loading, 1000);
+    const [courseInfo, setCourseInfo] = useState({});
 
     useEffect(() => {
-        setLoading(false);
-    }, [debounced]);
+        const fetchCourseInfo = async () => {
+            const courseId = await getCoursesInfoApi();
+            const courseData = await getCourseInfoApi(courseId[0]);
+
+            setCourseInfo(courseData);
+        };
+
+        fetchCourseInfo();
+    }, []);
 
     const data = [];
     return (
@@ -39,7 +46,7 @@ function Course() {
                         }}
                         width={'100%'}
                         preview={false}
-                        src="https://images.unsplash.com/photo-1693590229281-6a78deecd122?q=80&w=1937&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        src={useConvertAvatarPath(courseInfo.cover)}
                     />
                 </div>
             </div>
@@ -50,11 +57,7 @@ function Course() {
                 bordered={false}
                 extra={<EditDescription type="course" />}
             >
-                <Meta
-                    avatar={<Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=8" />}
-                    title="Description"
-                    description="This is the description"
-                />
+                <Meta avatar={<h1>{courseInfo.emoji}</h1>} title="Description" description={courseInfo.description} />
 
                 <Divider />
                 <Row>
@@ -63,7 +66,7 @@ function Course() {
                 <Row>
                     <Flex style={{ width: '100%' }} wrap justify="space-between" align="center">
                         <p style={{ padding: '10px' }}>Term</p>
-                        <TagsDrawer />
+                        <TagsDrawer tagsIds={courseInfo.tags} isDefault={false} />
                     </Flex>
                 </Row>
                 <Divider />

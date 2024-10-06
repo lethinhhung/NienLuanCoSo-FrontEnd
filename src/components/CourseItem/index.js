@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import styles from './CourseItem.module.scss';
 import TagsDrawer from '../TagsDrawer';
 import { useConvertAvatarPath } from '~/hooks';
+import { useEffect, useState } from 'react';
 
 function CourseItem({ data, loading }) {
     const cx = classNames.bind(styles);

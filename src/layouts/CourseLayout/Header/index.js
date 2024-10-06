@@ -13,29 +13,12 @@ import { useGetBrighterColor, useGetTextColorFromBackground } from '~/hooks';
 import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
 import { Link, useNavigate } from 'react-router-dom';
+import { getCourseInfoApi, getCoursesInfoApi } from '~/utils/api';
 
 function Header() {
     const cx = classNames.bind(styles);
 
     const navigate = useNavigate();
-
-    const items = [
-        {
-            label: <Link to={'/dashboard'}>Dashboard</Link>,
-            key: 'dashboard',
-            icon: <DashboardOutlined />,
-        },
-        {
-            label: <Link to={'/courses'}>Courses</Link>,
-            key: 'courses',
-            icon: <AppstoreOutlined />,
-        },
-        {
-            label: <Link to={'/terms'}>Terms</Link>,
-            key: 'term',
-            icon: <ProfileOutlined />,
-        },
-    ];
 
     const cardColor = '#624e88';
 
@@ -45,10 +28,23 @@ function Header() {
         navigate(-1);
     };
 
+    const [courseInfo, setCourseInfo] = useState({});
+
+    useEffect(() => {
+        const fetchCourseInfo = async () => {
+            const courseId = await getCoursesInfoApi();
+            const courseData = await getCourseInfoApi(courseId[0]);
+
+            setCourseInfo(courseData);
+        };
+
+        fetchCourseInfo();
+    }, []);
+
     return (
         <Flex className={cx('wrapper')} vertical>
             <Flex
-                style={{ backgroundColor: cardColor }}
+                style={{ backgroundColor: courseInfo.color }}
                 justify="space-between"
                 align="center"
                 wrap
@@ -64,7 +60,7 @@ function Header() {
                 >
                     <LeftOutlined />
                 </Button>
-                <h1 style={{ color: textColor }}>This is the course name</h1>
+                <h1 style={{ color: textColor }}>{courseInfo.name}</h1>
                 {/* <Button className={cx('btn')} size="large" shape="circle">
                     More
                 </Button> */}

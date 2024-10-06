@@ -31,7 +31,7 @@ function TagsDrawer({ tagsIds, isClickable = false, onTagClick, isDefault = true
 
             fetchTagsInfo();
         }
-    }, []);
+    }, [tagsIds]);
 
     return (
         <Flex justify="flex-end" wrap gap="5px 0" className={cx('wrapper')}>

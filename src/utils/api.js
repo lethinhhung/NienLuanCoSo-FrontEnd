@@ -85,11 +85,22 @@ const createNewCourseApi = async (formData) => {
     }
 };
 
+const getCourseInfoApi = async (courseId) => {
+    const URL_API = '/v1/api/get-course-info';
+    const data = {
+        courseId,
+    };
+
+    return axios.post(URL_API, data);
+};
+
 const getCoursesInfoApi = async () => {
     const URL_API = '/v1/api/get-courses-info';
 
     return axios.get(URL_API);
 };
+
+// Term
 
 const createNewTermApi = async (formData) => {
     const URL_API = '/v1/api/create-new-term';
@@ -119,6 +130,7 @@ export {
     getTagsInfoByIdsApi,
     createNewCourseApi,
     getCoursesInfoApi,
+    getCourseInfoApi,
     createNewTermApi,
     getTermsInfoApi,
 };
