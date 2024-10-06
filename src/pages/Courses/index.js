@@ -12,7 +12,11 @@ function Courses() {
     const cx = classNames.bind(styles);
 
     const [loading, setLoading] = useState(true);
-    const [coursesInfo, setCoursesInfo] = useState([]);
+    const [coursesInfo, setCoursesInfo] = useState([
+        {
+            name: 'Empty',
+        },
+    ]);
     const debounced = useDebounce(loading, 1000);
 
     useEffect(() => {
@@ -21,51 +25,21 @@ function Courses() {
 
     useEffect(() => {
         const fetchCoursesInfo = async () => {
-            const result = await getCoursesInfoApi();
-            setCoursesInfo(result);
+            const coursesData = await getCoursesInfoApi();
+
+            setCoursesInfo(coursesData);
         };
 
         fetchCoursesInfo();
-        console.log(coursesInfo);
     }, []);
 
     return (
         <div>
             <SearchBar />
             <Flex className={cx('wrapper')} wrap gap="small" justify="space-evenly" align="center">
-                <CourseItem loading={debounced}></CourseItem>
-                <CourseItem loading={debounced}></CourseItem>
-                <CourseItem loading={debounced}></CourseItem>
-                <CourseItem loading={debounced}></CourseItem>
-                <CourseItem loading={debounced}></CourseItem>
-                <CourseItem loading={debounced}></CourseItem>
-                <CourseItem loading={debounced}></CourseItem>
-                <CourseItem loading={debounced}></CourseItem>
-                <CourseItem loading={debounced}></CourseItem>
-                <CourseItem loading={debounced}></CourseItem>
-                <CourseItem loading={debounced}></CourseItem>
-                <CourseItem loading={debounced}></CourseItem>
-                <CourseItem loading={debounced}></CourseItem>
-                <CourseItem loading={debounced}></CourseItem>
-                <CourseItem loading={debounced}></CourseItem>
-                <CourseItem loading={debounced}></CourseItem>
-                <CourseItem loading={debounced}></CourseItem>
-                <CourseItem loading={debounced}></CourseItem>
-                <CourseItem loading={debounced}></CourseItem>
-                <CourseItem loading={debounced}></CourseItem>
-                <CourseItem loading={debounced}></CourseItem>
-                <CourseItem loading={debounced}></CourseItem>
-                <CourseItem loading={debounced}></CourseItem>
-                <CourseItem loading={debounced}></CourseItem>
-                <CourseItem loading={debounced}></CourseItem>
-                <CourseItem loading={debounced}></CourseItem>
-                <CourseItem loading={debounced}></CourseItem>
-                <CourseItem loading={debounced}></CourseItem>
-                <CourseItem loading={debounced}></CourseItem>
-                <CourseItem loading={debounced}></CourseItem>
-                <CourseItem loading={debounced}></CourseItem>
-                <CourseItem loading={debounced}></CourseItem>
-                <CourseItem loading={debounced}></CourseItem>
+                {coursesInfo.map((data, index) => (
+                    <CourseItem key={index} loading={debounced} data={data}></CourseItem>
+                ))}
             </Flex>
         </div>
     );

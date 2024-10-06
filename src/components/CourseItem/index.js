@@ -1,11 +1,11 @@
 import classNames from 'classnames/bind';
 import { Card, Avatar, Popconfirm, Button, Spin, Tooltip } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import styles from './CourseItem.module.scss';
 import TagsDrawer from '../TagsDrawer';
+import { useConvertAvatarPath } from '~/hooks';
 
 function CourseItem({ data, loading }) {
     const cx = classNames.bind(styles);
@@ -20,36 +20,15 @@ function CourseItem({ data, loading }) {
         console.log('Delete course');
     };
 
-    const img = (
-        <Spin
-            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-            className={cx('cover-img')}
-            size="large"
-        />
-    );
-
-    const [coverImg, setCoverImg] = useState(img);
-
-    useEffect(() => {
-        if (loading === false) {
-            setCoverImg(
-                <img
-                    className={cx('cover-img')}
-                    alt="example"
-                    src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                />,
-            );
-        }
-    }, [loading]);
-
     const { Meta } = Card;
     return (
         <Card
+            style={{ backgroundColor: data.color }}
             hoverable
             loading={loading}
             bordered={false}
             className={cx('wrapper')}
-            cover={coverImg}
+            cover={<img className={cx('cover-img')} src={useConvertAvatarPath(data.cover)} alt="cover" />}
             actions={[
                 <Tooltip title="Edit this course" placement="bottom">
                     <Button type="text" onClick={handleEdit}>
@@ -71,13 +50,9 @@ function CourseItem({ data, loading }) {
                 </Popconfirm>,
             ]}
         >
-            <Meta
-                avatar={<Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=8" />}
-                title="Card title"
-                description="This is the description"
-            />
+            <Meta avatar={data.emoji} title={data.name} description={data.description} />
             <div className={cx('tags-drawer')}>
-                <TagsDrawer></TagsDrawer>
+                <TagsDrawer tagsIds={data.tags} isDefault={false}></TagsDrawer>
             </div>
         </Card>
     );

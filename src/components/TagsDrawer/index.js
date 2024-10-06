@@ -1,9 +1,11 @@
 import classNames from 'classnames/bind';
 import { Tag, Flex } from 'antd';
+import { useEffect, useState } from 'react';
 
 import styles from './TagsDrawer.module.scss';
+import { getTagsInfoApi, getTagsInfoByIdsApi } from '~/utils/api';
 
-function TagsDrawer({ data = [{ key: 1, name: 'Default tag', color: '' }], isClickable = false, onTagClick }) {
+function TagsDrawer({ tagsIds, isClickable = false, onTagClick, isDefault = true, data }) {
     const cx = classNames.bind(styles);
 
     const handleClicked = (e) => {
@@ -15,10 +17,31 @@ function TagsDrawer({ data = [{ key: 1, name: 'Default tag', color: '' }], isCli
         }
     };
 
+    const [options, setOptions] = useState([]);
+    const [tagsInfo, setTagsInfo] = useState([]);
+
+    useEffect(() => {
+        if (isDefault) {
+            setTagsInfo(data);
+        } else {
+            const fetchTagsInfo = async () => {
+                const result = await getTagsInfoByIdsApi(tagsIds);
+                setTagsInfo(result);
+            };
+
+            fetchTagsInfo();
+        }
+    }, []);
+
     return (
         <Flex justify="flex-end" wrap gap="5px 0" className={cx('wrapper')}>
-            {data.map((result) => (
-                <Tag style={{ cursor: 'pointer' }} onClick={handleClicked} key={result.key} color={result.color}>
+            {tagsInfo.map((result) => (
+                <Tag
+                    style={{ cursor: 'pointer' }}
+                    onClick={handleClicked}
+                    key={result._id || result.key}
+                    color={result.color}
+                >
                     {result.name}
                 </Tag>
             ))}

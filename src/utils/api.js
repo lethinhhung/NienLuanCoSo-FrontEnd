@@ -61,6 +61,16 @@ const getTagsInfoApi = async () => {
     return axios.get(URL_API);
 };
 
+const getTagsInfoByIdsApi = async (tagsIds) => {
+    const URL_API = '/v1/api/get-tags-info-by-ids';
+
+    const data = {
+        tagsIds,
+    };
+
+    return axios.post(URL_API, data);
+};
+
 // Course
 
 const createNewCourseApi = async (formData) => {
@@ -106,6 +116,7 @@ export {
     getAccountInfoApi,
     createNewTagApi,
     getTagsInfoApi,
+    getTagsInfoByIdsApi,
     createNewCourseApi,
     getCoursesInfoApi,
     createNewTermApi,
