@@ -1,14 +1,26 @@
 import { Modal, Card, List, Avatar, Button, Popconfirm, Input } from 'antd';
 import classNames from 'classnames/bind';
 import { DeleteOutlined } from '@ant-design/icons';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import styles from './LessonsList.module.scss';
+import { getCourseInfoApi, getCoursesInfoApi, getCoursesInfoByIdsApi } from '~/utils/api';
 
-function CustomList({ title = '', data, type = 'term' }) {
+function CustomList({ title = '', data = [], type = 'term' }) {
     const cx = classNames.bind(styles);
     const [isModalVisible, setIsModalVisible] = useState(false);
+
+    const transformData = (inputData) => {
+        return inputData.map((item) => ({
+            emoji: item.emoji,
+            title: item.name,
+            color: item.color,
+            description: item.description,
+        }));
+    };
+
+    const [transformedData, setTransformedData] = useState();
 
     const navigate = useNavigate();
 
@@ -41,6 +53,17 @@ function CustomList({ title = '', data, type = 'term' }) {
     } else {
         childType = 'lesson';
     }
+
+    useEffect(() => {
+        const fetchCourseInfo = async () => {
+            const coursesData = await getCoursesInfoByIdsApi(data);
+
+            setTransformedData(transformData(coursesData));
+        };
+
+        fetchCourseInfo();
+    }, [data]);
+
     return (
         <Card
             className={cx('lessons-list')}
@@ -62,9 +85,16 @@ function CustomList({ title = '', data, type = 'term' }) {
         >
             <List
                 itemLayout="horizontal"
-                dataSource={data}
+                dataSource={transformedData}
                 renderItem={(item, index) => (
                     <List.Item
+                        style={{
+                            backgroundColor: item.color,
+                            border: '1px solid #ccc',
+                            borderRadius: '5px',
+                            marginBottom: '5px',
+                            padding: '10px',
+                        }}
                         actions={[
                             <Popconfirm
                                 title={'Remove this ' + childType}
@@ -79,9 +109,9 @@ function CustomList({ title = '', data, type = 'term' }) {
                         ]}
                     >
                         <List.Item.Meta
-                            avatar={<Avatar src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${index}`} />}
+                            avatar={<h1>{item.emoji}</h1>}
                             title={<Link to="/course/hehe/lesson">{item.title}</Link>}
-                            description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                            description={item.description}
                         />
                     </List.Item>
                 )}

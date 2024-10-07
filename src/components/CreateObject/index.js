@@ -6,7 +6,6 @@ import { CheckOutlined } from '@ant-design/icons';
 import EmojiPicker from 'emoji-picker-react';
 
 import styles from './CreateObject.module.scss';
-import ImageUpload from '~/components/ImageUpload';
 import NewTag from '~/components/NewTag';
 import { getTagsInfoApi, getTermsInfoApi, createNewCourseApi, createNewTermApi } from '~/utils/api';
 
@@ -87,7 +86,7 @@ function CreateObject({ type = 'course', action = 'create' }) {
 
     //FormData
     const [submitEmoji, setSubmitEmoji] = useState('📘');
-    const [submitColor, setSubmitColor] = useState('#624e88');
+    const [submitColor, setSubmitColor] = useState('#ffffff');
     const [submitCover, setSubmitCover] = useState(null);
     const [submitName, setSubmitName] = useState('');
     const [submitDescription, setSubmitDescription] = useState('');
@@ -187,7 +186,7 @@ function CreateObject({ type = 'course', action = 'create' }) {
     const handleColor = (checked) => {
         if (!checked) {
             setIsColorDisabled(true);
-            setSubmitColor('#624e88');
+            setSubmitColor('#ffffff');
         } else {
             setIsColorDisabled(false);
         }
@@ -231,6 +230,8 @@ function CreateObject({ type = 'course', action = 'create' }) {
             reader.readAsDataURL(selectedFile);
         } else {
             console.error('No file selected or file is not valid.');
+            setImagePreview(null);
+            setHoldSubmitImage(null);
         }
     };
 
@@ -277,7 +278,7 @@ function CreateObject({ type = 'course', action = 'create' }) {
             </Flex>
             <Flex justify="center">
                 <div style={isCoverDisabled ? { pointerEvents: 'none', opacity: '0.4' } : {}}>
-                    <div>
+                    <div className={cx('upload-panel')}>
                         <h3 className={cx('title')}>Upload an image</h3>
                         {imagePreview && <img width={'100px'} src={imagePreview} alt="Preview" />}
                         <form>

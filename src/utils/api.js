@@ -100,6 +100,16 @@ const getCoursesInfoApi = async () => {
     return axios.get(URL_API);
 };
 
+const getCoursesInfoByIdsApi = async (coursesIds) => {
+    const URL_API = '/v1/api/get-courses-info-by-ids';
+
+    const data = {
+        coursesIds,
+    };
+
+    return axios.post(URL_API, data);
+};
+
 // Term
 
 const createNewTermApi = async (formData) => {
@@ -120,6 +130,16 @@ const getTermsInfoApi = async () => {
     return axios.get(URL_API);
 };
 
+const getTermInfoApi = async (termId) => {
+    const URL_API = '/v1/api/get-term-info';
+
+    const data = {
+        termId,
+    };
+
+    return axios.post(URL_API, data);
+};
+
 export {
     createUserApi,
     loginApi,
@@ -131,6 +151,8 @@ export {
     createNewCourseApi,
     getCoursesInfoApi,
     getCourseInfoApi,
+    getCoursesInfoByIdsApi,
     createNewTermApi,
     getTermsInfoApi,
+    getTermInfoApi,
 };

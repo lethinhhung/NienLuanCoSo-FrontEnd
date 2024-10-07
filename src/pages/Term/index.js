@@ -3,9 +3,10 @@ import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 
 import styles from './Term.module.scss';
-import { useDebounce, useWindowDimensions } from '~/hooks';
+import { useConvertAvatarPath, useDebounce, useWindowDimensions } from '~/hooks';
 import CustomList from '~/components/CustomList';
 import EditDescription from '~/components/EditDescription';
+import { getTermInfoApi, getTermsInfoApi } from '~/utils/api';
 
 function Term() {
     const cx = classNames.bind(styles);
@@ -38,6 +39,19 @@ function Term() {
         },
     ];
 
+    const [termInfo, setTermInfo] = useState({});
+
+    useEffect(() => {
+        const fetchCoursesInfo = async () => {
+            const termId = await getTermsInfoApi();
+            const termData = await getTermInfoApi(termId[0]);
+
+            setTermInfo(termData);
+        };
+
+        fetchCoursesInfo();
+    }, []);
+
     //Modal
     const [isModalVisible, setIsModalVisible] = useState(false);
     const showModal = () => {
@@ -63,16 +77,16 @@ function Term() {
                             objectFit: 'cover',
                             borderRadius: '20px',
                             boxShadow: 'rgba(99, 99, 99, 0.8) 0px 2px 8px 0px',
-                            border: 'solid #624e88',
+                            border: '10px solid ' + termInfo.color,
                         }}
                         width={'100%'}
                         preview={false}
-                        src="https://images.unsplash.com/photo-1693590229281-6a78deecd122?q=80&w=1937&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        src={useConvertAvatarPath(termInfo.cover)}
                     />
                 </div>
             </div>
             <div className={cx('lessions-list-wrapper')}>
-                <CustomList title="Courses" data={data} />
+                <CustomList title="Courses" data={termInfo.courses} />
             </div>
             <div className={cx('component-wrapper')}>
                 <Card
@@ -82,11 +96,7 @@ function Term() {
                     bordered={false}
                     extra={<EditDescription type="term" />}
                 >
-                    <Meta
-                        avatar={<Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=8" />}
-                        title="This is the term name"
-                        description="This is the description"
-                    />
+                    <Meta avatar={<h1>{termInfo.emoji}</h1>} title={termInfo.name} description={termInfo.description} />
                 </Card>
             </div>
 

@@ -75,6 +75,17 @@ p {
     padding: 10px 0 5px 0;
 }
 
+.upload-panel {
+    height: 100%;
+    background-color: #ccc;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: var(--box-shadow);
+    .title {
+        margin-bottom: 10px;
+    }
+}
+
 .title-alone {
     padding: 10px 0;
 }
