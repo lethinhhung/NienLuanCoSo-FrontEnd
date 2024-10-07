@@ -110,6 +110,16 @@ const getCoursesInfoByIdsApi = async (coursesIds) => {
     return axios.post(URL_API, data);
 };
 
+const deleteCourseApi = async (courseId) => {
+    const URL_API = '/v1/api/delete-course';
+
+    const data = {
+        courseId,
+    };
+
+    return axios.post(URL_API, data);
+};
+
 // Term
 
 const createNewTermApi = async (formData) => {
@@ -152,6 +162,7 @@ export {
     getCoursesInfoApi,
     getCourseInfoApi,
     getCoursesInfoByIdsApi,
+    deleteCourseApi,
     createNewTermApi,
     getTermsInfoApi,
     getTermInfoApi,

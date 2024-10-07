@@ -5,23 +5,17 @@ import { useEffect, useState } from 'react';
 
 import SearchBar from '~/components/SearchBar';
 import CourseItem from '~/components/CourseItem';
-import { useDebounce } from '~/hooks';
 import { getCoursesInfoApi } from '~/utils/api';
 
 function Courses() {
     const cx = classNames.bind(styles);
 
     const [loading, setLoading] = useState(true);
-    const [coursesInfo, setCoursesInfo] = useState([
-        {
-            name: 'Empty',
-        },
-    ]);
-    const debounced = useDebounce(loading, 1000);
+    const [coursesInfo, setCoursesInfo] = useState([]);
 
-    useEffect(() => {
-        setLoading(false);
-    }, [debounced]);
+    const handleCourseDelete = () => {
+        setLoading(true);
+    };
 
     useEffect(() => {
         const fetchCoursesInfo = async () => {
@@ -31,7 +25,7 @@ function Courses() {
         };
 
         fetchCoursesInfo();
-    }, []);
+    }, [loading]);
 
     return (
         <div>
@@ -42,7 +36,7 @@ function Courses() {
                 ))} */}
                 {coursesInfo.length > 0 ? (
                     coursesInfo.map((data, index) => (
-                        <CourseItem key={index} loading={debounced} data={data}></CourseItem>
+                        <CourseItem onDelete={handleCourseDelete} key={index} data={data}></CourseItem>
                     ))
                 ) : (
                     <div>No course created...</div>

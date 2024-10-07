@@ -7,8 +7,9 @@ import styles from './CourseItem.module.scss';
 import TagsDrawer from '../TagsDrawer';
 import { useConvertAvatarPath } from '~/hooks';
 import { useEffect, useState } from 'react';
+import { deleteCourseApi } from '~/utils/api';
 
-function CourseItem({ data, loading }) {
+function CourseItem({ data, loading, onDelete }) {
     const cx = classNames.bind(styles);
     const navigate = useNavigate();
 
@@ -18,6 +19,10 @@ function CourseItem({ data, loading }) {
     };
 
     const handleDelete = () => {
+        deleteCourseApi(data._id);
+        if (onDelete) {
+            onDelete(data._id);
+        }
         console.log('Delete course');
     };
 
