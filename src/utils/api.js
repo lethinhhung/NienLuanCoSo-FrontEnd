@@ -150,6 +150,16 @@ const getTermInfoApi = async (termId) => {
     return axios.post(URL_API, data);
 };
 
+const deleteTermApi = async (termId) => {
+    const URL_API = '/v1/api/delete-term';
+
+    const data = {
+        termId,
+    };
+
+    return axios.post(URL_API, data);
+};
+
 export {
     createUserApi,
     loginApi,
@@ -166,4 +176,5 @@ export {
     createNewTermApi,
     getTermsInfoApi,
     getTermInfoApi,
+    deleteTermApi,
 };

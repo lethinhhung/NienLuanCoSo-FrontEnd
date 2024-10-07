@@ -33,7 +33,7 @@ function Header() {
     useEffect(() => {
         const fetchCourseInfo = async () => {
             const courseId = await getCoursesInfoApi();
-            const courseData = await getCourseInfoApi(courseId[1]);
+            const courseData = await getCourseInfoApi(courseId[0]);
 
             setCourseInfo(courseData);
         };

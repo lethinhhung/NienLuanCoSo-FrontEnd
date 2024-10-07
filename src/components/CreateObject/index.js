@@ -45,7 +45,6 @@ function CreateObject({ type = 'course', action = 'create' }) {
 
             setTagsOptions(newTagsOptions);
             setTermsOptions(newTermsOptions);
-            console.log(termsInfo);
         };
 
         fetchTagsAndTermsInfo();
@@ -99,6 +98,9 @@ function CreateObject({ type = 'course', action = 'create' }) {
         if (submitName === '') {
             alert('Enter name...');
             return;
+        } else if (type === 'term' && (submitStartDate === '0000-01-02' || submitEndDate === '0000-01-01')) {
+            alert('Select time...');
+            return;
         } else if ((submitStartDate === '' || submitEndDate === '') && !isTerm) {
             alert('Select time...');
             return;
@@ -106,6 +108,7 @@ function CreateObject({ type = 'course', action = 'create' }) {
             alert('Select term...');
             return;
         }
+        console.log(submitStartDate);
         const formData = new FormData();
         formData.append('emoji', submitEmoji);
         formData.append('color', submitColor);
@@ -126,12 +129,18 @@ function CreateObject({ type = 'course', action = 'create' }) {
         try {
             if (type === 'course') {
                 const res = await createNewCourseApi(formData);
-
+                if (res.EC === 0) {
+                    alert('Duplicate name. Choose another name!');
+                    return;
+                }
                 console.log('Update successful:', res);
                 alert('New ' + type + ' created!');
             } else {
                 const res = await createNewTermApi(formData);
-
+                if (res.EC === 0) {
+                    alert('Duplicate name. Choose another name!');
+                    return;
+                }
                 console.log('Update successful:', res);
                 alert('New ' + type + ' created!');
             }

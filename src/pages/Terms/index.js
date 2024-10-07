@@ -14,15 +14,7 @@ import CourseItem from '~/components/CourseItem';
 function Terms() {
     const cx = classNames.bind(styles);
 
-    const [loading, setLoading] = useState(true);
-
-    const debounced = useDebounce(loading, 1000);
-
     const { RangePicker } = DatePicker;
-
-    useEffect(() => {
-        setLoading(false);
-    }, [debounced]);
 
     const { width } = useWindowDimensions();
 
@@ -90,9 +82,7 @@ function Terms() {
                 <Col offset={2} span={20}>
                     <Flex className={cx('wrapper')} wrap gap="small" justify="space-evenly">
                         {termsInfo.length > 0 ? (
-                            termsInfo.map((data, index) => (
-                                <TermItem key={index} loading={debounced} data={data}></TermItem>
-                            ))
+                            termsInfo.map((data, index) => <TermItem key={index} data={data}></TermItem>)
                         ) : (
                             <div>No term created...</div>
                         )}

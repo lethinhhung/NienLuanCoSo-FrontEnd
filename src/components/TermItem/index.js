@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import styles from './TermItem.module.scss';
 import { useEffect, useState } from 'react';
 import { useConvertAvatarPath } from '~/hooks';
+import { deleteTermApi } from '~/utils/api';
 
 function TermItem({ data, loading }) {
     const cx = classNames.bind(styles);
@@ -17,6 +18,7 @@ function TermItem({ data, loading }) {
     };
 
     const handleDelete = () => {
+        deleteTermApi(data._id);
         console.log('Delete term');
     };
 
