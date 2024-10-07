@@ -9,7 +9,20 @@ import styles from './CreateObject.module.scss';
 import NewTag from '~/components/NewTag';
 import { getTagsInfoApi, getTermsInfoApi, createNewCourseApi, createNewTermApi } from '~/utils/api';
 
-function CreateObject({ type = 'course', action = 'create' }) {
+function CreateObject({
+    type = 'course',
+    action = 'create',
+    editData = {
+        emoji: '📘',
+        color: '#ffffff',
+        cover: null,
+        name: '',
+        description: '',
+        startDate: '0000-01-02',
+        endDate: '0000-01-01',
+    },
+    isEdit = false,
+}) {
     const cx = classNames.bind(styles);
 
     const { TextArea } = Input;
@@ -84,69 +97,83 @@ function CreateObject({ type = 'course', action = 'create' }) {
     const [isColorDisabled, setIsColorDisabled] = useState(true);
 
     //FormData
-    const [submitEmoji, setSubmitEmoji] = useState('📘');
-    const [submitColor, setSubmitColor] = useState('#ffffff');
-    const [submitCover, setSubmitCover] = useState(null);
-    const [submitName, setSubmitName] = useState('');
-    const [submitDescription, setSubmitDescription] = useState('');
+    // const [submitEmoji, setSubmitEmoji] = useState('📘');
+    // const [submitColor, setSubmitColor] = useState('#ffffff');
+    // const [submitCover, setSubmitCover] = useState(null);
+    // const [submitName, setSubmitName] = useState('');
+    // const [submitDescription, setSubmitDescription] = useState('');
+    // const [submitTags, setSubmitTags] = useState([]);
+    // const [submitTerm, setSubmitTerm] = useState('');
+    // const [submitStartDate, setSubmitStartDate] = useState('0000-01-02');
+    // const [submitEndDate, setSubmitEndDate] = useState('0000-01-01');
+
+    const [submitEmoji, setSubmitEmoji] = useState(editData.emoji);
+    const [submitColor, setSubmitColor] = useState(editData.color);
+    const [submitCover, setSubmitCover] = useState(editData.cover);
+    const [submitName, setSubmitName] = useState(editData.name);
+    const [submitDescription, setSubmitDescription] = useState(editData.description);
     const [submitTags, setSubmitTags] = useState([]);
     const [submitTerm, setSubmitTerm] = useState('');
-    const [submitStartDate, setSubmitStartDate] = useState('0000-01-02');
-    const [submitEndDate, setSubmitEndDate] = useState('0000-01-01');
+    const [submitStartDate, setSubmitStartDate] = useState(editData.startDate);
+    const [submitEndDate, setSubmitEndDate] = useState(editData.endDate);
 
     const handleSubmit = async () => {
-        if (submitName === '') {
-            alert('Enter name...');
-            return;
-        } else if (type === 'term' && (submitStartDate === '0000-01-02' || submitEndDate === '0000-01-01')) {
-            alert('Select time...');
-            return;
-        } else if ((submitStartDate === '' || submitEndDate === '') && !isTerm) {
-            alert('Select time...');
-            return;
-        } else if (submitTerm === '' && isTerm && type === 'course') {
-            alert('Select term...');
-            return;
-        }
-        console.log(submitStartDate);
-        const formData = new FormData();
-        formData.append('emoji', submitEmoji);
-        formData.append('color', submitColor);
-        formData.append('cover', submitCover);
-        formData.append('name', submitName);
-        formData.append('description', submitDescription);
-        submitTags.forEach((tag, index) => {
-            formData.append(`tags[${index}]`, tag);
-        });
-
-        if (type === 'course') {
-            formData.append('term', submitTerm);
-        }
-        formData.append('startDate', submitStartDate);
-        formData.append('endDate', submitEndDate);
-
-        //Goi API
-        try {
-            if (type === 'course') {
-                const res = await createNewCourseApi(formData);
-                if (res.EC === 0) {
-                    alert('Duplicate name. Choose another name!');
-                    return;
-                }
-                console.log('Update successful:', res);
-                alert('New ' + type + ' created!');
-            } else {
-                const res = await createNewTermApi(formData);
-                if (res.EC === 0) {
-                    alert('Duplicate name. Choose another name!');
-                    return;
-                }
-                console.log('Update successful:', res);
-                alert('New ' + type + ' created!');
+        if (!isEdit) {
+            if (submitName === '') {
+                alert('Enter name...');
+                return;
+            } else if (type === 'term' && submitStartDate === '0000-01-02' && submitEndDate === '0000-01-01') {
+                alert('Select time...');
+                return;
+            } else if ((submitStartDate === '' || submitEndDate === '') && !isTerm) {
+                alert('Select time...');
+                return;
+            } else if (submitTerm === '' && isTerm && type === 'course') {
+                alert('Select term...');
+                return;
             }
-        } catch (error) {
-            console.error('Update failed:', error);
-            alert('Unkown error');
+            console.log(submitStartDate);
+            const formData = new FormData();
+            formData.append('emoji', submitEmoji);
+            formData.append('color', submitColor);
+            formData.append('cover', submitCover);
+            formData.append('name', submitName);
+            formData.append('description', submitDescription);
+            submitTags.forEach((tag, index) => {
+                formData.append(`tags[${index}]`, tag);
+            });
+
+            if (type === 'course') {
+                formData.append('term', submitTerm);
+            }
+            formData.append('startDate', submitStartDate);
+            formData.append('endDate', submitEndDate);
+
+            //Goi API
+            try {
+                if (type === 'course') {
+                    const res = await createNewCourseApi(formData);
+                    if (res.EC === 0) {
+                        alert('Duplicate name. Choose another name!');
+                        return;
+                    }
+                    console.log('Update successful:', res);
+                    alert('New ' + type + ' created!');
+                } else {
+                    const res = await createNewTermApi(formData);
+                    if (res.EC === 0) {
+                        alert('Duplicate name. Choose another name!');
+                        return;
+                    }
+                    console.log('Update successful:', res);
+                    alert('New ' + type + ' created!');
+                }
+            } catch (error) {
+                console.error('Update failed:', error);
+                alert('Unkown error');
+            }
+        } else {
+            console.log('hehe');
         }
     };
     // Select
@@ -374,7 +401,7 @@ function CreateObject({ type = 'course', action = 'create' }) {
                     <RangePicker required onChange={handleSelectTime} />
                 </Flex>
             </div>
-            <div hidden={action === 'edit'}>
+            <div>
                 <Flex style={{ marginTop: '30px' }} justify="flex-end">
                     <Button onClick={handleSubmit} size="large" style={{ backgroundColor: '#cb80ab', width: '100px' }}>
                         <CheckOutlined />

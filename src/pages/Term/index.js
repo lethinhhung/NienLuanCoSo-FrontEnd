@@ -94,7 +94,7 @@ function Term() {
                     hoverable
                     title="Term overview"
                     bordered={false}
-                    extra={<EditDescription type="term" />}
+                    extra={<EditDescription type="term" editData={termInfo} />}
                 >
                     <Meta avatar={<h1>{termInfo.emoji}</h1>} title={termInfo.name} description={termInfo.description} />
                 </Card>
