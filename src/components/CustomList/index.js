@@ -7,7 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import styles from './LessonsList.module.scss';
 import { getCourseInfoApi, getCoursesInfoApi, getCoursesInfoByIdsApi } from '~/utils/api';
 
-function CustomList({ title = '', data = [], type = 'term' }) {
+function CustomList({ title = '', data, type = 'term' }) {
     const cx = classNames.bind(styles);
     const [isModalVisible, setIsModalVisible] = useState(false);
 
