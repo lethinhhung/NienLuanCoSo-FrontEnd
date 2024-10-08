@@ -5,15 +5,17 @@ import styles from './TagsDrawerClosable.module.scss';
 import { useEffect, useState } from 'react';
 import { getTagsInfoApi } from '~/utils/api';
 
-function TagsDrawerClosable({ border = true }) {
+function TagsDrawerClosable({ border = true, onTagsChange }) {
     const cx = classNames.bind(styles);
 
     const [options, setOptions] = useState([]);
     const [tagsInfo, setTagsInfo] = useState([]);
     const [selectClicked, setSelectClicked] = useState(false);
 
-    const handleSelectTags = (dateString) => {
-        console.log(dateString);
+    const handleSelectTags = (value) => {
+        if (onTagsChange) {
+            onTagsChange(value);
+        }
     };
     useEffect(() => {
         const fetchTagsInfo = async () => {

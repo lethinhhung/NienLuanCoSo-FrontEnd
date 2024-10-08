@@ -4,20 +4,20 @@ import SearchBarLarge from './SearchBarLarge';
 import SearchBarSmall from './SearchBarSmall';
 import { useWindowDimensions, useDebounce } from '~/hooks';
 
-function SearchBar(container) {
+function SearchBar({ onSearch, onTagsChange }) {
     const { width } = useWindowDimensions();
 
     const debounced = useDebounce(width, 500);
 
-    const [searchBar, setSearchBar] = useState(<SearchBarLarge />);
+    const [searchBar, setSearchBar] = useState(<SearchBarLarge onSearch={onSearch} />);
 
     useEffect(() => {
         if (debounced >= 700) {
-            setSearchBar(<SearchBarLarge />);
+            setSearchBar(<SearchBarLarge onSearch={onSearch} onTagsChange={onTagsChange} />);
         } else {
-            setSearchBar(<SearchBarSmall />);
+            setSearchBar(<SearchBarSmall onSearch={onSearch} onTagsChange={onTagsChange} />);
         }
-    }, [debounced]);
+    }, [debounced, onSearch]);
 
     return searchBar;
 }
