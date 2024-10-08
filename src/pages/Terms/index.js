@@ -31,16 +31,20 @@ function Terms() {
     }, []);
 
     const handleSelectTime = (date, dateString) => {
-        const [startDate, endDate] = dateString;
-        const start = new Date(startDate);
-        const end = new Date(endDate);
+        if (dateString[0] === '' || dateString[1] === '') {
+            setFilteredTerms(termsInfo);
+        } else {
+            const [startDate, endDate] = dateString;
+            const start = new Date(startDate);
+            const end = new Date(endDate);
 
-        const filtered = termsInfo.filter((term) => {
-            const termDate = new Date(term.startDate);
-            return termDate >= start && termDate <= end;
-        });
+            const filtered = termsInfo.filter((term) => {
+                const termDate = new Date(term.startDate);
+                return termDate >= start && termDate <= end;
+            });
 
-        setFilteredTerms(filtered);
+            setFilteredTerms(filtered);
+        }
     };
     return (
         <div>
@@ -49,7 +53,7 @@ function Terms() {
                     {/* Select Component */}
                     <Flex className={cx('select-wrapper')} justify="center" wrap>
                         <div className={cx('time-select')}>
-                            <RangePicker onChange={handleSelectTime} />
+                            <RangePicker on onChange={handleSelectTime} />
                         </div>
                         <div className={cx('status-select')}>
                             <Select

@@ -7,9 +7,9 @@ const routes = {
     profile: '/profile',
     newCourse: '/create-new-course',
     newTerm: '/create-new-term',
-    course: '/course/:name',
-    lesson: '/course/:name/:lesson',
-    term: '/term/:name',
+    course: '/course/:courseId',
+    lesson: '/course/:courseId/:lessonId',
+    term: '/term/:termId',
 };
 
 export default routes;

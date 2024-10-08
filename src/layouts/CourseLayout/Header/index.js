@@ -8,6 +8,7 @@ import {
 } from '@ant-design/icons';
 import { Breadcrumb, Flex, Menu, Button, ConfigProvider } from 'antd';
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 import { useGetBrighterColor, useGetTextColorFromBackground } from '~/hooks';
 import classNames from 'classnames/bind';
@@ -17,6 +18,8 @@ import { getCourseInfoApi, getCoursesInfoApi } from '~/utils/api';
 
 function Header() {
     const cx = classNames.bind(styles);
+
+    const { courseId } = useParams();
 
     const navigate = useNavigate();
 
@@ -32,8 +35,7 @@ function Header() {
 
     useEffect(() => {
         const fetchCourseInfo = async () => {
-            const courseId = await getCoursesInfoApi();
-            const courseData = await getCourseInfoApi(courseId[0]);
+            const courseData = await getCourseInfoApi(courseId);
 
             setCourseInfo(courseData);
         };
@@ -82,12 +84,12 @@ function Header() {
                         title: (
                             <Link to="/courses">
                                 <AppstoreOutlined />
-                                <span>Courses</span>
+                                <span> Courses</span>
                             </Link>
                         ),
                     },
                     {
-                        title: 'Current course',
+                        title: courseInfo.emoji + ' ' + courseInfo.name,
                     },
                 ]}
             />

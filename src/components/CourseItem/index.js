@@ -15,7 +15,7 @@ function CourseItem({ data, loading, onDelete, termsInfo }) {
 
     const handleEdit = () => {
         console.log('Edit course');
-        window.location.reload();
+        navigate('/course/' + data._id);
     };
 
     const handleDelete = () => {
@@ -24,7 +24,7 @@ function CourseItem({ data, loading, onDelete, termsInfo }) {
             onDelete(data._id);
         }
         console.log('Delete course');
-        navigate('/courses');
+        window.location.reload();
     };
 
     const { Meta } = Card;

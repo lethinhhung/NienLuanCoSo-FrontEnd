@@ -1,6 +1,7 @@
 import { Image, Avatar, Card, Flex, Divider, Row, Input } from 'antd';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 import styles from './Course.module.scss';
 import CustomList from '~/components/CustomList';
@@ -13,6 +14,7 @@ import { useConvertAvatarPath } from '~/hooks';
 
 function Course() {
     const cx = classNames.bind(styles);
+    const { courseId } = useParams();
 
     const { Meta } = Card;
 
@@ -22,8 +24,7 @@ function Course() {
 
     useEffect(() => {
         const fetchCourseInfo = async () => {
-            const courseId = await getCoursesInfoApi();
-            const courseData = await getCourseInfoApi(courseId[0]);
+            const courseData = await getCourseInfoApi(courseId);
 
             setCourseInfo(courseData);
         };
@@ -32,6 +33,7 @@ function Course() {
     }, []);
 
     const data = [];
+
     return (
         <Flex className={cx('wrapper')} wrap vertical align="center">
             <div className={cx('image-wrapper')}>

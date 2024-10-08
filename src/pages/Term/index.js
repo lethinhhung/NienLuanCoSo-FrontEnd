@@ -1,6 +1,7 @@
 import { Image, Avatar, Card, Flex, Divider, Progress, Select, Row, Col, Button, Input, Modal } from 'antd';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 import styles from './Term.module.scss';
 import { useConvertAvatarPath, useDebounce, useWindowDimensions } from '~/hooks';
@@ -10,6 +11,8 @@ import { getTermInfoApi, getTermsInfoApi } from '~/utils/api';
 
 function Term() {
     const cx = classNames.bind(styles);
+
+    const { termId } = useParams();
 
     const { Meta } = Card;
 
@@ -43,8 +46,7 @@ function Term() {
 
     useEffect(() => {
         const fetchCoursesInfo = async () => {
-            const termId = await getTermsInfoApi();
-            const termData = await getTermInfoApi(termId[0]);
+            const termData = await getTermInfoApi(termId);
 
             setTermInfo(termData);
         };
