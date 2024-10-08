@@ -18,6 +18,8 @@ function Terms() {
 
     const [termsInfo, setTermsInfo] = useState([]);
     const [filteredTerms, setFilteredTerms] = useState([]);
+    const [selectedTime, setSelectedTime] = useState([]);
+    const [selectedStatus, setSelectedStatus] = useState('all');
 
     useEffect(() => {
         const fetchCoursesInfo = async () => {
@@ -30,45 +32,45 @@ function Terms() {
         fetchCoursesInfo();
     }, []);
 
-    const handleSelectTime = (date, dateString) => {
-        if (dateString[0] === '' || dateString[1] === '') {
-            setFilteredTerms(termsInfo);
-        } else {
-            const [startDate, endDate] = dateString;
+    const applyFilters = (time, status) => {
+        let filtered = termsInfo;
+
+        if (time.length === 2 && time[0] !== '' && time[1] !== '') {
+            const [startDate, endDate] = time;
             const start = new Date(startDate);
             const end = new Date(endDate);
 
-            const filtered = termsInfo.filter((term) => {
+            filtered = filtered.filter((term) => {
                 const termDate = new Date(term.startDate);
                 return termDate >= start && termDate <= end;
             });
-
-            setFilteredTerms(filtered);
         }
-    };
 
-    const handleSelectStatus = (value) => {
-        if (value === 'onprogress') {
+        if (status === 'onprogress') {
             const currentDate = new Date();
-
-            const filtered = termsInfo.filter((term) => {
+            filtered = filtered.filter((term) => {
                 const termDate = new Date(term.endDate);
                 return termDate >= currentDate;
             });
-
-            setFilteredTerms(filtered);
-        } else if (value === 'completed') {
+        } else if (status === 'completed') {
             const currentDate = new Date();
-
-            const filtered = termsInfo.filter((term) => {
+            filtered = filtered.filter((term) => {
                 const termDate = new Date(term.endDate);
                 return termDate <= currentDate;
             });
-
-            setFilteredTerms(filtered);
-        } else {
-            setFilteredTerms(termsInfo);
         }
+
+        setFilteredTerms(filtered);
+    };
+
+    const handleSelectTime = (date, dateString) => {
+        setSelectedTime(dateString);
+        applyFilters(dateString, selectedStatus);
+    };
+
+    const handleSelectStatus = (value) => {
+        setSelectedStatus(value);
+        applyFilters(selectedTime, value);
     };
     return (
         <div>
@@ -77,7 +79,7 @@ function Terms() {
                     {/* Select Component */}
                     <Flex className={cx('select-wrapper')} justify="center" wrap>
                         <div className={cx('time-select')}>
-                            <RangePicker on onChange={handleSelectTime} />
+                            <RangePicker onChange={handleSelectTime} />
                         </div>
                         <div className={cx('status-select')}>
                             <Select

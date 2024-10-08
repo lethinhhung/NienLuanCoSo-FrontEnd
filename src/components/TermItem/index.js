@@ -14,6 +14,23 @@ function TermItem({ data, loading }) {
     const navigate = useNavigate();
     const [renderKey, setRenderKey] = useState(false);
 
+    const currentDate = new Date();
+    const termDate = new Date(data.endDate);
+    let status = {
+        status: '',
+        color: '',
+    };
+    if (currentDate > termDate) {
+        status = {
+            status: 'Completed',
+            color: 'blue',
+        };
+    } else
+        status = {
+            status: 'On progress',
+            color: 'red',
+        };
+
     const handleEdit = () => {
         console.log('Edit term');
         navigate('/term/' + data._id);
@@ -60,15 +77,18 @@ function TermItem({ data, loading }) {
                     ]}
                 >
                     <Row style={{ marginTop: '10px' }}>
-                        <Col span={24}>
-                            {' '}
+                        <Col span={20}>
                             <Meta
                                 avatar={<h1>{data.emoji}</h1>}
                                 title={<h3>{data.name}</h3>}
                                 description={data.description}
                             />
                         </Col>
+                        <Col span={4}>
+                            <Badge count={status.status} color={status.color}></Badge>
+                        </Col>
                     </Row>
+
                     <Divider orientation="left"></Divider>
 
                     <Row>
