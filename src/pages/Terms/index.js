@@ -46,6 +46,30 @@ function Terms() {
             setFilteredTerms(filtered);
         }
     };
+
+    const handleSelectStatus = (value) => {
+        if (value === 'onprogress') {
+            const currentDate = new Date();
+
+            const filtered = termsInfo.filter((term) => {
+                const termDate = new Date(term.endDate);
+                return termDate >= currentDate;
+            });
+
+            setFilteredTerms(filtered);
+        } else if (value === 'completed') {
+            const currentDate = new Date();
+
+            const filtered = termsInfo.filter((term) => {
+                const termDate = new Date(term.endDate);
+                return termDate <= currentDate;
+            });
+
+            setFilteredTerms(filtered);
+        } else {
+            setFilteredTerms(termsInfo);
+        }
+    };
     return (
         <div>
             <Row>
@@ -60,6 +84,7 @@ function Terms() {
                                 defaultValue={'all'}
                                 placeholder="Status"
                                 style={{ width: 120 }}
+                                onChange={handleSelectStatus}
                                 options={[
                                     { value: 'all', label: 'All' },
                                     { value: 'completed', label: 'Completed' },
