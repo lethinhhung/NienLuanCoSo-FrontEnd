@@ -15,21 +15,28 @@ function TermItem({ data, loading }) {
     const [renderKey, setRenderKey] = useState(false);
 
     const currentDate = new Date();
-    const termDate = new Date(data.endDate);
+    const courseStartDate = new Date(data.startDate);
+    const courseEndDate = new Date(data.endDate);
     let status = {
         status: '',
         color: '',
     };
-    if (currentDate > termDate) {
+    if (currentDate > courseEndDate) {
         status = {
             status: 'Completed',
             color: 'blue',
         };
-    } else
+    } else if (currentDate < courseEndDate && currentDate > courseStartDate) {
         status = {
             status: 'On progress',
             color: 'red',
         };
+    } else {
+        status = {
+            status: 'Incoming',
+            color: 'green',
+        };
+    }
 
     const handleEdit = () => {
         console.log('Edit term');

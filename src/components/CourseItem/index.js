@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import { Card, Avatar, Popconfirm, Button, Spin, Tooltip, Badge } from 'antd';
+import { Card, Avatar, Popconfirm, Button, Spin, Tooltip, Badge, Flex } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 
@@ -42,6 +42,30 @@ function CourseItem({ data, loading, onDelete, termsInfo }) {
         endDate = new Date(data.endDate).toLocaleDateString();
     }
 
+    const currentDate = new Date();
+    const termStartDate = new Date(data.startDate);
+    const termEndDate = new Date(data.endDate);
+    let status = {
+        status: '',
+        color: '',
+    };
+    if (currentDate > termEndDate) {
+        status = {
+            status: 'Completed',
+            color: 'blue',
+        };
+    } else if (currentDate < termEndDate && currentDate > termStartDate) {
+        status = {
+            status: 'On progress',
+            color: 'red',
+        };
+    } else {
+        status = {
+            status: 'Incoming',
+            color: 'green',
+        };
+    }
+
     return (
         <Badge.Ribbon text={`${startDate} ${endDate}`}>
             <Card
@@ -72,6 +96,9 @@ function CourseItem({ data, loading, onDelete, termsInfo }) {
                     </Popconfirm>,
                 ]}
             >
+                <Flex wrap justify="flex-end" style={{ margin: '-10px -10px 20px 0' }}>
+                    <Badge count={status.status} color={status.color}></Badge>
+                </Flex>
                 <Meta avatar={<h1>{data.emoji}</h1>} title={data.name} description={data.description} />
                 <div className={cx('tags-drawer')}>
                     <TagsDrawer tagsIds={data.tags} isDefault={false}></TagsDrawer>
