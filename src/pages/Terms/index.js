@@ -16,20 +16,32 @@ function Terms() {
 
     const { RangePicker } = DatePicker;
 
-    const onOk = () => {};
-
     const [termsInfo, setTermsInfo] = useState([]);
+    const [filteredTerms, setFilteredTerms] = useState([]);
 
     useEffect(() => {
         const fetchCoursesInfo = async () => {
             const termsData = await getTermsInfoApi();
 
             setTermsInfo(termsData);
+            setFilteredTerms(termsData);
         };
 
         fetchCoursesInfo();
     }, []);
 
+    const handleSelectTime = (date, dateString) => {
+        const [startDate, endDate] = dateString;
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+
+        const filtered = termsInfo.filter((term) => {
+            const termDate = new Date(term.startDate);
+            return termDate >= start && termDate <= end;
+        });
+
+        setFilteredTerms(filtered);
+    };
     return (
         <div>
             <Row>
@@ -37,7 +49,7 @@ function Terms() {
                     {/* Select Component */}
                     <Flex className={cx('select-wrapper')} justify="center" wrap>
                         <div className={cx('time-select')}>
-                            <RangePicker onOk={onOk} />
+                            <RangePicker onChange={handleSelectTime} />
                         </div>
                         <div className={cx('status-select')}>
                             <Select
@@ -57,8 +69,13 @@ function Terms() {
             <Row>
                 <Col offset={2} span={20}>
                     <Flex className={cx('wrapper')} wrap gap="small" justify="space-evenly">
-                        {termsInfo.length > 0 ? (
+                        {/* {termsInfo.length > 0 ? (
                             termsInfo.map((data, index) => <TermItem key={index} data={data}></TermItem>)
+                        ) : (
+                            <div>No term created...</div>
+                        )} */}
+                        {filteredTerms.length > 0 ? (
+                            filteredTerms.map((data, index) => <TermItem key={index} data={data}></TermItem>)
                         ) : (
                             <div>No term created...</div>
                         )}

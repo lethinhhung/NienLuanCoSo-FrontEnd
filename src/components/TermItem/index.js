@@ -5,13 +5,14 @@ import { useNavigate } from 'react-router-dom';
 
 import styles from './TermItem.module.scss';
 import { useEffect, useState } from 'react';
-import { useConvertAvatarPath } from '~/hooks';
+import { useConvertAvatarPath, useReRender } from '~/hooks';
 import { deleteTermApi } from '~/utils/api';
 import CustomList from '../CustomList';
 
 function TermItem({ data, loading }) {
     const cx = classNames.bind(styles);
     const navigate = useNavigate();
+    const [renderKey, setRenderKey] = useState(false);
 
     const handleEdit = () => {
         console.log('Edit term');
@@ -21,6 +22,7 @@ function TermItem({ data, loading }) {
     const handleDelete = () => {
         deleteTermApi(data._id);
         console.log('Delete term');
+        window.location.reload();
     };
 
     const { Meta } = Card;
