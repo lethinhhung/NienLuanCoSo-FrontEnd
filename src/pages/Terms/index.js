@@ -8,7 +8,7 @@ import SearchBar from '~/components/SearchBar';
 import SearchBarLarge from '~/components/SearchBar/SearchBarLarge';
 import SearchBarSmall from '~/components/SearchBar/SearchBarSmall';
 import TermItem from '~/components/TermItem';
-import { getTermsInfoApi } from '~/utils/api';
+import { getTermsInfoApi, getCoursesInfoApi } from '~/utils/api';
 import CourseItem from '~/components/CourseItem';
 
 function Terms() {
@@ -16,21 +16,15 @@ function Terms() {
 
     const { RangePicker } = DatePicker;
 
-    const { width } = useWindowDimensions();
-
     const onOk = () => {};
 
-    const [termsInfo, setTermsInfo] = useState([
-        {
-            name: 'Empty',
-        },
-    ]);
+    const [termsInfo, setTermsInfo] = useState([]);
 
     useEffect(() => {
         const fetchCoursesInfo = async () => {
-            const coursesData = await getTermsInfoApi();
+            const termsData = await getTermsInfoApi();
 
-            setTermsInfo(coursesData);
+            setTermsInfo(termsData);
         };
 
         fetchCoursesInfo();
@@ -42,24 +36,6 @@ function Terms() {
                 <Col offset={6} span={12}>
                     {/* Select Component */}
                     <Flex className={cx('select-wrapper')} justify="center" wrap>
-                        {/* <Select
-                            placeholder="From"
-                            style={{ width: 120 }}
-                            options={[
-                                { value: '2023', label: '2023' },
-                                { value: '2024', label: '2025' },
-                                { value: '2026', label: '2026' },
-                            ]}
-                        />
-                        <Select
-                            placeholder="To"
-                            style={{ width: 120 }}
-                            options={[
-                                { value: '2023', label: '2023' },
-                                { value: '2024', label: '2025' },
-                                { value: '2026', label: '2026' },
-                            ]}
-                        /> */}
                         <div className={cx('time-select')}>
                             <RangePicker onOk={onOk} />
                         </div>

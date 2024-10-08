@@ -5,13 +5,14 @@ import { useEffect, useState } from 'react';
 
 import SearchBar from '~/components/SearchBar';
 import CourseItem from '~/components/CourseItem';
-import { getCoursesInfoApi } from '~/utils/api';
+import { getCoursesInfoApi, getTermsInfoApi } from '~/utils/api';
 
 function Courses() {
     const cx = classNames.bind(styles);
 
     const [loading, setLoading] = useState(true);
     const [coursesInfo, setCoursesInfo] = useState([]);
+    const [termsInfo, setTermsInfo] = useState([]);
 
     const handleCourseDelete = () => {
         setLoading(true);
@@ -20,8 +21,9 @@ function Courses() {
     useEffect(() => {
         const fetchCoursesInfo = async () => {
             const coursesData = await getCoursesInfoApi();
-
+            const termsData = await getTermsInfoApi();
             setCoursesInfo(coursesData);
+            setTermsInfo(termsData);
         };
 
         fetchCoursesInfo();
@@ -36,7 +38,12 @@ function Courses() {
                 ))} */}
                 {coursesInfo.length > 0 ? (
                     coursesInfo.map((data, index) => (
-                        <CourseItem onDelete={handleCourseDelete} key={index} data={data}></CourseItem>
+                        <CourseItem
+                            onDelete={handleCourseDelete}
+                            key={index}
+                            data={data}
+                            termsInfo={termsInfo}
+                        ></CourseItem>
                     ))
                 ) : (
                     <div>No course created...</div>

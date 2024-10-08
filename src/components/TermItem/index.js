@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import { Card, Avatar, Popconfirm, Button, Spin, Tooltip, Row, Col, Image, Divider } from 'antd';
+import { Card, Avatar, Popconfirm, Button, Spin, Tooltip, Row, Col, Image, Divider, Badge } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,6 +7,7 @@ import styles from './TermItem.module.scss';
 import { useEffect, useState } from 'react';
 import { useConvertAvatarPath } from '~/hooks';
 import { deleteTermApi } from '~/utils/api';
+import CustomList from '../CustomList';
 
 function TermItem({ data, loading }) {
     const cx = classNames.bind(styles);
@@ -23,46 +24,73 @@ function TermItem({ data, loading }) {
     };
 
     const { Meta } = Card;
+
+    const startDate = new Date(data.startDate).toLocaleDateString() + ' -';
+    const endDate = new Date(data.endDate).toLocaleDateString();
     return (
-        <Card
-            style={{ backgroundColor: data.color }}
-            hoverable
-            loading={loading}
-            bordered={false}
-            className={cx('wrapper')}
-            actions={[
-                <Tooltip title="Edit this term" placement="bottom">
-                    <Button type="text" onClick={handleEdit}>
-                        <EditOutlined />
-                    </Button>
-                </Tooltip>,
-                <Popconfirm
-                    title="Delete the term"
-                    description="Are you sure to delete this term?"
-                    onConfirm={handleDelete}
-                    okText="Yes"
-                    cancelText="No"
+        <div style={{ marginBottom: '20px' }}>
+            <Badge.Ribbon text={`${startDate} ${endDate}`}>
+                <Card
+                    style={{ backgroundColor: data.color, marginBottom: '1px' }}
+                    hoverable
+                    loading={loading}
+                    bordered={false}
+                    className={cx('wrapper')}
+                    actions={[
+                        <Tooltip title="Edit this term" placement="bottom">
+                            <Button type="text" onClick={handleEdit}>
+                                <EditOutlined />
+                            </Button>
+                        </Tooltip>,
+                        <Popconfirm
+                            title="Delete the term"
+                            description="Are you sure to delete this term?"
+                            onConfirm={handleDelete}
+                            okText="Yes"
+                            cancelText="No"
+                        >
+                            <Tooltip title="Delete this term" placement="bottom">
+                                <Button type="text">
+                                    <DeleteOutlined />
+                                </Button>
+                            </Tooltip>
+                        </Popconfirm>,
+                    ]}
                 >
-                    <Tooltip title="Delete this term" placement="bottom">
-                        <Button type="text">
-                            <DeleteOutlined />
-                        </Button>
-                    </Tooltip>
-                </Popconfirm>,
-            ]}
-        >
-            <Row>
-                <Col span={24}>
-                    <img width={'100%'} src={useConvertAvatarPath(data.cover)} alt="cover" />
-                </Col>
-            </Row>
-            <Divider></Divider>
-            <Row>
-                <Col span={24}>
-                    <Meta avatar={<h1>{data.emoji}</h1>} title={data.name} description={data.description} />
-                </Col>
-            </Row>
-        </Card>
+                    <Row style={{ marginTop: '10px' }}>
+                        <Col span={24}>
+                            {' '}
+                            <Meta
+                                avatar={<h1>{data.emoji}</h1>}
+                                title={<h3>{data.name}</h3>}
+                                description={data.description}
+                            />
+                        </Col>
+                    </Row>
+                    <Divider orientation="left"></Divider>
+
+                    <Row>
+                        <Col span={24}>
+                            <img
+                                style={{ borderRadius: '10px' }}
+                                width={'100%'}
+                                src={useConvertAvatarPath(data.cover)}
+                                alt="cover"
+                            />
+                        </Col>
+                    </Row>
+
+                    <Row style={{ marginTop: '10px' }}>
+                        <Col span={24}></Col>
+                    </Row>
+
+                    <Row>
+                        <Col span={24}></Col>
+                    </Row>
+                    {/* <CustomList title="Courses" data={data.courses} /> */}
+                </Card>
+            </Badge.Ribbon>
+        </div>
     );
 }
 

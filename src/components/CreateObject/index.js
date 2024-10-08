@@ -1,6 +1,6 @@
 import { ColorPicker, Tag, Flex, Button, Input, Select, Switch, DatePicker, Divider } from 'antd';
 import classNames from 'classnames/bind';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { CheckOutlined } from '@ant-design/icons';
 import EmojiPicker from 'emoji-picker-react';
@@ -24,7 +24,7 @@ function CreateObject({
     isEdit = false,
 }) {
     const cx = classNames.bind(styles);
-
+    const navigate = useNavigate();
     const { TextArea } = Input;
     const { RangePicker } = DatePicker;
 
@@ -151,7 +151,7 @@ function CreateObject({
 
             //Goi API
             try {
-                if (type === 'course') {
+                if (type === 'course' && isEdit === false) {
                     const res = await createNewCourseApi(formData);
                     if (res.EC === 0) {
                         alert('Duplicate name. Choose another name!');
@@ -159,7 +159,8 @@ function CreateObject({
                     }
                     console.log('Update successful:', res);
                     alert('New ' + type + ' created!');
-                } else {
+                    navigate('/courses');
+                } else if (type === 'term' && isEdit === false) {
                     const res = await createNewTermApi(formData);
                     if (res.EC === 0) {
                         alert('Duplicate name. Choose another name!');
@@ -167,6 +168,7 @@ function CreateObject({
                     }
                     console.log('Update successful:', res);
                     alert('New ' + type + ' created!');
+                    navigate('/terms');
                 }
             } catch (error) {
                 console.error('Update failed:', error);
