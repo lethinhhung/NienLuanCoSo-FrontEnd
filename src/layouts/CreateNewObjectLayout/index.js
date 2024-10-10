@@ -8,9 +8,11 @@ import styles from './CreateNewObjectLayout.module.scss';
 import CustomHeader from '~/layouts/DefaultLayout/Header';
 import CustomFooter from '~/layouts/DefaultLayout/Footer';
 import logo from '~/assets/images/logo.png';
-import { useWindowDimensions } from '~/hooks';
+import { useConvertAvatarPath, useWindowDimensions } from '~/hooks';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '~/contexts/Auth';
+import { getAccountInfoApi } from '~/utils/api';
 
 function CreateNewObjectLayout({ children }) {
     const cx = classNames.bind(styles);
@@ -18,11 +20,16 @@ function CreateNewObjectLayout({ children }) {
     const { Header, Footer } = Layout;
     const navigate = useNavigate();
     const { width } = useWindowDimensions();
+    const { logout } = useAuth();
 
     const [isHidden, setIsHidden] = useState(true);
 
     const layoutStyle = {
         overflow: 'hidden',
+    };
+
+    const handleLogout = () => {
+        logout();
     };
 
     const items = [
@@ -33,11 +40,7 @@ function CreateNewObjectLayout({ children }) {
         },
         {
             key: 'logout',
-            label: (
-                <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
-                    Logout
-                </a>
-            ),
+            label: <a onClick={handleLogout}>Logout</a>,
             icon: <LogoutOutlined />,
         },
     ];
@@ -50,11 +53,21 @@ function CreateNewObjectLayout({ children }) {
         }
     }, [width]);
 
-    useEffect(() => {});
-
     const handleToHome = () => {
         navigate('/');
     };
+
+    const [info, setInfo] = useState({ name: '', description: '' });
+
+    useEffect(() => {
+        const fetchAccountInfo = async () => {
+            const accountInfo = await getAccountInfoApi();
+
+            setInfo(accountInfo.info);
+        };
+
+        fetchAccountInfo();
+    }, []);
 
     return (
         <Flex gap="middle" wrap>
@@ -73,19 +86,31 @@ function CreateNewObjectLayout({ children }) {
                                 placement="bottomRight"
                                 arrow
                             >
-                                <Button type="text" className={cx('account-btn')} shape="circle">
-                                    <div style={{ borderRadius: '9999px', padding: '10px' }}>
+                                <button
+                                    style={{ backgroundColor: 'transparent' }}
+                                    type="text"
+                                    className={cx('account-btn')}
+                                    shape="circle"
+                                >
+                                    <div
+                                        style={{
+                                            borderRadius: '9999px',
+                                            padding: '10px',
+                                        }}
+                                    >
                                         {/* <MehOutlined style={{ fontSize: '40px' }} /> */}
                                         <img
                                             style={{
                                                 width: '100%',
-                                                objectFit: 'contain',
+                                                height: '100%',
+                                                objectFit: 'cover',
+                                                borderRadius: '9999px',
                                             }}
-                                            src={defaultAvatar}
+                                            src={useConvertAvatarPath(info.avatarPath)}
                                             alt="avatar"
                                         />
                                     </div>
-                                </Button>
+                                </button>
                             </Dropdown>
                         </Space>
                     </Header>

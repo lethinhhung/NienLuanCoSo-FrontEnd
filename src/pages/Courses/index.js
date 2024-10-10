@@ -38,17 +38,24 @@ function Courses() {
         fetchCoursesInfo();
     }, [loading]);
 
-    // const filteredCourses = coursesInfo.filter((course) =>
-    //     course.name.toLowerCase().includes(searchTerm.toLowerCase()),
-    // );
+    // const filteredCourses = coursesInfo.filter((course) => {
+    //     const matchesSearchTerm = course.name.toLowerCase().includes(searchTerm.toLowerCase());
+    //     const matchesSelectedTags =
+    //         selectedTags.length === 0 ||
+    //         course.tags.some((tagId) => {
+    //             const tagName = tagsInfo.find((tag) => tag._id === tagId)?.name;
+    //             return selectedTags.includes(tagName);
+    //         });
+    //     return matchesSearchTerm && matchesSelectedTags;
+    // });
     const filteredCourses = coursesInfo.filter((course) => {
         const matchesSearchTerm = course.name.toLowerCase().includes(searchTerm.toLowerCase());
-        const matchesSelectedTags =
-            selectedTags.length === 0 ||
+        const matchesSelectedTags = selectedTags.every((selectedTag) =>
             course.tags.some((tagId) => {
                 const tagName = tagsInfo.find((tag) => tag._id === tagId)?.name;
-                return selectedTags.includes(tagName);
-            });
+                return tagName === selectedTag;
+            }),
+        );
         return matchesSearchTerm && matchesSelectedTags;
     });
 

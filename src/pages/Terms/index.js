@@ -49,14 +49,22 @@ function Terms() {
         if (status === 'onprogress') {
             const currentDate = new Date();
             filtered = filtered.filter((term) => {
-                const termDate = new Date(term.endDate);
-                return termDate >= currentDate;
+                const termStartDate = new Date(term.startDate);
+                const termEndDate = new Date(term.endDate);
+
+                return termStartDate <= currentDate && termEndDate >= currentDate;
             });
         } else if (status === 'completed') {
             const currentDate = new Date();
             filtered = filtered.filter((term) => {
                 const termDate = new Date(term.endDate);
                 return termDate <= currentDate;
+            });
+        } else if (status === 'incoming') {
+            const currentDate = new Date();
+            filtered = filtered.filter((term) => {
+                const termDate = new Date(term.startDate);
+                return termDate > currentDate;
             });
         }
 
@@ -91,6 +99,7 @@ function Terms() {
                                     { value: 'all', label: 'All' },
                                     { value: 'completed', label: 'Completed' },
                                     { value: 'onprogress', label: 'On Progress' },
+                                    { value: 'incoming', label: 'Incoming' },
                                 ]}
                             />
                         </div>
