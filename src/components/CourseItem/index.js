@@ -43,27 +43,53 @@ function CourseItem({ data, loading, onDelete, termsInfo }) {
     }
 
     const currentDate = new Date();
-    const termStartDate = new Date(data.startDate);
-    const termEndDate = new Date(data.endDate);
+    const courseStartDate = new Date(data.startDate);
+    const courseEndDate = new Date(data.endDate);
+    let termStartDate;
+    let termEndDate;
+    if (termInfo !== undefined) {
+        termStartDate = new Date(termInfo.startDate);
+        termEndDate = new Date(termInfo.endDate);
+    }
     let status = {
         status: '',
         color: '',
     };
-    if (currentDate > termEndDate) {
-        status = {
-            status: 'Completed',
-            color: 'blue',
-        };
-    } else if (currentDate < termEndDate && currentDate > termStartDate) {
-        status = {
-            status: 'On progress',
-            color: 'red',
-        };
+
+    if (data.term === null) {
+        if (currentDate > courseEndDate) {
+            status = {
+                status: 'Completed',
+                color: 'blue',
+            };
+        } else if (currentDate <= courseEndDate && currentDate >= courseStartDate) {
+            status = {
+                status: 'On progress',
+                color: 'red',
+            };
+        } else {
+            status = {
+                status: 'Incoming',
+                color: 'green',
+            };
+        }
     } else {
-        status = {
-            status: 'Incoming',
-            color: 'green',
-        };
+        if (currentDate > termEndDate) {
+            status = {
+                status: 'Completed',
+                color: 'blue',
+            };
+        } else if (currentDate <= termEndDate && currentDate >= termStartDate) {
+            status = {
+                status: 'On progress',
+                color: 'red',
+            };
+        } else {
+            status = {
+                status: 'Incoming',
+                color: 'green',
+            };
+        }
     }
 
     return (
