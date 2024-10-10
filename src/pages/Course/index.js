@@ -1,7 +1,8 @@
-import { Image, Avatar, Card, Flex, Divider, Row, Input } from 'antd';
+import { Image, Avatar, Card, Flex, Divider, Row, Input, Popconfirm, Button, List } from 'antd';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { DeleteOutlined } from '@ant-design/icons';
 
 import styles from './Course.module.scss';
 import CustomList from '~/components/CustomList';
@@ -32,7 +33,12 @@ function Course() {
         fetchCourseInfo();
     }, []);
 
-    const data = [];
+    const data = [
+        {
+            key: 1,
+            title: 'hehe',
+        },
+    ];
 
     return (
         <Flex className={cx('wrapper')} wrap vertical align="center">
@@ -88,7 +94,39 @@ function Course() {
             </div>
 
             <div className={cx('lessions-list-wrapper')}>
-                <CustomList title="Lessons" data={data} type="course" />
+                <List
+                    itemLayout="horizontal"
+                    dataSource={data}
+                    renderItem={(item, index) => (
+                        <List.Item
+                            style={{
+                                backgroundColor: item.color,
+                                border: '1px solid #ccc',
+                                borderRadius: '5px',
+                                marginBottom: '5px',
+                                padding: '10px',
+                            }}
+                            actions={[
+                                <Popconfirm
+                                    title={'Remove this '}
+                                    description={'Are you sure to remove this '}
+                                    okText="Delete"
+                                    cancelText={'Remove from this '}
+                                >
+                                    <Button>
+                                        <DeleteOutlined />
+                                    </Button>
+                                </Popconfirm>,
+                            ]}
+                        >
+                            <List.Item.Meta
+                                avatar={<h1>{item.emoji}</h1>}
+                                title={<Link to="/course/hehe/lesson">{item.title}</Link>}
+                                description={item.description}
+                            />
+                        </List.Item>
+                    )}
+                ></List>
             </div>
         </Flex>
     );

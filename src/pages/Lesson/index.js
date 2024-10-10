@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Image, Avatar, Card, Flex, Divider, Progress, Select, Row, Col, Button, Input } from 'antd';
+import { Image, Avatar, Card, Flex, Divider, Progress, Select, Row, Col, Button, Input, Modal } from 'antd';
 import classNames from 'classnames/bind';
 
 import styles from './Lesson.module.scss';
@@ -22,7 +22,19 @@ function Lesson() {
         setLoading(false);
     }, [debounced]);
 
-    const { width } = useWindowDimensions();
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const showModal = () => {
+        setIsModalVisible(true);
+    };
+
+    const handleOk = () => {
+        //Goi API
+        setIsModalVisible(false);
+    };
+
+    const handleCancel = () => {
+        setIsModalVisible(false);
+    };
 
     return (
         <Flex className={cx('wrapper')} wrap vertical align="center">
@@ -32,7 +44,17 @@ function Lesson() {
                     hoverable
                     title={<h2>Lesson title</h2>}
                     bordered={false}
-                    extra={<a href="#">Edit description</a>}
+                    extra={
+                        <div>
+                            <Button onClick={showModal}>Edit</Button>
+                            <Modal
+                                title={<h2>{'Edit lesson details'}</h2>}
+                                open={isModalVisible}
+                                onOk={handleOk}
+                                onCancel={handleCancel}
+                            ></Modal>
+                        </div>
+                    }
                 >
                     <Meta title="Description" description="This is the description" />
                 </Card>
