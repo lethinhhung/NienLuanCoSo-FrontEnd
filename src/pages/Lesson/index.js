@@ -1,26 +1,32 @@
 import { useEffect, useRef, useState } from 'react';
 import { Image, Avatar, Card, Flex, Divider, Progress, Select, Row, Col, Button, Input, Modal } from 'antd';
 import classNames from 'classnames/bind';
+import { useParams } from 'react-router-dom';
 
 import styles from './Lesson.module.scss';
 import { useDebounce, useWindowDimensions } from '~/hooks';
 import Editor from '~/components/Editor';
+import { getLessonInfoApi } from '~/utils/api';
 
 function Lesson() {
     const cardColor = '#624e88';
     const cx = classNames.bind(styles);
 
+    const { lessonId } = useParams();
+
     const { Meta } = Card;
 
-    const { TextArea } = Input;
-
-    const [loading, setLoading] = useState(true);
-
-    const debounced = useDebounce(loading, 1000);
+    const [lessonInfo, setLessonInfo] = useState({});
 
     useEffect(() => {
-        setLoading(false);
-    }, [debounced]);
+        const fetchLessonInfo = async () => {
+            const lessonData = await getLessonInfoApi(lessonId);
+
+            setLessonInfo(lessonData);
+        };
+
+        fetchLessonInfo();
+    }, []);
 
     const [isModalVisible, setIsModalVisible] = useState(false);
     const showModal = () => {
@@ -42,7 +48,7 @@ function Lesson() {
                 <Card
                     className={cx('overview')}
                     hoverable
-                    title={<h2>Lesson title</h2>}
+                    title={<h2>{lessonInfo.name}</h2>}
                     bordered={false}
                     extra={
                         <div>
@@ -56,7 +62,7 @@ function Lesson() {
                         </div>
                     }
                 >
-                    <Meta title="Description" description="This is the description" />
+                    <Meta title="Description" description={lessonInfo.description} />
                 </Card>
             </Flex>
             <Flex wrap justify="center">

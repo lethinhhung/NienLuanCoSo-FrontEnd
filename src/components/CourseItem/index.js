@@ -14,7 +14,6 @@ function CourseItem({ data, loading, onDelete, termsInfo }) {
     const navigate = useNavigate();
 
     const handleEdit = () => {
-        console.log('Edit course');
         navigate('/course/' + data._id);
     };
 

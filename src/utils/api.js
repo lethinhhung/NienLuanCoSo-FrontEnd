@@ -160,6 +160,28 @@ const deleteTermApi = async (termId) => {
     return axios.post(URL_API, data);
 };
 
+// Lesson
+
+const createNewLessonApi = async (formData) => {
+    const URL_API = '/v1/api/create-new-lesson';
+
+    try {
+        const res = await axios.post(URL_API, formData);
+        return res;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
+const getLessonInfoApi = async (lessonId) => {
+    const URL_API = '/v1/api/get-lesson-info';
+    const data = {
+        lessonId,
+    };
+
+    return axios.post(URL_API, data);
+};
 export {
     createUserApi,
     loginApi,
@@ -177,4 +199,6 @@ export {
     getTermsInfoApi,
     getTermInfoApi,
     deleteTermApi,
+    createNewLessonApi,
+    getLessonInfoApi,
 };
