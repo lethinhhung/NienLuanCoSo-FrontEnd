@@ -19,16 +19,7 @@ function Term() {
     const { TextArea } = Input;
 
     const [termInfo, setTermInfo] = useState({});
-
-    useEffect(() => {
-        const fetchCoursesInfo = async () => {
-            const termData = await getTermInfoApi(termId);
-
-            setTermInfo(termData);
-        };
-
-        fetchCoursesInfo();
-    }, []);
+    const [fetchData, setFetchData] = useState(false);
 
     //Modal
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -44,6 +35,15 @@ function Term() {
     const handleCancel = () => {
         setIsModalVisible(false);
     };
+    useEffect(() => {
+        const fetchTermInfo = async () => {
+            const termData = await getTermInfoApi(termId);
+
+            setTermInfo(termData);
+        };
+
+        fetchTermInfo();
+    }, [isModalVisible, fetchData]);
 
     return (
         <Flex className={cx('wrapper')} wrap vertical align="center">
@@ -64,7 +64,15 @@ function Term() {
                 </div>
             </div>
             <div className={cx('lessions-list-wrapper')}>
-                <CustomList title="Courses" data={termInfo.courses} />
+                <CustomList
+                    title="Courses"
+                    data={termInfo.courses}
+                    id={termInfo._id}
+                    isModalVisible={isModalVisible}
+                    setIsModalVisible={setIsModalVisible}
+                    fetchData={fetchData}
+                    setFetchData={setFetchData}
+                />
             </div>
             <div className={cx('component-wrapper')}>
                 <Card

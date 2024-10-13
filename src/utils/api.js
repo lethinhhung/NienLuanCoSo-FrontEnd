@@ -160,6 +160,27 @@ const deleteTermApi = async (termId) => {
     return axios.post(URL_API, data);
 };
 
+const addCourseToTermApi = async (termId, courseId) => {
+    const URL_API = '/v1/api/add-course-to-term-by-id';
+    const data = {
+        termId,
+        courseId,
+    };
+
+    return axios.post(URL_API, data);
+};
+
+const removeCourseFromTermApi = async (termId, courseId) => {
+    const URL_API = '/v1/api/remove-course-from-term-by-id';
+    const data = {
+        termId,
+        courseId,
+    };
+    console.log(data);
+
+    return axios.post(URL_API, data);
+};
+
 // Lesson
 
 const createNewLessonApi = async (formData) => {
@@ -210,6 +231,8 @@ export {
     getTermsInfoApi,
     getTermInfoApi,
     deleteTermApi,
+    addCourseToTermApi,
+    removeCourseFromTermApi,
     createNewLessonApi,
     getLessonInfoApi,
     getLessonsInfoByIdsApi,
