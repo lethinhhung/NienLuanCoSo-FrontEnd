@@ -9,7 +9,7 @@ import CustomList from '~/components/CustomList';
 import TagsDrawer from '~/components/TagsDrawer';
 import EditDescription from '~/components/EditDescription';
 import ProgressionOverview from '~/components/ProgressionOverview';
-import { createNewLessonApi, getCourseInfoApi, getLessonsInfoByIdsApi } from '~/utils/api';
+import { createNewLessonApi, deleteLessonApi, getCourseInfoApi, getLessonsInfoByIdsApi } from '~/utils/api';
 import defaultTagsData from '~/components/DefaultTagColor';
 import { useConvertAvatarPath } from '~/hooks';
 
@@ -19,6 +19,7 @@ function Course() {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [inputLessonName, setInputLessonName] = useState('');
     const [inputDescription, setInputDescription] = useState('');
+    const [deleteTrigger, setDeleteTrigger] = useState(false);
 
     const { Meta } = Card;
 
@@ -45,7 +46,7 @@ function Course() {
         };
 
         fetchCourseInfo();
-    }, [isModalVisible]);
+    }, [isModalVisible, courseId, deleteTrigger]);
 
     const showModal = () => {
         setIsModalVisible(true);
@@ -87,6 +88,15 @@ function Course() {
 
     const handleInputDescription = (e) => {
         setInputDescription(e.target.value);
+    };
+
+    const handleDeleteLesson = async (id) => {
+        const lessonId = id;
+        const result = await deleteLessonApi(lessonId);
+        if (result._id) {
+            alert('Lesson deleted');
+            setDeleteTrigger(!deleteTrigger);
+        }
     };
 
     return (
@@ -177,10 +187,11 @@ function Course() {
                             }}
                             actions={[
                                 <Popconfirm
-                                    title={'Remove this '}
-                                    description={'Are you sure to remove this '}
+                                    onConfirm={() => handleDeleteLesson(item._id)}
+                                    title={'Delete this lesson'}
+                                    description={'Are you sure to remove this lesson?'}
                                     okText="Delete"
-                                    cancelText={'Remove from this '}
+                                    cancelText={'Cancel '}
                                 >
                                     <Button>
                                         <DeleteOutlined />

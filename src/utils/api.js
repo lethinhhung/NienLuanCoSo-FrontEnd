@@ -227,7 +227,22 @@ const addContentToLessonApi = async (formData) => {
 };
 
 const getContentFromLessonApi = async (lessonId) => {
-    const URL_API = '/v1/api//get-lesson-content';
+    const URL_API = '/v1/api/get-lesson-content';
+    const data = {
+        lessonId,
+    };
+
+    try {
+        const res = await axios.post(URL_API, data);
+        return res;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
+const deleteLessonApi = async (lessonId) => {
+    const URL_API = '/v1/api/delete-lesson';
     const data = {
         lessonId,
     };
@@ -265,4 +280,5 @@ export {
     getLessonsInfoByIdsApi,
     addContentToLessonApi,
     getContentFromLessonApi,
+    deleteLessonApi,
 };
