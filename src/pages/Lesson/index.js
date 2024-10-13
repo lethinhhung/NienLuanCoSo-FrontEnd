@@ -1,5 +1,20 @@
 import { useEffect, useRef, useState } from 'react';
-import { Image, Avatar, Card, Flex, Divider, Progress, Select, Row, Col, Button, Input, Modal } from 'antd';
+import {
+    Image,
+    Avatar,
+    Card,
+    Flex,
+    Divider,
+    Progress,
+    Select,
+    Row,
+    Col,
+    Button,
+    Input,
+    Modal,
+    Spin,
+    Badge,
+} from 'antd';
 import classNames from 'classnames/bind';
 import { useParams } from 'react-router-dom';
 
@@ -17,6 +32,9 @@ function Lesson() {
     const { Meta } = Card;
 
     const [lessonInfo, setLessonInfo] = useState({});
+    const [tipText, setTipText] = useState('Status');
+    const [loading, setLoading] = useState(false);
+    const [color, setColor] = useState('red');
 
     useEffect(() => {
         const fetchLessonInfo = async () => {
@@ -65,9 +83,21 @@ function Lesson() {
                     <Meta title="Description" description={lessonInfo.description} />
                 </Card>
             </Flex>
+            <div style={{ width: '100%', justifyContent: 'center', display: 'flex' }}>
+                <Badge color={color} count={tipText}></Badge>
+                <Spin spinning={loading}></Spin>
+            </div>
             <Flex wrap justify="center">
                 <div style={{ backgroundColor: cardColor }} className={cx('editor-wrapper')}>
-                    <Editor className={cx('editor')} />
+                    <Editor
+                        loading={loading}
+                        setLoading={setLoading}
+                        tipText={tipText}
+                        setTipText={setTipText}
+                        className={cx('editor')}
+                        lessonId={lessonId}
+                        setColor={setColor}
+                    />
                 </div>
             </Flex>
         </Flex>

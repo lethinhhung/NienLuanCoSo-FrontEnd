@@ -214,6 +214,18 @@ const getLessonsInfoByIdsApi = async (lessonsIds) => {
     return axios.post(URL_API, data);
 };
 
+const addContentToLessonApi = async (formData) => {
+    const URL_API = '/v1/api/add-content-to-lesson';
+
+    try {
+        const res = await axios.post(URL_API, formData);
+        return res;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
 export {
     createUserApi,
     loginApi,
@@ -236,4 +248,5 @@ export {
     createNewLessonApi,
     getLessonInfoApi,
     getLessonsInfoByIdsApi,
+    addContentToLessonApi,
 };
