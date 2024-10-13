@@ -5,9 +5,10 @@ import { useNavigate } from 'react-router-dom';
 
 import styles from './TermItem.module.scss';
 import { useEffect, useState } from 'react';
-import { useConvertAvatarPath, useReRender } from '~/hooks';
+import convertAvatarPath from '~/utils/convertAvatarPath';
 import { deleteTermApi } from '~/utils/api';
 import CustomList from '../CustomList';
+import defaultCourseCover from '../../assets/images/default-course-cover.png';
 
 function TermItem({ data, loading }) {
     const cx = classNames.bind(styles);
@@ -108,7 +109,7 @@ function TermItem({ data, loading }) {
                             <img
                                 style={{ borderRadius: '10px', aspectRatio: '16/9', objectFit: 'cover' }}
                                 width={'100%'}
-                                src={useConvertAvatarPath(data.cover)}
+                                src={data.cover === '' ? defaultCourseCover : convertAvatarPath(data.cover)}
                                 alt="cover"
                             />
                         </Col>
@@ -121,8 +122,6 @@ function TermItem({ data, loading }) {
                     <Row>
                         <Col span={24}></Col>
                     </Row>
-
-                    {/* <CustomList title="Courses" data={data.courses} /> */}
                 </Card>
             </Badge.Ribbon>
         </div>

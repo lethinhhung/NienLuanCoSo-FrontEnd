@@ -5,9 +5,10 @@ import { useNavigate } from 'react-router-dom';
 
 import styles from './CourseItem.module.scss';
 import TagsDrawer from '../TagsDrawer';
-import { useConvertAvatarPath } from '~/hooks';
+import convertAvatarPath from '~/utils/convertAvatarPath';
 import { useEffect, useState } from 'react';
 import { deleteCourseApi } from '~/utils/api';
+import defaultCourseCover from '../../assets/images/default-course-cover.png';
 
 function CourseItem({ data, loading, onDelete, termsInfo }) {
     const cx = classNames.bind(styles);
@@ -103,7 +104,13 @@ function CourseItem({ data, loading, onDelete, termsInfo }) {
                 loading={loading}
                 bordered={false}
                 className={cx('wrapper')}
-                cover={<img className={cx('cover-img')} src={useConvertAvatarPath(data.cover)} alt="cover" />}
+                cover={
+                    <img
+                        className={cx('cover-img')}
+                        src={data.cover === '' ? defaultCourseCover : convertAvatarPath(data.cover)}
+                        alt="cover"
+                    />
+                }
                 actions={[
                     <Tooltip title="Edit this course" placement="bottom">
                         <Button type="text" onClick={handleEdit}>
