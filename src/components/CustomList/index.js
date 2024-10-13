@@ -14,16 +14,7 @@ import {
     removeCourseFromTermApi,
 } from '~/utils/api';
 
-function CustomList({
-    title = '',
-    data,
-    type = 'term',
-    id = '',
-    isModalVisible,
-    setIsModalVisible,
-    fetchData,
-    setFetchData,
-}) {
+function CustomList({ title = '', data, id = '', isModalVisible, setIsModalVisible, fetchData, setFetchData }) {
     const cx = classNames.bind(styles);
 
     const transformData = (inputData) => {
@@ -41,15 +32,6 @@ function CustomList({
 
     const navigate = useNavigate();
 
-    let handleAdd = () => {
-        if (type === 'term') {
-            navigate('/create-new-course');
-        } else {
-            //goi API
-            navigate('/course/lesson/:name');
-        }
-    };
-
     const showModal = () => {
         setIsModalVisible(true);
     };
@@ -57,7 +39,6 @@ function CustomList({
     const handleOk = () => {
         //Goi API
         setIsModalVisible(false);
-        handleAdd();
     };
 
     const handleCancel = () => {
@@ -73,13 +54,6 @@ function CustomList({
         } else setFetchData(false);
         console.log(result);
     };
-
-    let childType = '';
-    if (type === 'term') {
-        childType = 'course';
-    } else {
-        childType = 'lesson';
-    }
 
     useEffect(() => {
         const fetchCourseInfo = async () => {
@@ -111,54 +85,46 @@ function CustomList({
             title={title}
             bordered={false}
             extra={
-                type === 'course' ? (
-                    <>
-                        <Button onClick={showModal}>Add</Button>
-                        <Modal title="Add new lesson" open={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-                            <Input placeholder="Enter lesson name..." />
-                        </Modal>
-                    </>
-                ) : (
-                    <>
-                        <Button onClick={showModal}>Add</Button>
-                        <Modal
-                            title="Add current course to this term"
-                            open={isModalVisible}
-                            footer={[
-                                <Button key="cancel" onClick={handleCancel}>
-                                    Done
-                                </Button>,
-                            ]}
-                        >
-                            <List
-                                itemLayout="horizontal"
-                                dataSource={transformedCoursesData}
-                                renderItem={(item, index) => (
-                                    <List.Item
-                                        style={{
-                                            backgroundColor: item.color,
-                                            border: '1px solid #ccc',
-                                            borderRadius: '5px',
-                                            marginBottom: '5px',
-                                            padding: '10px',
-                                        }}
-                                        actions={[
-                                            <Button onClick={() => handleAddCourse(item.id)}>
-                                                <PlusOutlined />
-                                            </Button>,
-                                        ]}
-                                    >
-                                        <List.Item.Meta
-                                            avatar={<h1>{item.emoji}</h1>}
-                                            title={<Link to={'/course/' + item.id}>{item.title}</Link>}
-                                            description={item.description}
-                                        />
-                                    </List.Item>
-                                )}
-                            ></List>
-                        </Modal>
-                    </>
-                )
+                <>
+                    <Button onClick={showModal}>Add</Button>
+                    <Modal
+                        title="Add current course to this term"
+                        open={isModalVisible}
+                        footer={[
+                            <Button key="cancel" onClick={handleCancel}>
+                                Done
+                            </Button>,
+                        ]}
+                        onCancel={handleCancel}
+                    >
+                        <List
+                            itemLayout="horizontal"
+                            dataSource={transformedCoursesData}
+                            renderItem={(item, index) => (
+                                <List.Item
+                                    style={{
+                                        backgroundColor: item.color,
+                                        border: '1px solid #ccc',
+                                        borderRadius: '5px',
+                                        marginBottom: '5px',
+                                        padding: '10px',
+                                    }}
+                                    actions={[
+                                        <Button onClick={() => handleAddCourse(item.id)}>
+                                            <PlusOutlined />
+                                        </Button>,
+                                    ]}
+                                >
+                                    <List.Item.Meta
+                                        avatar={<h1>{item.emoji}</h1>}
+                                        title={<Link to={'/course/' + item.id}>{item.title}</Link>}
+                                        description={item.description}
+                                    />
+                                </List.Item>
+                            )}
+                        ></List>
+                    </Modal>
+                </>
             }
         >
             <List
@@ -190,7 +156,7 @@ function CustomList({
                     >
                         <List.Item.Meta
                             avatar={<h1>{item.emoji}</h1>}
-                            title={<Link to="/course/hehe/lesson">{item.title}</Link>}
+                            title={<Link to={'/course/' + item.id}>{item.title}</Link>}
                             description={item.description}
                         />
                     </List.Item>
