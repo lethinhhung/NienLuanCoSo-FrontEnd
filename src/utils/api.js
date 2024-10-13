@@ -182,6 +182,17 @@ const getLessonInfoApi = async (lessonId) => {
 
     return axios.post(URL_API, data);
 };
+
+const getLessonsInfoByIdsApi = async (lessonsIds) => {
+    const URL_API = '/v1/api/get-lessons-info-by-ids';
+
+    const data = {
+        lessonsIds,
+    };
+
+    return axios.post(URL_API, data);
+};
+
 export {
     createUserApi,
     loginApi,
@@ -201,4 +212,5 @@ export {
     deleteTermApi,
     createNewLessonApi,
     getLessonInfoApi,
+    getLessonsInfoByIdsApi,
 };

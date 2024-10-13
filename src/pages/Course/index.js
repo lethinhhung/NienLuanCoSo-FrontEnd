@@ -1,4 +1,4 @@
-import { Image, Avatar, Card, Flex, Divider, Row, Input, Popconfirm, Button, List } from 'antd';
+import { Image, Avatar, Card, Flex, Divider, Row, Input, Popconfirm, Button, List, Modal } from 'antd';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
@@ -9,36 +9,79 @@ import CustomList from '~/components/CustomList';
 import TagsDrawer from '~/components/TagsDrawer';
 import EditDescription from '~/components/EditDescription';
 import ProgressionOverview from '~/components/ProgressionOverview';
-import { getCourseInfoApi, getCoursesInfoApi } from '~/utils/api';
+import { createNewLessonApi, getCourseInfoApi, getLessonsInfoByIdsApi } from '~/utils/api';
 import defaultTagsData from '~/components/DefaultTagColor';
 import { useConvertAvatarPath } from '~/hooks';
 
 function Course() {
     const cx = classNames.bind(styles);
     const { courseId } = useParams();
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [inputLessonName, setInputLessonName] = useState('');
+    const [inputDescription, setInputDescription] = useState('');
 
     const { Meta } = Card;
 
     const { TextArea } = Input;
 
     const [courseInfo, setCourseInfo] = useState({});
+    const [transformedData, setTransformedData] = useState();
+
+    const transformData = (inputData) => {
+        return inputData.map((item) => ({
+            title: item.name,
+            description: item.description,
+            _id: item._id,
+        }));
+    };
 
     useEffect(() => {
         const fetchCourseInfo = async () => {
             const courseData = await getCourseInfoApi(courseId);
+            const lessonsData = await getLessonsInfoByIdsApi(courseData.lessons);
 
             setCourseInfo(courseData);
+            setTransformedData(transformData(lessonsData));
+            console.log(lessonsData);
         };
 
         fetchCourseInfo();
-    }, []);
+    }, [isModalVisible]);
 
-    const data = [
-        {
-            key: 1,
-            title: 'hehe',
-        },
-    ];
+    const showModal = () => {
+        setIsModalVisible(true);
+    };
+
+    const handleOk = async () => {
+        //Goi API
+        if (inputLessonName === '') {
+            alert('Enter lesson name!');
+            return;
+        } else if (inputDescription === '') {
+            alert('Enter lesson description!');
+            return;
+        }
+        const name = inputLessonName;
+        const description = inputDescription;
+        const course = courseInfo._id;
+        const data = { name, course, description };
+        await createNewLessonApi(data);
+        setInputLessonName('');
+        setInputDescription('');
+        setIsModalVisible(false);
+    };
+
+    const handleCancel = () => {
+        setIsModalVisible(false);
+    };
+
+    const handleInputLessonName = (e) => {
+        setInputLessonName(e.target.value);
+    };
+
+    const handleInputDescription = (e) => {
+        setInputDescription(e.target.value);
+    };
 
     return (
         <Flex className={cx('wrapper')} wrap vertical align="center">
@@ -95,16 +138,36 @@ function Course() {
 
             <div className={cx('lessions-list-wrapper')}>
                 <List
+                    header={
+                        <Flex wrap justify="space-between">
+                            <h3>Lessons</h3>
+                            <Button onClick={showModal}>Add</Button>
+                            <Modal title="Add new lesson" open={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+                                <Input
+                                    value={inputLessonName}
+                                    onChange={handleInputLessonName}
+                                    placeholder="Enter lesson name..."
+                                />
+                                <p>Description</p>
+                                <TextArea
+                                    autoSize={{ minRows: 2, maxRows: 6 }}
+                                    placeholder={'Enter lesson description...'}
+                                    onChange={handleInputDescription}
+                                    value={inputDescription}
+                                ></TextArea>
+                            </Modal>
+                        </Flex>
+                    }
+                    style={{ width: '100%', backgroundColor: '#ffffff', padding: '24px', borderRadius: '7px' }}
                     itemLayout="horizontal"
-                    dataSource={data}
+                    dataSource={transformedData}
                     renderItem={(item, index) => (
                         <List.Item
                             style={{
-                                backgroundColor: item.color,
                                 border: '1px solid #ccc',
                                 borderRadius: '5px',
                                 marginBottom: '5px',
-                                padding: '10px',
+                                padding: '15px',
                             }}
                             actions={[
                                 <Popconfirm
@@ -120,8 +183,7 @@ function Course() {
                             ]}
                         >
                             <List.Item.Meta
-                                avatar={<h1>{item.emoji}</h1>}
-                                title={<Link to="/course/hehe/lesson">{item.title}</Link>}
+                                title={<Link to={'/course/' + courseInfo._id + '/' + item._id}>{item.title}</Link>}
                                 description={item.description}
                             />
                         </List.Item>

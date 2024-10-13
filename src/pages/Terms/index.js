@@ -41,8 +41,9 @@ function Terms() {
             const end = new Date(endDate);
 
             filtered = filtered.filter((term) => {
-                const termDate = new Date(term.startDate);
-                return termDate >= start && termDate <= end;
+                const termStartDate = new Date(term.startDate);
+                const termEndDate = new Date(term.endDate);
+                return termStartDate >= start && termEndDate <= end;
             });
         }
 

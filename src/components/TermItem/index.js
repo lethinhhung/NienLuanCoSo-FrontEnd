@@ -53,6 +53,11 @@ function TermItem({ data, loading }) {
 
     const startDate = new Date(data.startDate).toLocaleDateString() + ' -';
     const endDate = new Date(data.endDate).toLocaleDateString();
+
+    const truncateDescription = (description) => {
+        return description.length > 60 ? description.substring(0, 60) + '...' : description;
+    };
+
     return (
         <div style={{ marginBottom: '20px' }}>
             <Badge.Ribbon text={`${startDate} ${endDate}`}>
@@ -83,12 +88,12 @@ function TermItem({ data, loading }) {
                         </Popconfirm>,
                     ]}
                 >
-                    <Row style={{ marginTop: '10px' }}>
+                    <Row style={{ marginTop: '10px', minHeight: '80px' }}>
                         <Col span={20}>
                             <Meta
                                 avatar={<h1>{data.emoji}</h1>}
                                 title={<h3>{data.name}</h3>}
-                                description={data.description}
+                                description={truncateDescription(data.description)}
                             />
                         </Col>
                         <Col span={4}>
@@ -101,7 +106,7 @@ function TermItem({ data, loading }) {
                     <Row>
                         <Col span={24}>
                             <img
-                                style={{ borderRadius: '10px' }}
+                                style={{ borderRadius: '10px', aspectRatio: '16/9', objectFit: 'cover' }}
                                 width={'100%'}
                                 src={useConvertAvatarPath(data.cover)}
                                 alt="cover"
@@ -116,6 +121,7 @@ function TermItem({ data, loading }) {
                     <Row>
                         <Col span={24}></Col>
                     </Row>
+
                     {/* <CustomList title="Courses" data={data.courses} /> */}
                 </Card>
             </Badge.Ribbon>

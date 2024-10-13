@@ -18,30 +18,6 @@ function Term() {
 
     const { TextArea } = Input;
 
-    const [loading, setLoading] = useState(true);
-
-    const debounced = useDebounce(loading, 1000);
-
-    useEffect(() => {
-        setLoading(false);
-    }, [debounced]);
-
-    const { width } = useWindowDimensions();
-    const data = [
-        {
-            title: 'Ant Design Title 1',
-        },
-        {
-            title: 'Ant Design Title 2',
-        },
-        {
-            title: 'Ant Design Title 3',
-        },
-        {
-            title: 'Ant Design Title 4',
-        },
-    ];
-
     const [termInfo, setTermInfo] = useState({});
 
     useEffect(() => {

@@ -91,6 +91,10 @@ function CourseItem({ data, loading, onDelete, termsInfo }) {
         }
     }
 
+    const truncateDescription = (description) => {
+        return description.length > 55 ? description.substring(0, 55) + '...' : description;
+    };
+
     return (
         <Badge.Ribbon text={`${startDate} ${endDate}`}>
             <Card
@@ -121,12 +125,18 @@ function CourseItem({ data, loading, onDelete, termsInfo }) {
                     </Popconfirm>,
                 ]}
             >
-                <Flex wrap justify="flex-end" style={{ margin: '-10px -10px 20px 0' }}>
-                    <Badge count={status.status} color={status.color}></Badge>
-                </Flex>
-                <Meta avatar={<h1>{data.emoji}</h1>} title={data.name} description={data.description} />
-                <div className={cx('tags-drawer')}>
-                    <TagsDrawer tagsIds={data.tags} isDefault={false}></TagsDrawer>
+                <div style={{ minHeight: '150px' }}>
+                    <Flex wrap justify="flex-end" style={{ margin: '-10px -10px 20px 0' }}>
+                        <Badge count={status.status} color={status.color}></Badge>
+                    </Flex>
+                    <Meta
+                        avatar={<h1>{data.emoji}</h1>}
+                        title={data.name}
+                        description={truncateDescription(data.description)}
+                    />
+                    <div className={cx('tags-drawer')}>
+                        <TagsDrawer tagsIds={data.tags} isDefault={false}></TagsDrawer>
+                    </div>
                 </div>
             </Card>
         </Badge.Ribbon>

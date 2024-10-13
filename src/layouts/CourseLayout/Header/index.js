@@ -41,7 +41,7 @@ function Header() {
         };
 
         fetchCourseInfo();
-    }, []);
+    }, [window.location.href]);
 
     let data = [
         {
