@@ -40,7 +40,6 @@ function TermItem({ data, loading }) {
     }
 
     const handleEdit = () => {
-        console.log('Edit term');
         navigate('/term/' + data._id);
     };
 

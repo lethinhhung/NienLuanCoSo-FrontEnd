@@ -21,7 +21,7 @@ import { useParams } from 'react-router-dom';
 import styles from './Lesson.module.scss';
 import { useDebounce, useWindowDimensions } from '~/hooks';
 import Editor from '~/components/Editor';
-import { getLessonInfoApi } from '~/utils/api';
+import { getContentFromLessonApi, getLessonInfoApi } from '~/utils/api';
 
 function Lesson() {
     const cardColor = '#624e88';
@@ -32,14 +32,17 @@ function Lesson() {
     const { Meta } = Card;
 
     const [lessonInfo, setLessonInfo] = useState({});
+    const [lessonContent, setLessonContent] = useState();
     const [tipText, setTipText] = useState('Status');
-    const [loading, setLoading] = useState(false);
+
     const [color, setColor] = useState('red');
 
     useEffect(() => {
         const fetchLessonInfo = async () => {
             const lessonData = await getLessonInfoApi(lessonId);
+            const lessonContentData = await getContentFromLessonApi(lessonId);
 
+            setLessonContent(lessonContentData);
             setLessonInfo(lessonData);
         };
 
@@ -85,18 +88,16 @@ function Lesson() {
             </Flex>
             <div style={{ width: '100%', justifyContent: 'center', display: 'flex' }}>
                 <Badge color={color} count={tipText}></Badge>
-                <Spin spinning={loading}></Spin>
             </div>
             <Flex wrap justify="center">
                 <div style={{ backgroundColor: cardColor }} className={cx('editor-wrapper')}>
                     <Editor
-                        loading={loading}
-                        setLoading={setLoading}
                         tipText={tipText}
                         setTipText={setTipText}
                         className={cx('editor')}
                         lessonId={lessonId}
                         setColor={setColor}
+                        lessonContent={lessonContent}
                     />
                 </div>
             </Flex>

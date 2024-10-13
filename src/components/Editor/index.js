@@ -7,7 +7,7 @@ import { useDebounce } from '~/hooks';
 import { useState, useEffect, useRef } from 'react';
 import { addContentToLessonApi, getCourseInfoApi, getCoursesInfoApi } from '~/utils/api';
 
-function Editor({ tipText, setTipText, loading, setLoading, lessonId, setColor }) {
+function Editor({ tipText, setTipText, lessonId, setColor, lessonContent }) {
     const cx = classNames.bind(styles);
 
     // When the editor's content has changed, store it in state
@@ -20,9 +20,29 @@ function Editor({ tipText, setTipText, loading, setLoading, lessonId, setColor }
     //     setLoading(false);
     // };
     const timeoutRef = useRef(null);
+
+    const save = async (content) => {
+        if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current);
+        }
+        setTipText('Saving...');
+        const blob = new Blob([content], { type: 'text/html' });
+
+        //Create a File from the Blob
+        const file = new File([blob], 'content.html', { type: 'text/html' });
+        const formData = new FormData();
+        formData.append('lessonId', lessonId);
+        formData.append('content', file);
+
+        await addContentToLessonApi(formData);
+
+        setTipText('Saved');
+
+        setColor('blue');
+    };
     const handleOnChange = async (content) => {
         setColor('red');
-        setTipText('Changed and not saving. Autosave after 5 seconds');
+        setTipText('Changed and not saving. Autosave after 60 seconds');
 
         // Clear any existing timeout
         if (timeoutRef.current) {
@@ -31,22 +51,8 @@ function Editor({ tipText, setTipText, loading, setLoading, lessonId, setColor }
 
         // Set a new timeout for 3 seconds
         timeoutRef.current = setTimeout(async () => {
-            setLoading(true);
-            setTipText('Saving...');
-            const blob = new Blob([content], { type: 'text/html' });
-
-            // Step 2: Create a File from the Blob
-            const file = new File([blob], 'content.html', { type: 'text/html' });
-            const formData = new FormData();
-            formData.append('lessonId', lessonId);
-            formData.append('content', file);
-            console.log(typeof formData.get('content'));
-            const result = await addContentToLessonApi(formData);
-            console.log(result);
-            setTipText('Saved');
-            setLoading(false);
-            setColor('blue');
-        }, 5000);
+            save(content);
+        }, 60000);
     };
 
     useEffect(() => {
@@ -61,8 +67,8 @@ function Editor({ tipText, setTipText, loading, setLoading, lessonId, setColor }
     return (
         <div className={cx('wrapper')}>
             <SunEditor
-                setContents={localStorage.getItem('content1')}
-                onSave={handleOnChange}
+                setContents={lessonContent}
+                onSave={save}
                 onChange={handleOnChange}
                 setOptions={{
                     minHeight: '300px',

@@ -42,7 +42,6 @@ function Course() {
 
             setCourseInfo(courseData);
             setTransformedData(transformData(lessonsData));
-            console.log(lessonsData);
         };
 
         fetchCourseInfo();
@@ -61,11 +60,18 @@ function Course() {
             alert('Enter lesson description!');
             return;
         }
-        const name = inputLessonName;
-        const description = inputDescription;
-        const course = courseInfo._id;
-        const data = { name, course, description };
-        await createNewLessonApi(data);
+        const content = '<p><br></p>';
+        const blob = new Blob([content], { type: 'text/html' });
+
+        // Step 2: Create a File from the Blob
+        const file = new File([blob], 'content.html', { type: 'text/html' });
+        const formData = new FormData();
+        formData.append('name', inputLessonName);
+        formData.append('content', file);
+        formData.append('description', inputDescription);
+        formData.append('course', courseInfo._id);
+
+        await createNewLessonApi(formData);
         setInputLessonName('');
         setInputDescription('');
         setIsModalVisible(false);
