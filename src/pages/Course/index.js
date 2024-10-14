@@ -11,7 +11,8 @@ import EditDescription from '~/components/EditDescription';
 import ProgressionOverview from '~/components/ProgressionOverview';
 import { createNewLessonApi, deleteLessonApi, getCourseInfoApi, getLessonsInfoByIdsApi } from '~/utils/api';
 import defaultTagsData from '~/components/DefaultTagColor';
-import { useConvertAvatarPath } from '~/hooks';
+import convertAvatarPath from '~/utils/convertAvatarPath';
+import defaultCourseCover from '../../assets/images/default-course-cover.png';
 
 function Course() {
     const cx = classNames.bind(styles);
@@ -113,7 +114,7 @@ function Course() {
                         }}
                         width={'100%'}
                         preview={false}
-                        src={useConvertAvatarPath(courseInfo.cover)}
+                        src={courseInfo.cover === '' ? defaultCourseCover : convertAvatarPath(courseInfo.cover)}
                     />
                 </div>
             </div>

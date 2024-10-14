@@ -4,10 +4,11 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import styles from './Term.module.scss';
-import { useConvertAvatarPath, useDebounce, useWindowDimensions } from '~/hooks';
+import convertAvatarPath from '~/utils/convertAvatarPath';
 import CustomList from '~/components/CustomList';
 import EditDescription from '~/components/EditDescription';
 import { getTermInfoApi, getTermsInfoApi } from '~/utils/api';
+import defaultCourseCover from '../../assets/images/default-term-cover.jpg';
 
 function Term() {
     const cx = classNames.bind(styles);
@@ -59,7 +60,7 @@ function Term() {
                         }}
                         width={'100%'}
                         preview={false}
-                        src={useConvertAvatarPath(termInfo.cover)}
+                        src={termInfo.cover === '' ? defaultCourseCover : convertAvatarPath(termInfo.cover)}
                     />
                 </div>
             </div>

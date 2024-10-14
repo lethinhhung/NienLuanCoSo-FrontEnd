@@ -8,8 +8,20 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         // Kiểm tra trạng thái đăng nhập từ localStorage khi ứng dụng khởi động
         const access_token = localStorage.getItem('access_token');
-        if (access_token) {
-            setIsAuthenticated(true);
+        const loginTime = new Date(localStorage.getItem('login_time'));
+        if (access_token && loginTime) {
+            const currentTime = new Date();
+
+            const timeDifference = currentTime - loginTime;
+            const daysDifference = timeDifference / (1000 * 60 * 60 * 24);
+            console.log(daysDifference);
+
+            if (daysDifference < 1) {
+                setIsAuthenticated(true);
+            } else {
+                setIsAuthenticated(false);
+                localStorage.removeItem('login_time');
+            }
         } else setIsAuthenticated(false);
     }, []);
 

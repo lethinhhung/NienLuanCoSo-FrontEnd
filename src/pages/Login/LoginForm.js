@@ -17,7 +17,9 @@ function LoginForm() {
         const res = await loginApi(name, password);
 
         if (res.access_token) {
+            const currentTime = new Date();
             localStorage.setItem('access_token', res.access_token);
+            localStorage.setItem('login_time', currentTime);
             login(true);
             alert('Login successfully!');
             navigate('/dashboard');

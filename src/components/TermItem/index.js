@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import convertAvatarPath from '~/utils/convertAvatarPath';
 import { deleteTermApi } from '~/utils/api';
 import CustomList from '../CustomList';
-import defaultCourseCover from '../../assets/images/default-course-cover.png';
+import defaultCourseCover from '../../assets/images/default-term-cover.jpg';
 
 function TermItem({ data, loading }) {
     const cx = classNames.bind(styles);
