@@ -14,7 +14,6 @@ export const AuthProvider = ({ children }) => {
 
             const timeDifference = currentTime - loginTime;
             const daysDifference = timeDifference / (1000 * 60 * 60 * 24);
-            console.log(daysDifference);
 
             if (daysDifference < 1) {
                 setIsAuthenticated(true);
