@@ -14,6 +14,7 @@ import NewTerm from '~/pages/NewTerm';
 import Course from '~/pages/Course';
 import Lesson from '~/pages/Lesson';
 import Term from '~/pages/Term';
+import Statistic from '~/pages/Statistics';
 
 // Public routes
 const publicRoutes = [
@@ -27,6 +28,7 @@ const publicRoutes = [
     { path: config.routes.newTerm, component: NewTerm, layout: CreateNewObjectLayout },
     { path: config.routes.course, component: Course, layout: CourseLayout },
     { path: config.routes.lesson, component: Lesson, layout: CourseLayout },
+    { path: config.routes.statistics, component: Statistic, layout: CourseLayout },
     { path: config.routes.term, component: Term },
 ];
 

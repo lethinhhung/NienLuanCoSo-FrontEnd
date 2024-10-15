@@ -10,6 +10,7 @@ const routes = {
     course: '/course/:courseId',
     lesson: '/course/:courseId/:lessonId',
     term: '/term/:termId',
+    statistics: '/course/:courseId/statistics/:statisticsId',
 };
 
 export default routes;

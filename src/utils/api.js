@@ -256,6 +256,169 @@ const deleteLessonApi = async (lessonId) => {
     }
 };
 
+// Statistics
+
+const getStatisticsInfoApi = async (statisticsId) => {
+    const URL_API = '/v1/api/get-statistics-info';
+    const data = {
+        statisticsId,
+    };
+
+    try {
+        const res = await axios.post(URL_API, data);
+        return res;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
+// Project
+const createNewProjectApi = async (name, totalSteps, completedSteps, statisticsId) => {
+    const URL_API = '/v1/api/create-new-project';
+    const data = {
+        name,
+        totalSteps,
+        completedSteps,
+        statisticsId,
+    };
+
+    try {
+        const res = await axios.post(URL_API, data);
+        return res;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
+const getProjectsInfoByIdsApi = async (projectsIds) => {
+    const URL_API = '/v1/api/get-projects-info-by-ids';
+    const data = {
+        projectsIds,
+    };
+
+    try {
+        const res = await axios.post(URL_API, data);
+        return res;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
+const deleteProjectApi = async (projectId) => {
+    const URL_API = '/v1/api/delete-project';
+    const data = {
+        projectId,
+    };
+
+    try {
+        const res = await axios.post(URL_API, data);
+        return res;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
+// ProjectStep
+const createNewProjectStepApi = async (name, status, projectId) => {
+    const URL_API = '/v1/api/create-new-project-step';
+    const data = {
+        name,
+        projectId,
+    };
+
+    try {
+        const res = await axios.post(URL_API, data);
+        return res;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
+const getProjectStepsInfoByIdsApi = async (projectStepsIds) => {
+    const URL_API = '/v1/api/get-project-steps-info-by-ids';
+    const data = {
+        projectStepsIds,
+    };
+
+    try {
+        const res = await axios.post(URL_API, data);
+        return res;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
+const deleteProjectStepApi = async (projectStepId) => {
+    const URL_API = '/v1/api/delete-project-step';
+    const data = {
+        projectStepId,
+    };
+
+    try {
+        const res = await axios.post(URL_API, data);
+        return res;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
+// Test
+const createNewTestApi = async (name, gradeWeight, maxScore, score, statisticsId) => {
+    const URL_API = '/v1/api/create-new-test';
+    const data = {
+        name,
+        gradeWeight,
+        maxScore,
+        score,
+        statisticsId,
+    };
+
+    try {
+        const res = await axios.post(URL_API, data);
+        return res;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
+const getTestsInfoByIdsApi = async (testsIds) => {
+    const URL_API = '/v1/api/get-tests-info-by-ids';
+    const data = {
+        testsIds,
+    };
+
+    try {
+        const res = await axios.post(URL_API, data);
+        return res;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
+const deleteTestApi = async (testId) => {
+    const URL_API = '/v1/api/delete-test';
+    const data = {
+        testId,
+    };
+
+    try {
+        const res = await axios.post(URL_API, data);
+        return res;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
 export {
     createUserApi,
     loginApi,
@@ -281,4 +444,14 @@ export {
     addContentToLessonApi,
     getContentFromLessonApi,
     deleteLessonApi,
+    getStatisticsInfoApi,
+    createNewProjectApi,
+    createNewProjectStepApi,
+    createNewTestApi,
+    deleteProjectApi,
+    deleteProjectStepApi,
+    deleteTestApi,
+    getProjectsInfoByIdsApi,
+    getProjectStepsInfoByIdsApi,
+    getTestsInfoByIdsApi,
 };
