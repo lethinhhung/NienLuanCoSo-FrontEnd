@@ -6,3 +6,4 @@ export { default as useGetDimmerColor } from './useGetDimmerColor';
 export { default as useGetBrighterColor } from './useGetBrighterColor';
 export { default as useConvertImage } from './useConvertImage';
 export { default as useConvertAvatarPath } from './useConvertAvatarPath';
+export { default as useProcessData } from './useProcessData';

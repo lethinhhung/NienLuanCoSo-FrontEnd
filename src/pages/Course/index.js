@@ -9,10 +9,20 @@ import CustomList from '~/components/CustomList';
 import TagsDrawer from '~/components/TagsDrawer';
 import EditDescription from '~/components/EditDescription';
 import ProgressionOverview from '~/components/ProgressionOverview';
-import { createNewLessonApi, deleteLessonApi, getCourseInfoApi, getLessonsInfoByIdsApi } from '~/utils/api';
+import {
+    createNewLessonApi,
+    deleteLessonApi,
+    getCourseInfoApi,
+    getLessonsInfoByIdsApi,
+    getProjectsInfoByIdsApi,
+    getStatisticsInfoApi,
+    getTestsInfoByIdsApi,
+} from '~/utils/api';
 import defaultTagsData from '~/components/DefaultTagColor';
 import convertAvatarPath from '~/utils/convertAvatarPath';
 import defaultCourseCover from '../../assets/images/default-course-cover.png';
+import { statistic } from 'antd/es/theme/internal';
+import { useProcessData } from '~/hooks';
 
 function Course() {
     const cx = classNames.bind(styles);
@@ -28,6 +38,10 @@ function Course() {
 
     const [courseInfo, setCourseInfo] = useState({});
     const [transformedData, setTransformedData] = useState();
+    const [statisticsInfo, setStatisticsInfo] = useState({});
+    const [testsInfo, setTestsInfo] = useState([]);
+    const [projectsInfo, setProjectsInfo] = useState([]);
+    const [data, setData] = useState({});
 
     const transformData = (inputData) => {
         return inputData.map((item) => ({
@@ -41,13 +55,30 @@ function Course() {
         const fetchCourseInfo = async () => {
             const courseData = await getCourseInfoApi(courseId);
             const lessonsData = await getLessonsInfoByIdsApi(courseData.lessons);
-
             setCourseInfo(courseData);
+
             setTransformedData(transformData(lessonsData));
         };
 
+        const fetchInfo = async () => {
+            const statisticsData = await getStatisticsInfoApi(courseInfo.statistics);
+            setStatisticsInfo(statisticsData);
+            if (statisticsData.tests !== null) {
+                const testsData = await getTestsInfoByIdsApi(statisticsData.tests);
+                setTestsInfo(testsData);
+            }
+            if (statisticsData.projects !== null) {
+                const projectsData = await getProjectsInfoByIdsApi(statisticsData.projects);
+                setProjectsInfo(projectsData);
+            }
+        };
+
+        fetchInfo();
+
         fetchCourseInfo();
     }, [isModalVisible, courseId, deleteTrigger]);
+
+    // setData(useProcessData(statisticsInfo, testsInfo, projectsInfo));
 
     const showModal = () => {
         setIsModalVisible(true);
@@ -99,6 +130,7 @@ function Course() {
             setDeleteTrigger(!deleteTrigger);
         }
     };
+    console.log(data);
 
     return (
         <Flex className={cx('wrapper')} wrap vertical align="center">
@@ -139,7 +171,11 @@ function Course() {
                 </Row>
                 <Divider />
 
-                <ProgressionOverview></ProgressionOverview>
+                {/* <ProgressionOverview
+                    statisticsId={courseInfo.statistics}
+                    courseStartDate={courseInfo.startDate}
+                    courseEndDate={courseInfo.endDate}
+                ></ProgressionOverview> */}
             </Card>
 
             <div className={cx('notes-wrapper')}>
