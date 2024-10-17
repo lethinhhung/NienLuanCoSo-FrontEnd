@@ -14,20 +14,18 @@ import {
 
 function Statistics({}) {
     const { courseId, statisticsId } = useParams();
+    const [statisticsInfo, setStatisticsInfo] = useState({});
 
     useEffect(() => {
         const fetchInfo = async () => {
             const statisticsData = await getStatisticsInfoApi(statisticsId);
-            const projectData = await getProjectsInfoByIdsApi(statisticsData.projects);
-            const testData = await getTestsInfoByIdsApi(statisticsData.tests);
-            const projectStepData = await getProjectStepsInfoByIdsApi(projectData[0].steps);
-            console.log(projectStepData);
+            setStatisticsInfo(statisticsData);
         };
 
         fetchInfo();
     }, []);
 
-    return <div></div>;
+    return <div>{statisticsInfo.completedScore}</div>;
 }
 
 export default Statistics;

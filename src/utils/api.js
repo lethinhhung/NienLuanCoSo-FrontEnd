@@ -323,7 +323,7 @@ const deleteProjectApi = async (projectId) => {
 };
 
 // ProjectStep
-const createNewProjectStepApi = async (name, status, projectId) => {
+const createNewProjectStepApi = async (name, projectId) => {
     const URL_API = '/v1/api/create-new-project-step';
     const data = {
         name,
@@ -358,6 +358,22 @@ const deleteProjectStepApi = async (projectStepId) => {
     const URL_API = '/v1/api/delete-project-step';
     const data = {
         projectStepId,
+    };
+
+    try {
+        const res = await axios.post(URL_API, data);
+        return res;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
+const updateProjectStepApi = async (projectStepId, status) => {
+    const URL_API = '/v1/api/update-project-step';
+    const data = {
+        projectStepId,
+        status,
     };
 
     try {
@@ -419,6 +435,22 @@ const deleteTestApi = async (testId) => {
     }
 };
 
+const updateTestScoreApi = async (testId, newScore) => {
+    const URL_API = '/v1/api/update-test-score';
+    const data = {
+        testId,
+        newScore,
+    };
+
+    try {
+        const res = await axios.post(URL_API, data);
+        return res;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
 export {
     createUserApi,
     loginApi,
@@ -450,6 +482,7 @@ export {
     createNewTestApi,
     deleteProjectApi,
     deleteProjectStepApi,
+    updateProjectStepApi,
     deleteTestApi,
     getProjectsInfoByIdsApi,
     getProjectStepsInfoByIdsApi,

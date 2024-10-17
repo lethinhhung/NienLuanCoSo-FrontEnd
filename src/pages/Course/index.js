@@ -1,14 +1,15 @@
-import { Image, Avatar, Card, Flex, Divider, Row, Input, Popconfirm, Button, List, Modal } from 'antd';
+import { Image, Avatar, Card, Flex, Divider, Row, Input, Popconfirm, Button, List, Modal, Badge } from 'antd';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { DeleteOutlined } from '@ant-design/icons';
+import moment from 'moment';
 
 import styles from './Course.module.scss';
 import CustomList from '~/components/CustomList';
 import TagsDrawer from '~/components/TagsDrawer';
 import EditDescription from '~/components/EditDescription';
-import ProgressionOverview from '~/components/ProgressionOverview';
+
 import {
     createNewLessonApi,
     deleteLessonApi,
@@ -16,6 +17,7 @@ import {
     getLessonsInfoByIdsApi,
     getProjectsInfoByIdsApi,
     getStatisticsInfoApi,
+    getTermInfoApi,
     getTestsInfoByIdsApi,
 } from '~/utils/api';
 import defaultTagsData from '~/components/DefaultTagColor';
@@ -23,6 +25,7 @@ import convertAvatarPath from '~/utils/convertAvatarPath';
 import defaultCourseCover from '../../assets/images/default-course-cover.png';
 import { statistic } from 'antd/es/theme/internal';
 import { useProcessData } from '~/hooks';
+import StatisticsOverview from '~/components/StatisticsOverview';
 
 function Course() {
     const cx = classNames.bind(styles);
@@ -39,9 +42,7 @@ function Course() {
     const [courseInfo, setCourseInfo] = useState({});
     const [transformedData, setTransformedData] = useState();
     const [statisticsInfo, setStatisticsInfo] = useState({});
-    const [testsInfo, setTestsInfo] = useState([]);
-    const [projectsInfo, setProjectsInfo] = useState([]);
-    const [data, setData] = useState({});
+    const [termInfo, setTermInfo] = useState({});
 
     const transformData = (inputData) => {
         return inputData.map((item) => ({
@@ -55,30 +56,18 @@ function Course() {
         const fetchCourseInfo = async () => {
             const courseData = await getCourseInfoApi(courseId);
             const lessonsData = await getLessonsInfoByIdsApi(courseData.lessons);
+            const statisticsData = await getStatisticsInfoApi(courseData.statistics);
+            if (courseData.term) {
+                const termData = await getTermInfoApi(courseData.term);
+                setTermInfo(termData);
+            }
             setCourseInfo(courseData);
-
             setTransformedData(transformData(lessonsData));
-        };
-
-        const fetchInfo = async () => {
-            const statisticsData = await getStatisticsInfoApi(courseInfo.statistics);
             setStatisticsInfo(statisticsData);
-            if (statisticsData.tests !== null) {
-                const testsData = await getTestsInfoByIdsApi(statisticsData.tests);
-                setTestsInfo(testsData);
-            }
-            if (statisticsData.projects !== null) {
-                const projectsData = await getProjectsInfoByIdsApi(statisticsData.projects);
-                setProjectsInfo(projectsData);
-            }
         };
-
-        fetchInfo();
 
         fetchCourseInfo();
     }, [isModalVisible, courseId, deleteTrigger]);
-
-    // setData(useProcessData(statisticsInfo, testsInfo, projectsInfo));
 
     const showModal = () => {
         setIsModalVisible(true);
@@ -130,7 +119,7 @@ function Course() {
             setDeleteTrigger(!deleteTrigger);
         }
     };
-    console.log(data);
+    console.log(statisticsInfo);
 
     return (
         <Flex className={cx('wrapper')} wrap vertical align="center">
@@ -160,22 +149,37 @@ function Course() {
                 <Meta avatar={<h1>{courseInfo.emoji}</h1>} title="Description" description={courseInfo.description} />
 
                 <Divider />
-                <Row>
+                <Row style={{ marginBottom: '10px' }}>
                     <h4>Infomations</h4>
                 </Row>
                 <Row>
                     <Flex style={{ width: '100%' }} wrap justify="space-between" align="center">
-                        <p style={{ padding: '10px' }}>Term</p>
+                        Durration:
+                        {courseInfo.term ? (
+                            <Badge count={termInfo.name}></Badge>
+                        ) : (
+                            <Badge
+                                count={
+                                    moment(courseInfo.startDate).format('DD/MM/YYYY') +
+                                    ' - ' +
+                                    moment(courseInfo.endDate).format('DD/MM/YYYY')
+                                }
+                            ></Badge>
+                        )}
                         <TagsDrawer tagsIds={courseInfo.tags} isDefault={false} />
                     </Flex>
                 </Row>
+
+                <Row>
+                    <Flex style={{ width: '100%' }} wrap justify="space-between" align="center">
+                        Tags:
+                        <TagsDrawer tagsIds={courseInfo.tags} isDefault={false} />
+                    </Flex>
+                </Row>
+                <Row></Row>
                 <Divider />
 
-                {/* <ProgressionOverview
-                    statisticsId={courseInfo.statistics}
-                    courseStartDate={courseInfo.startDate}
-                    courseEndDate={courseInfo.endDate}
-                ></ProgressionOverview> */}
+                <StatisticsOverview data={statisticsInfo} courseInfo={courseInfo}></StatisticsOverview>
             </Card>
 
             <div className={cx('notes-wrapper')}>

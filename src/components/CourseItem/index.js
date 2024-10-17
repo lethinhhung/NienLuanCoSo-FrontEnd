@@ -9,6 +9,7 @@ import convertAvatarPath from '~/utils/convertAvatarPath';
 import { useEffect, useState } from 'react';
 import { deleteCourseApi } from '~/utils/api';
 import defaultCourseCover from '../../assets/images/default-course-cover.png';
+import moment from 'moment';
 
 function CourseItem({ data, loading, onDelete, termsInfo }) {
     const cx = classNames.bind(styles);
@@ -40,6 +41,8 @@ function CourseItem({ data, loading, onDelete, termsInfo }) {
     } else {
         startDate = new Date(data.startDate).toLocaleDateString() + ' -';
         endDate = new Date(data.endDate).toLocaleDateString();
+        startDate = moment(data.startDate).format('DD/MM/YYYY') + ' -';
+        endDate = moment(data.endDate).format('DD/MM/YYYY');
     }
 
     const currentDate = new Date();

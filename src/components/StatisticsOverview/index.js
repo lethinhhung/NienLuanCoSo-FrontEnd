@@ -1,0 +1,97 @@
+import { Flex, Progress, Row, Button, Tooltip } from 'antd';
+import classNames from 'classnames/bind';
+
+import styles from './StatisticsOverview.module.scss';
+
+import {
+    createNewLessonApi,
+    deleteLessonApi,
+    getCourseInfoApi,
+    getLessonsInfoByIdsApi,
+    getProjectsInfoByIdsApi,
+    getProjectStepsInfoByIdsApi,
+    getStatisticsInfoApi,
+    getTestsInfoByIdsApi,
+} from '~/utils/api';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+
+const StatisticsOverview = ({ data, courseInfo }) => {
+    const cx = classNames.bind(styles);
+    const currentDate = new Date();
+    const courseStartDate = new Date(courseInfo.startDate);
+    const courseEndDate = new Date(courseInfo.endDate);
+    const progression = (courseEndDate - currentDate) / 1000 / 60 / 60 / 24;
+
+    const navigate = useNavigate();
+
+    const handleEditStatistics = () => {
+        navigate('/course/' + courseInfo._id + '/statistics/' + courseInfo.statistics);
+    };
+
+    return (
+        <div className={cx('wrapper')}>
+            <Flex wrap justify="space-evenly">
+                <div className={cx('progression-wrapper')}>
+                    <p>Progression</p>
+                    <Flex justify="center">
+                        <Tooltip
+                            title={
+                                currentDate < courseStartDate
+                                    ? 'Incoming'
+                                    : currentDate > courseEndDate
+                                    ? 'Completed'
+                                    : progression.toFixed(1)
+                            }
+                        >
+                            <Progress
+                                type="circle"
+                                percent={
+                                    currentDate < courseStartDate
+                                        ? '0'
+                                        : currentDate > courseEndDate
+                                        ? '100'
+                                        : progression.toFixed(1)
+                                }
+                            />
+                        </Tooltip>
+                    </Flex>
+                </div>
+                <div className={cx('progression-wrapper')}>
+                    <p>Tests</p>
+
+                    <Flex justify="center">
+                        <Tooltip title={data.completedScore + '%/' + data.completedGradeWeight + '% completed'}>
+                            <Progress
+                                percent={data.completedGradeWeight}
+                                success={{ percent: data.completedScore }}
+                                type="circle"
+                            />
+                        </Tooltip>
+                    </Flex>
+                </div>
+                <div className={cx('progression-wrapper')}>
+                    <p>Projects</p>
+
+                    <Flex justify="center">
+                        <Tooltip title={data.completedProjects + '/' + data.totalProjects + ' project(s) completed'}>
+                            <Progress
+                                type="circle"
+                                percent={
+                                    data.totalProjects === 0
+                                        ? '0'
+                                        : ((data.completedProjects / data.totalProjects) * 100).toFixed(1)
+                                }
+                            />
+                        </Tooltip>
+                    </Flex>
+                </div>
+            </Flex>
+            <Row>
+                <Button onClick={handleEditStatistics}>Edit/Add</Button>
+            </Row>
+        </div>
+    );
+};
+
+export default StatisticsOverview;
