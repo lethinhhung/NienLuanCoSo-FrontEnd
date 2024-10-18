@@ -70,6 +70,7 @@ const StatisticsOverview = ({ data, courseInfo }) => {
                         </Tooltip>
                     </Flex>
                 </div>
+
                 <div className={cx('progression-wrapper')}>
                     <p>Projects</p>
 
@@ -77,11 +78,16 @@ const StatisticsOverview = ({ data, courseInfo }) => {
                         <Tooltip title={data.completedProjects + '/' + data.totalProjects + ' project(s) completed'}>
                             <Progress
                                 type="circle"
+                                steps={{
+                                    count: data.totalProjects,
+                                    gap: 2,
+                                }}
                                 percent={
                                     data.totalProjects === 0
                                         ? '0'
                                         : ((data.completedProjects / data.totalProjects) * 100).toFixed(1)
                                 }
+                                trailColor="rgba(0, 0, 0, 0.06)"
                             />
                         </Tooltip>
                     </Flex>
