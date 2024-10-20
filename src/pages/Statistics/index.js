@@ -17,10 +17,12 @@ import {
 } from 'antd';
 import classNames from 'classnames/bind';
 import { useParams } from 'react-router-dom';
-import { CheckCircleOutlined, StarOutlined } from '@ant-design/icons';
+import { CheckCircleOutlined, CloseCircleOutlined, StarOutlined } from '@ant-design/icons';
 
 import styles from './Statistics.module.scss';
 import Bar from '~/components/Charts/Bar';
+import getScoreColor from '~/utils/getScoreColor';
+import moment from 'moment';
 
 import {
     getContentFromLessonApi,
@@ -31,28 +33,22 @@ import {
     getStatisticsInfoApi,
     getTestsInfoByIdsApi,
 } from '~/utils/api';
-import moment from 'moment';
+import Projects from '~/components/Statistics/Projects';
+import Tests from '~/components/Statistics/Tests';
 
 function Statistics({}) {
     const { courseId, statisticsId } = useParams();
     const [statisticsInfo, setStatisticsInfo] = useState({});
     const [projectsInfo, setProjectsInfo] = useState([]);
     const [courseInfo, setCourseInfo] = useState({});
+    const [testsInfo, setTestsInfo] = useState([]);
     const [testsChartData, setTestsChartData] = useState({
         labels: [],
         datasets: [
             {
                 label: '',
                 data: [],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(255, 159, 64, 0.2)',
-                    'rgba(255, 205, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(201, 203, 207, 0.2)',
-                ],
+                backgroundColor: [],
             },
         ],
     });
@@ -90,12 +86,17 @@ function Statistics({}) {
             setStatisticsInfo(statisticsData);
             setProjectsInfo(projectsWithSteps);
             setCourseInfo(courseData);
+            setTestsInfo(testsData);
 
             // Update data object with testsInfo
             const updatedLabels = testsData.map((test) => test.name + ' (' + test.gradeWeight + '%)');
             const updatedData = testsData.map((test) => {
                 return test.score === -1 ? 0 : test.score;
             });
+            const updatedBackgroundColor = testsData.map((test) => {
+                return getScoreColor(test.score);
+            });
+
             setTestsChartData((prevData) => ({
                 ...prevData,
                 labels: updatedLabels,
@@ -103,6 +104,7 @@ function Statistics({}) {
                     {
                         ...prevData.datasets[0],
                         data: updatedData,
+                        backgroundColor: updatedBackgroundColor,
                     },
                 ],
             }));
@@ -143,132 +145,14 @@ function Statistics({}) {
                 </Row>
             </Card>
 
-            <Card className={cx('overview')} hoverable title="Tests" bordered={false}>
-                <Row>
-                    <Flex style={{ width: '100%' }} justify="space-between" align="center">
-                        <Title level={3}>Achieved: {statisticsInfo.completedScore + '%'}</Title>
-                        <Tooltip
-                            title={
-                                statisticsInfo.completedScore +
-                                '%/' +
-                                statisticsInfo.completedGradeWeight +
-                                '% completed'
-                            }
-                        >
-                            <Progress
-                                percent={statisticsInfo.completedGradeWeight}
-                                success={{ percent: statisticsInfo.completedScore }}
-                                type="circle"
-                            />
-                        </Tooltip>
-                    </Flex>
-                </Row>
-                <Divider></Divider>
-                <Row>
-                    <Flex style={{ width: '100%' }} justify="center">
-                        <div style={{ maxWidth: '700px', width: '100%' }}>
-                            {statisticsInfo.tests && statisticsInfo.tests.length === 0 ? (
-                                <Flex justify="center" style={{ marginTop: '20px' }}>
-                                    <Badge count={'Empty'}></Badge>
-                                </Flex>
-                            ) : (
-                                <Bar data={testsChartData} options={testOptions}></Bar>
-                            )}
-                        </div>
-                    </Flex>
-                </Row>
-            </Card>
+            <Tests
+                testsInfo={testsInfo}
+                testOptions={testOptions}
+                testsChartData={testsChartData}
+                statisticsInfo={statisticsInfo}
+            />
 
-            <Card className={cx('overview')} hoverable title="Projects" bordered={false}>
-                <Row>
-                    <Flex style={{ width: '100%' }} justify="space-between" align="center">
-                        <Title level={3}>Completed project(s): {statisticsInfo.completedProjects}</Title>
-                        <Tooltip
-                            title={
-                                statisticsInfo.completedProjects +
-                                '/' +
-                                statisticsInfo.totalProjects +
-                                ' project(s) completed'
-                            }
-                        >
-                            <Progress
-                                type="circle"
-                                steps={{
-                                    count: statisticsInfo.totalProjects,
-                                    gap: 2,
-                                }}
-                                percent={
-                                    statisticsInfo.totalProjects === 0
-                                        ? '0'
-                                        : (
-                                              (statisticsInfo.completedProjects / statisticsInfo.totalProjects) *
-                                              100
-                                          ).toFixed(1)
-                                }
-                                trailColor="rgba(0, 0, 0, 0.06)"
-                            />
-                        </Tooltip>
-                    </Flex>
-                </Row>
-                <Divider></Divider>
-                <Row style={{ marginBottom: '10px' }}>
-                    <Title level={3}>Projects progression</Title>
-                </Row>
-                <Row>
-                    <Flex style={{ width: '100%' }} justify="center">
-                        <Flex vertical style={{ maxWidth: '700px', width: '100%' }}>
-                            {statisticsInfo.totalProjects !== 0 ? (
-                                projectsInfo.map((project, index) => (
-                                    <Card style={{ marginBottom: '10px' }} key={index} hoverable title={project.name}>
-                                        <Tooltip
-                                            title={
-                                                project.completedSteps === project.totalSteps
-                                                    ? 'Completed'
-                                                    : project.completedSteps +
-                                                      '/' +
-                                                      project.totalSteps +
-                                                      ' step(s) completed'
-                                            }
-                                        >
-                                            <Progress percent={(project.completedSteps / project.totalSteps) * 100} />
-                                            <Divider></Divider>
-                                            {project.steps.map((step, index) => (
-                                                <Row key={index} style={{ marginTop: '2px' }}>
-                                                    <Flex
-                                                        justify="space-between"
-                                                        align="center"
-                                                        style={{ width: '100%' }}
-                                                    >
-                                                        <p>
-                                                            <CheckCircleOutlined /> {step.name}
-                                                        </p>
-                                                        {step.status === true ? (
-                                                            <Badge
-                                                                style={{ marginLeft: '5px' }}
-                                                                color="blue"
-                                                                count={'Done'}
-                                                            ></Badge>
-                                                        ) : (
-                                                            <Badge
-                                                                style={{ marginLeft: '2px' }}
-                                                                count={'On working'}
-                                                            ></Badge>
-                                                        )}
-                                                    </Flex>
-                                                </Row>
-                                            ))}
-                                        </Tooltip>
-                                    </Card>
-                                ))
-                            ) : (
-                                <Flex justify="center" style={{ marginTop: '20px' }}>
-                                    <Badge count={'Empty'}></Badge>
-                                </Flex>
-                            )}
-                        </Flex>
-                    </Flex>
-                </Row>
-            </Card>
+            <Projects statisticsInfo={statisticsInfo} projectsInfo={projectsInfo} />
         </Flex>
     );
 }

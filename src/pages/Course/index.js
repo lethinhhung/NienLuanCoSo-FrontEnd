@@ -2,7 +2,7 @@ import { Image, Avatar, Card, Flex, Divider, Row, Input, Popconfirm, Button, Lis
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { DeleteOutlined } from '@ant-design/icons';
+import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import moment from 'moment';
 
 import styles from './Course.module.scss';
@@ -119,7 +119,6 @@ function Course() {
             setDeleteTrigger(!deleteTrigger);
         }
     };
-    console.log(statisticsInfo);
 
     return (
         <Flex className={cx('wrapper')} wrap vertical align="center">
@@ -153,7 +152,7 @@ function Course() {
                     <h4>Infomations</h4>
                 </Row>
                 <Row>
-                    <Flex style={{ width: '100%' }} wrap justify="space-between" align="center">
+                    <Flex style={{ width: '100%', marginBottom: '5px' }} wrap justify="space-between" align="center">
                         Durration:
                         {courseInfo.term ? (
                             <Badge count={termInfo.name}></Badge>
@@ -166,7 +165,6 @@ function Course() {
                                 }
                             ></Badge>
                         )}
-                        <TagsDrawer tagsIds={courseInfo.tags} isDefault={false} />
                     </Flex>
                 </Row>
 
@@ -198,7 +196,9 @@ function Course() {
                     header={
                         <Flex wrap justify="space-between">
                             <h3>Lessons</h3>
-                            <Button onClick={showModal}>Add</Button>
+                            <Button onClick={showModal}>
+                                <PlusOutlined />
+                            </Button>
                             <Modal title="Add new lesson" open={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
                                 <Input
                                     value={inputLessonName}

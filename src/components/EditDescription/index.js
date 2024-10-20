@@ -1,6 +1,7 @@
 import { Button, Modal } from 'antd';
 import classNames from 'classnames/bind';
 import { useState } from 'react';
+import { EditOutlined } from '@ant-design/icons';
 
 import styles from './EditDescription.module.scss';
 import CreateObject from '~/components/CreateObject';
@@ -24,7 +25,9 @@ function EditDescription({ type = 'course', editData }) {
 
     return (
         <div>
-            <Button onClick={showModal}>Edit</Button>
+            <Button onClick={showModal}>
+                <EditOutlined />
+            </Button>
             <Modal
                 title={<h2>{'Edit this ' + type}</h2>}
                 open={isModalVisible}

@@ -1,4 +1,4 @@
-import { Flex, Progress, Row, Button, Tooltip } from 'antd';
+import { Flex, Progress, Row, Button, Tooltip, Col } from 'antd';
 import classNames from 'classnames/bind';
 
 import styles from './StatisticsOverview.module.scss';
@@ -15,6 +15,13 @@ import {
 } from '~/utils/api';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import {
+    BarChartOutlined,
+    CheckCircleOutlined,
+    CloseCircleOutlined,
+    EditOutlined,
+    StarOutlined,
+} from '@ant-design/icons';
 
 const StatisticsOverview = ({ data, courseInfo }) => {
     const cx = classNames.bind(styles);
@@ -94,7 +101,14 @@ const StatisticsOverview = ({ data, courseInfo }) => {
                 </div>
             </Flex>
             <Row>
-                <Button onClick={handleEditStatistics}>Edit/Add</Button>
+                <Col span={24}>
+                    <Flex wrap justify="flex-end">
+                        <Button onClick={handleEditStatistics}>
+                            <BarChartOutlined />
+                            More details
+                        </Button>
+                    </Flex>
+                </Col>
             </Row>
         </div>
     );
