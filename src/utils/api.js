@@ -323,11 +323,12 @@ const deleteProjectApi = async (projectId) => {
 };
 
 // ProjectStep
-const createNewProjectStepApi = async (name, projectId) => {
+const createNewProjectStepApi = async (name, projectId, status) => {
     const URL_API = '/v1/api/create-new-project-step';
     const data = {
         name,
         projectId,
+        status,
     };
 
     try {
@@ -369,11 +370,12 @@ const deleteProjectStepApi = async (projectStepId) => {
     }
 };
 
-const updateProjectStepApi = async (projectStepId, status) => {
+const updateProjectStepApi = async (projectStepId, status, name) => {
     const URL_API = '/v1/api/update-project-step';
     const data = {
         projectStepId,
         status,
+        name,
     };
 
     try {

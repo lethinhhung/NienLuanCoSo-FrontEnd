@@ -175,7 +175,7 @@ function Tests({ statisticsInfo, testOptions, testsChartData, testsInfo }) {
     };
 
     const handleChangeScore = (value) => {
-        if (value > 0 && value <= 100 && value <= currentSubmitTest.maxScore) {
+        if (value >= 0 && value <= 100 && value <= currentSubmitTest.maxScore) {
             setCurrentSubmitTest({
                 ...currentSubmitTest,
                 score: value,
@@ -329,7 +329,7 @@ function Tests({ statisticsInfo, testOptions, testsChartData, testsInfo }) {
                                                     value={
                                                         currentSubmitTest.score === -1 ? 0.1 : currentSubmitTest.score
                                                     }
-                                                    min={0.1}
+                                                    min={0}
                                                     max={100}
                                                     step="0.1"
                                                 />
