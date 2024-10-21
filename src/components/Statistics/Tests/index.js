@@ -33,7 +33,7 @@ import styles from './Tests.module.scss';
 import Bar from '~/components/Charts/Bar';
 import getScoreColor from '~/utils/getScoreColor';
 import moment from 'moment';
-import { createNewTestApi, deleteTestApi } from '~/utils/api';
+import { createNewTestApi, deleteTestApi, updateTestInfoApi } from '~/utils/api';
 
 function Tests({ statisticsInfo, testOptions, testsChartData, testsInfo }) {
     const cx = classNames.bind(styles);
@@ -66,10 +66,20 @@ function Tests({ statisticsInfo, testOptions, testsChartData, testsInfo }) {
         setIsModalVisible(false);
         setCurrentTest({});
         setCurrentSubmitTest({});
+        setSubmitTest({
+            name: '',
+            gradeWeight: 0,
+            maxScore: 0,
+            score: -1,
+        });
     };
 
     const handleOk = async (test) => {
         //Goi API
+        const testId = currentSubmitTest._id;
+        const { name, gradeWeight, maxScore, score } = currentSubmitTest;
+        const result = await updateTestInfoApi(testId, name, gradeWeight, maxScore, score);
+        console.log(result);
         setIsTestModalVisible(false);
         setCurrentTest({});
         setCurrentSubmitTest({});
@@ -115,14 +125,14 @@ function Tests({ statisticsInfo, testOptions, testsChartData, testsInfo }) {
     };
 
     const handleChangeAddScore = (value) => {
-        // if (value > 0 && value <= 100 && value <= submitTest.maxScore) {
-        //     setSubmitTest({
-        //         ...submitTest,
-        //         score: -1,
-        //     });
-        // } else {
-        //     setSubmitTest(submitTest);
-        // }
+        if ((value >= 0 && value <= 100 && value <= submitTest.maxScore) || value === -1) {
+            setSubmitTest({
+                ...submitTest,
+                score: value,
+            });
+        } else {
+            setSubmitTest(submitTest);
+        }
     };
 
     // Edit test
@@ -191,7 +201,6 @@ function Tests({ statisticsInfo, testOptions, testsChartData, testsInfo }) {
                         <Input onChange={handleChangeAddName} value={submitTest.name}></Input>
                         <p>Grade weight</p>
                         <InputNumber
-                            readOnly
                             onChange={handleChangeAddGradeWeight}
                             addonAfter="%"
                             value={submitTest.gradeWeight}
@@ -211,7 +220,7 @@ function Tests({ statisticsInfo, testOptions, testsChartData, testsInfo }) {
                         <InputNumber
                             onChange={handleChangeAddScore}
                             value={submitTest.score}
-                            min={0.1}
+                            min={-1}
                             max={100}
                             step="0.1"
                         />
@@ -276,7 +285,9 @@ function Tests({ statisticsInfo, testOptions, testsChartData, testsInfo }) {
                                     <Flex justify="space-between" align="center">
                                         <Flex wrap>
                                             <Flex justify="center" style={{ width: '50px', height: '50px' }}>
-                                                <Title style={{ color: 'white' }}>{test.score}</Title>
+                                                <Title style={{ color: 'white' }}>
+                                                    {test.score === -1 ? 'N' : test.score}
+                                                </Title>
                                             </Flex>
                                             <p style={{ color: 'white' }}>{test.name}</p>
                                         </Flex>
@@ -315,7 +326,9 @@ function Tests({ statisticsInfo, testOptions, testsChartData, testsInfo }) {
                                                 <p>Your score</p>
                                                 <InputNumber
                                                     onChange={handleChangeScore}
-                                                    value={currentSubmitTest.score}
+                                                    value={
+                                                        currentSubmitTest.score === -1 ? 0.1 : currentSubmitTest.score
+                                                    }
                                                     min={0.1}
                                                     max={100}
                                                     step="0.1"

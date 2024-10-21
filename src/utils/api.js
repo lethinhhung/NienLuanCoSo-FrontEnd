@@ -451,6 +451,25 @@ const updateTestScoreApi = async (testId, newScore) => {
     }
 };
 
+const updateTestInfoApi = async (testId, name, gradeWeight, maxScore, score) => {
+    const URL_API = '/v1/api/update-test-info';
+    const data = {
+        testId,
+        name,
+        gradeWeight,
+        maxScore,
+        score,
+    };
+
+    try {
+        const res = await axios.post(URL_API, data);
+        return res;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
 export {
     createUserApi,
     loginApi,
@@ -487,4 +506,6 @@ export {
     getProjectsInfoByIdsApi,
     getProjectStepsInfoByIdsApi,
     getTestsInfoByIdsApi,
+    updateTestScoreApi,
+    updateTestInfoApi,
 };
