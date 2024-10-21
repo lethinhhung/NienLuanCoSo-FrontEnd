@@ -40,7 +40,7 @@ import {
     updateProjectStepApi,
 } from '~/utils/api';
 
-function Projects({ statisticsInfo, projectsInfo }) {
+function Projects({ statisticsInfo, projectsInfo, onProjectsChange }) {
     const { Meta } = Card;
     const { Title } = Typography;
     const cx = classNames.bind(styles);
@@ -111,6 +111,18 @@ function Projects({ statisticsInfo, projectsInfo }) {
         const result = await createNewProjectApi(name, totalSteps, completedSteps, statisticsId);
         console.log(result);
         setIsAddModalVisible(false);
+        setCurrentProject({});
+        setSubmitProject({
+            name: '',
+            totalSteps: 0,
+            completedSteps: 0,
+        });
+        setSubmitStep({
+            name: '',
+            status: false,
+        });
+        setCurrentStep({});
+        onProjectsChange();
     };
 
     // Add project step
@@ -139,6 +151,18 @@ function Projects({ statisticsInfo, projectsInfo }) {
         const result = await createNewProjectStepApi(name, projectId, status);
         console.log(result);
         setIsAddStepModalVisible(false);
+        setCurrentProject({});
+        setSubmitProject({
+            name: '',
+            totalSteps: 0,
+            completedSteps: 0,
+        });
+        setSubmitStep({
+            name: '',
+            status: false,
+        });
+        setCurrentStep({});
+        onProjectsChange();
     };
 
     // Edit step
@@ -168,6 +192,18 @@ function Projects({ statisticsInfo, projectsInfo }) {
         const result = await updateProjectStepApi(projectStepId, status, name);
         console.log(result);
         setIsEditStepModalVisible(false);
+        setCurrentProject({});
+        setSubmitProject({
+            name: '',
+            totalSteps: 0,
+            completedSteps: 0,
+        });
+        setSubmitStep({
+            name: '',
+            status: false,
+        });
+        setCurrentStep({});
+        onProjectsChange();
     };
 
     // Delete step
@@ -179,6 +215,7 @@ function Projects({ statisticsInfo, projectsInfo }) {
     const handleDeleteStep = async () => {
         const projectStepId = currentStep._id;
         await deleteProjectStepApi(projectStepId);
+        onProjectsChange();
     };
 
     // Delete project
@@ -190,6 +227,7 @@ function Projects({ statisticsInfo, projectsInfo }) {
     const handleDeleteProject = async () => {
         const projectId = currentProject._id;
         await deleteProjectApi(projectId);
+        onProjectsChange();
     };
 
     return (
@@ -312,7 +350,9 @@ function Projects({ statisticsInfo, projectsInfo }) {
                                                   ' step(s) completed'
                                         }
                                     >
-                                        <Progress percent={(project.completedSteps / project.totalSteps) * 100} />
+                                        <Progress
+                                            percent={((project.completedSteps / project.totalSteps) * 100).toFixed(1)}
+                                        />
                                         <Divider></Divider>
                                         {project.steps.map((step, index) => (
                                             <Row key={index} style={{ marginTop: '2px' }}>

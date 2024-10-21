@@ -35,7 +35,7 @@ import getScoreColor from '~/utils/getScoreColor';
 import moment from 'moment';
 import { createNewTestApi, deleteTestApi, updateTestInfoApi } from '~/utils/api';
 
-function Tests({ statisticsInfo, testOptions, testsChartData, testsInfo }) {
+function Tests({ statisticsInfo, testOptions, testsChartData, testsInfo, onTestsChange }) {
     const cx = classNames.bind(styles);
     const { Meta } = Card;
     const { Title } = Typography;
@@ -83,6 +83,7 @@ function Tests({ statisticsInfo, testOptions, testsChartData, testsInfo }) {
         setIsTestModalVisible(false);
         setCurrentTest({});
         setCurrentSubmitTest({});
+        onTestsChange();
     };
 
     const handleAddOk = async () => {
@@ -91,6 +92,15 @@ function Tests({ statisticsInfo, testOptions, testsChartData, testsInfo }) {
         const result = await createNewTestApi(name, gradeWeight, maxScore, score, statisticsId);
         console.log(result);
         setIsModalVisible(false);
+        setCurrentTest({});
+        setCurrentSubmitTest({});
+        setSubmitTest({
+            name: '',
+            gradeWeight: 0,
+            maxScore: 0,
+            score: -1,
+        });
+        onTestsChange();
     };
 
     // Add test
@@ -142,7 +152,8 @@ function Tests({ statisticsInfo, testOptions, testsChartData, testsInfo }) {
         if (result.success) {
             alert('Success');
         } else alert('Failed');
-        console.log(result);
+
+        onTestsChange();
     };
 
     const handleChangeName = (e) => {

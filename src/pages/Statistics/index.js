@@ -69,47 +69,47 @@ function Statistics({}) {
     const courseEndDate = new Date(courseInfo.endDate);
     const progression = (courseEndDate - currentDate) / 1000 / 60 / 60 / 24;
 
+    const fetchInfo = async () => {
+        const statisticsData = await getStatisticsInfoApi(statisticsId);
+        const testsData = await getTestsInfoByIdsApi(statisticsData.tests);
+        const projectsData = await getProjectsInfoByIdsApi(statisticsData.projects);
+        const courseData = await getCourseInfoApi(courseId);
+
+        const projectsWithSteps = await Promise.all(
+            projectsData.map(async (project) => {
+                const steps = await getProjectStepsInfoByIdsApi(project.steps);
+                return { ...project, steps };
+            }),
+        );
+
+        setStatisticsInfo(statisticsData);
+        setProjectsInfo(projectsWithSteps);
+        setCourseInfo(courseData);
+        setTestsInfo(testsData);
+
+        // Update data object with testsInfo
+        const updatedLabels = testsData.map((test) => test.name + ' (' + test.gradeWeight + '%)');
+        const updatedData = testsData.map((test) => {
+            return test.score === -1 ? 0 : test.score;
+        });
+        const updatedBackgroundColor = testsData.map((test) => {
+            return getScoreColor(test.score);
+        });
+
+        setTestsChartData((prevData) => ({
+            ...prevData,
+            labels: updatedLabels,
+            datasets: [
+                {
+                    ...prevData.datasets[0],
+                    data: updatedData,
+                    backgroundColor: updatedBackgroundColor,
+                },
+            ],
+        }));
+    };
+
     useEffect(() => {
-        const fetchInfo = async () => {
-            const statisticsData = await getStatisticsInfoApi(statisticsId);
-            const testsData = await getTestsInfoByIdsApi(statisticsData.tests);
-            const projectsData = await getProjectsInfoByIdsApi(statisticsData.projects);
-            const courseData = await getCourseInfoApi(courseId);
-
-            const projectsWithSteps = await Promise.all(
-                projectsData.map(async (project) => {
-                    const steps = await getProjectStepsInfoByIdsApi(project.steps);
-                    return { ...project, steps };
-                }),
-            );
-
-            setStatisticsInfo(statisticsData);
-            setProjectsInfo(projectsWithSteps);
-            setCourseInfo(courseData);
-            setTestsInfo(testsData);
-
-            // Update data object with testsInfo
-            const updatedLabels = testsData.map((test) => test.name + ' (' + test.gradeWeight + '%)');
-            const updatedData = testsData.map((test) => {
-                return test.score === -1 ? 0 : test.score;
-            });
-            const updatedBackgroundColor = testsData.map((test) => {
-                return getScoreColor(test.score);
-            });
-
-            setTestsChartData((prevData) => ({
-                ...prevData,
-                labels: updatedLabels,
-                datasets: [
-                    {
-                        ...prevData.datasets[0],
-                        data: updatedData,
-                        backgroundColor: updatedBackgroundColor,
-                    },
-                ],
-            }));
-        };
-
         fetchInfo();
     }, []);
 
@@ -150,9 +150,10 @@ function Statistics({}) {
                 testOptions={testOptions}
                 testsChartData={testsChartData}
                 statisticsInfo={statisticsInfo}
+                onTestsChange={fetchInfo}
             />
 
-            <Projects statisticsInfo={statisticsInfo} projectsInfo={projectsInfo} />
+            <Projects statisticsInfo={statisticsInfo} projectsInfo={projectsInfo} onProjectsChange={fetchInfo} />
         </Flex>
     );
 }
