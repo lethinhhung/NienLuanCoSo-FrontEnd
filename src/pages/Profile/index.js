@@ -6,6 +6,7 @@ import defaultAvatar from '~/assets/images/default-avatar.png';
 import { useConvertAvatarPath } from '~/hooks';
 import { updateUserApi, getAccountInfoApi } from '~/utils/api';
 import styles from './Profile.module.scss';
+import LoadingSpin from '~/components/LoadingSpin';
 
 function Profile() {
     const cx = classNames.bind(styles);
@@ -16,15 +17,18 @@ function Profile() {
     const [description, setDescription] = useState('');
     const [imagePreview, setImagePreview] = useState(null);
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     // fetch info
     const [info, setInfo] = useState({ name: '', description: '' });
 
     useEffect(() => {
+        setLoading(true);
         const fetchAccountInfo = async () => {
             const accountInfo = await getAccountInfoApi();
 
             setInfo(accountInfo.info);
+            setLoading(false);
         };
 
         fetchAccountInfo();
@@ -132,8 +136,10 @@ function Profile() {
                     >
                         <Row>
                             <Col span={6}>
-                                {' '}
-                                <Image width={'100%'} src={avatarPath || defaultAvatar} />
+                                <LoadingSpin loading={loading} />
+                                <div hidden={loading}>
+                                    <Image width={'100%'} src={avatarPath || defaultAvatar} />
+                                </div>
                             </Col>
                             <Col span={18} style={{ paddingLeft: '20px' }}>
                                 <Card

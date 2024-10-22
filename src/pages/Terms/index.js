@@ -1,27 +1,30 @@
-import { Row, Col, Flex, Select, DatePicker } from 'antd';
+import { Row, Col, Flex, Select, DatePicker, Badge } from 'antd';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 
 import styles from './Terms.module.scss';
 import TermItem from '~/components/TermItem';
 import { getTermsInfoApi } from '~/utils/api';
+import LoadingSpin from '~/components/LoadingSpin';
 
 function Terms() {
     const cx = classNames.bind(styles);
 
     const { RangePicker } = DatePicker;
-
+    const [loading, setLoading] = useState(false);
     const [termsInfo, setTermsInfo] = useState([]);
     const [filteredTerms, setFilteredTerms] = useState([]);
     const [selectedTime, setSelectedTime] = useState([]);
     const [selectedStatus, setSelectedStatus] = useState('all');
 
     useEffect(() => {
+        setLoading(true);
         const fetchCoursesInfo = async () => {
             const termsData = await getTermsInfoApi();
 
             setTermsInfo(termsData);
             setFilteredTerms(termsData);
+            setLoading(false);
         };
 
         fetchCoursesInfo();
@@ -102,18 +105,27 @@ function Terms() {
                     </Flex>
                 </Col>
             </Row>
+            <LoadingSpin loading={loading} />
             <Row>
                 <Col offset={2} span={20}>
                     <Flex className={cx('wrapper')} wrap gap="small" justify="space-evenly">
-                        {/* {termsInfo.length > 0 ? (
-                            termsInfo.map((data, index) => <TermItem key={index} data={data}></TermItem>)
-                        ) : (
-                            <div>No term created...</div>
-                        )} */}
                         {filteredTerms.length > 0 ? (
                             filteredTerms.map((data, index) => <TermItem key={index} data={data}></TermItem>)
                         ) : (
-                            <div>No term created...</div>
+                            <>
+                                <div style={{ height: '60vh' }}></div>
+                                <div
+                                    hidden={loading}
+                                    style={{
+                                        position: 'absolute',
+                                        top: '50%',
+                                        left: '50%',
+                                        transform: 'translate(-50%, -50%)',
+                                    }}
+                                >
+                                    <Badge count={'No term created'}></Badge>
+                                </div>
+                            </>
                         )}
                     </Flex>
                 </Col>

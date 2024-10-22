@@ -1,4 +1,4 @@
-import { Flex } from 'antd';
+import { Badge, Flex } from 'antd';
 import classNames from 'classnames/bind';
 import styles from './Courses.module.scss';
 import { useEffect, useState } from 'react';
@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import SearchBar from '~/components/SearchBar';
 import CourseItem from '~/components/CourseItem';
 import { getCoursesInfoApi, getTermsInfoApi, getTagsInfoApi } from '~/utils/api';
+import LoadingSpin from '~/components/LoadingSpin';
 
 function Courses() {
     const cx = classNames.bind(styles);
@@ -26,6 +27,7 @@ function Courses() {
     };
 
     useEffect(() => {
+        setLoading(true);
         const fetchCoursesInfo = async () => {
             const coursesData = await getCoursesInfoApi();
             const termsData = await getTermsInfoApi();
@@ -33,21 +35,12 @@ function Courses() {
             setCoursesInfo(coursesData);
             setTermsInfo(termsData);
             setTagsInfo(tagsData);
+            setLoading(false);
         };
 
         fetchCoursesInfo();
-    }, [loading]);
+    }, []);
 
-    // const filteredCourses = coursesInfo.filter((course) => {
-    //     const matchesSearchTerm = course.name.toLowerCase().includes(searchTerm.toLowerCase());
-    //     const matchesSelectedTags =
-    //         selectedTags.length === 0 ||
-    //         course.tags.some((tagId) => {
-    //             const tagName = tagsInfo.find((tag) => tag._id === tagId)?.name;
-    //             return selectedTags.includes(tagName);
-    //         });
-    //     return matchesSearchTerm && matchesSelectedTags;
-    // });
     const filteredCourses = coursesInfo.filter((course) => {
         const matchesSearchTerm = course.name.toLowerCase().includes(searchTerm.toLowerCase());
         const matchesSelectedTags = selectedTags.every((selectedTag) =>
@@ -66,25 +59,19 @@ function Courses() {
     return (
         <div>
             <SearchBar onSearch={handleSearch} onTagsChange={handleTagsChange} />
+            <LoadingSpin loading={loading}></LoadingSpin>
             <Flex className={cx('wrapper')} wrap gap="small" justify="space-evenly" align="center">
-                {/* {coursesInfo.length > 0 ? (
-                    coursesInfo.map((data, index) => (
-                        <CourseItem
-                            onDelete={handleCourseDelete}
-                            key={index}
-                            data={data}
-                            termsInfo={termsInfo}
-                        ></CourseItem>
-                    ))
-                ) : (
-                    <div>No course created...</div>
-                )} */}
                 {filteredCourses.length > 0 ? (
                     filteredCourses.map((data, index) => (
                         <CourseItem onDelete={handleCourseDelete} key={index} data={data} termsInfo={termsInfo} />
                     ))
                 ) : (
-                    <div>No course created...</div>
+                    <div
+                        hidden={loading}
+                        style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
+                    >
+                        <Badge count={'No course created'}></Badge>
+                    </div>
                 )}
             </Flex>
         </div>
