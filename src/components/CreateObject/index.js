@@ -7,7 +7,14 @@ import EmojiPicker from 'emoji-picker-react';
 
 import styles from './CreateObject.module.scss';
 import NewTag from '~/components/NewTag';
-import { getTagsInfoApi, getTermsInfoApi, createNewCourseApi, createNewTermApi, updateCourseApi } from '~/utils/api';
+import {
+    getTagsInfoApi,
+    getTermsInfoApi,
+    createNewCourseApi,
+    createNewTermApi,
+    updateCourseApi,
+    updateTermApi,
+} from '~/utils/api';
 
 function CreateObject({
     type = 'course',
@@ -41,8 +48,8 @@ function CreateObject({
     const [submitDescription, setSubmitDescription] = useState(editData.description);
     const [submitTags, setSubmitTags] = useState([]);
     const [submitTerm, setSubmitTerm] = useState('');
-    const [submitStartDate, setSubmitStartDate] = useState(editData.startDate);
-    const [submitEndDate, setSubmitEndDate] = useState(editData.endDate);
+    const [submitStartDate, setSubmitStartDate] = useState('');
+    const [submitEndDate, setSubmitEndDate] = useState('');
 
     const reRenderTagsAndTerms = () => {
         setReRender(reRender + ' ');
@@ -71,7 +78,8 @@ function CreateObject({
         };
 
         fetchTagsAndTermsInfo();
-    }, [reRender, tagsInfo, termsInfo]);
+        // eslint-disable-next-line
+    }, [reRender]);
 
     const tagRender = (props) => {
         const { value, closable, onClose } = props;
@@ -110,7 +118,10 @@ function CreateObject({
         if (submitName === '') {
             alert('Enter name...');
             return;
-        } else if (type === 'term' && submitStartDate === '0000-01-02' && submitEndDate === '0000-01-01') {
+        } else if (
+            (type === 'term' && submitStartDate === '0000-01-02' && submitEndDate === '0000-01-01') ||
+            (type === 'term' && submitStartDate === '' && submitEndDate === '')
+        ) {
             alert('Select time...');
             return;
         } else if ((submitStartDate === '' || submitEndDate === '') && !isTerm) {
@@ -127,9 +138,11 @@ function CreateObject({
         formData.append('cover', submitCover);
         formData.append('name', submitName);
         formData.append('description', submitDescription);
-        submitTags.forEach((tag, index) => {
-            formData.append(`tags[${index}]`, tag);
-        });
+        if (type === 'course') {
+            submitTags.forEach((tag, index) => {
+                formData.append(`tags[${index}]`, tag);
+            });
+        }
 
         if (type === 'course') {
             formData.append('term', submitTerm);
@@ -164,15 +177,28 @@ function CreateObject({
                 alert('Unkown error');
             }
         } else {
-            formData.append('courseId', editData._id);
-            try {
-                const res = await updateCourseApi(formData);
+            if (type === 'course') {
+                formData.append('courseId', editData._id);
+                try {
+                    const res = await updateCourseApi(formData);
 
-                console.log(res);
-            } catch (error) {
-                console.error('Update failed:', error);
-                alert('Unkown error');
+                    console.log(res);
+                } catch (error) {
+                    console.error('Update failed:', error);
+                    alert('Unkown error');
+                }
+            } else if (type === 'term') {
+                formData.append('termId', editData._id);
+                try {
+                    const res = await updateTermApi(formData);
+
+                    console.log(res);
+                } catch (error) {
+                    console.error('Update failed:', error);
+                    alert('Unkown error');
+                }
             }
+            window.location.reload();
         }
     };
     // Select

@@ -193,6 +193,18 @@ const removeCourseFromTermApi = async (termId, courseId) => {
     return axios.post(URL_API, data);
 };
 
+const updateTermApi = async (formData) => {
+    const URL_API = '/v1/api/update-term-info';
+
+    try {
+        const res = await axios.post(URL_API, formData);
+        return res;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
 // Lesson
 
 const createNewLessonApi = async (formData) => {
@@ -504,6 +516,7 @@ export {
     deleteTermApi,
     addCourseToTermApi,
     removeCourseFromTermApi,
+    updateTermApi,
     createNewLessonApi,
     getLessonInfoApi,
     getLessonsInfoByIdsApi,

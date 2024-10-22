@@ -31,7 +31,8 @@ function TagsDrawerClosable({ border = true, onTagsChange }) {
         };
 
         fetchTagsInfo();
-    }, [selectClicked, tagsInfo]);
+        // eslint-disable-next-line
+    }, [selectClicked]);
 
     const tagRender = (props) => {
         const { value, closable, onClose } = props;

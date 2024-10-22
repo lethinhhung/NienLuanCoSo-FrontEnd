@@ -7,11 +7,13 @@ import styles from './DefaultLayout.module.scss';
 import CustomHeader from './Header';
 import CustomFooter from './Footer';
 import logo from '~/assets/images/logo.png';
-import { useConvertAvatarPath, useWindowDimensions } from '~/hooks';
+import { useWindowDimensions } from '~/hooks';
 import { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '~/contexts/Auth';
 import { getAccountInfoApi } from '~/utils/api';
+import convertAvatarPath from '~/utils/convertAvatarPath';
+import defaultAvatar from '~/assets/images/default-avatar.png';
 
 function DefaultLayout({ children }) {
     const cx = classNames.bind(styles);
@@ -129,7 +131,7 @@ function DefaultLayout({ children }) {
                                                 objectFit: 'cover',
                                                 borderRadius: '9999px',
                                             }}
-                                            src={useConvertAvatarPath(info.avatarPath)}
+                                            src={info.avatarPath ? convertAvatarPath(info.avatarPath) : defaultAvatar}
                                             alt="avatar"
                                         />
                                     </div>

@@ -7,11 +7,13 @@ import styles from './CreateNewObjectLayout.module.scss';
 import CustomHeader from '~/layouts/DefaultLayout/Header';
 import CustomFooter from '~/layouts/DefaultLayout/Footer';
 import logo from '~/assets/images/logo.png';
-import { useConvertAvatarPath, useWindowDimensions } from '~/hooks';
+import { useWindowDimensions } from '~/hooks';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '~/contexts/Auth';
 import { getAccountInfoApi } from '~/utils/api';
+import convertAvatarPath from '~/utils/convertAvatarPath';
+import defaultAvatar from '~/assets/images/default-avatar.png';
 
 function CreateNewObjectLayout({ children }) {
     const cx = classNames.bind(styles);
@@ -106,7 +108,7 @@ function CreateNewObjectLayout({ children }) {
                                                 objectFit: 'cover',
                                                 borderRadius: '9999px',
                                             }}
-                                            src={useConvertAvatarPath(info.avatarPath)}
+                                            src={info.avatarPath ? convertAvatarPath(info.avatarPath) : defaultAvatar}
                                             alt="avatar"
                                         />
                                     </div>
