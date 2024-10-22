@@ -7,7 +7,8 @@ import EmojiPicker from 'emoji-picker-react';
 
 import styles from './CreateObject.module.scss';
 import NewTag from '~/components/NewTag';
-import { getTagsInfoApi, getTermsInfoApi, createNewCourseApi, createNewTermApi } from '~/utils/api';
+import { getTagsInfoApi, getTermsInfoApi, createNewCourseApi, createNewTermApi, updateCourseApi } from '~/utils/api';
+import { addLessLoader } from 'customize-cra';
 
 function CreateObject({
     type = 'course',
@@ -33,6 +34,16 @@ function CreateObject({
     const [reRender, setReRender] = useState('');
     const [tagsInfo, setTagsInfo] = useState([]);
     const [termsInfo, setTermsInfo] = useState([]);
+
+    const [submitEmoji, setSubmitEmoji] = useState(editData.emoji);
+    const [submitColor, setSubmitColor] = useState(editData.color);
+    const [submitCover, setSubmitCover] = useState(editData.cover);
+    const [submitName, setSubmitName] = useState(editData.name);
+    const [submitDescription, setSubmitDescription] = useState(editData.description);
+    const [submitTags, setSubmitTags] = useState([]);
+    const [submitTerm, setSubmitTerm] = useState('');
+    const [submitStartDate, setSubmitStartDate] = useState(editData.startDate);
+    const [submitEndDate, setSubmitEndDate] = useState(editData.endDate);
 
     const reRenderTagsAndTerms = () => {
         setReRender(reRender + ' ');
@@ -96,59 +107,38 @@ function CreateObject({
     const [isCoverDisabled, setIsCoverDisabled] = useState(true);
     const [isColorDisabled, setIsColorDisabled] = useState(true);
 
-    //FormData
-    // const [submitEmoji, setSubmitEmoji] = useState('📘');
-    // const [submitColor, setSubmitColor] = useState('#ffffff');
-    // const [submitCover, setSubmitCover] = useState(null);
-    // const [submitName, setSubmitName] = useState('');
-    // const [submitDescription, setSubmitDescription] = useState('');
-    // const [submitTags, setSubmitTags] = useState([]);
-    // const [submitTerm, setSubmitTerm] = useState('');
-    // const [submitStartDate, setSubmitStartDate] = useState('0000-01-02');
-    // const [submitEndDate, setSubmitEndDate] = useState('0000-01-01');
-
-    const [submitEmoji, setSubmitEmoji] = useState(editData.emoji);
-    const [submitColor, setSubmitColor] = useState(editData.color);
-    const [submitCover, setSubmitCover] = useState(editData.cover);
-    const [submitName, setSubmitName] = useState(editData.name);
-    const [submitDescription, setSubmitDescription] = useState(editData.description);
-    const [submitTags, setSubmitTags] = useState([]);
-    const [submitTerm, setSubmitTerm] = useState('');
-    const [submitStartDate, setSubmitStartDate] = useState(editData.startDate);
-    const [submitEndDate, setSubmitEndDate] = useState(editData.endDate);
-
     const handleSubmit = async () => {
+        if (submitName === '') {
+            alert('Enter name...');
+            return;
+        } else if (type === 'term' && submitStartDate === '0000-01-02' && submitEndDate === '0000-01-01') {
+            alert('Select time...');
+            return;
+        } else if ((submitStartDate === '' || submitEndDate === '') && !isTerm) {
+            alert('Select time...');
+            return;
+        } else if (submitTerm === '' && isTerm && type === 'course') {
+            alert('Select term...');
+            return;
+        }
+        console.log(submitStartDate);
+        const formData = new FormData();
+        formData.append('emoji', submitEmoji);
+        formData.append('color', submitColor);
+        formData.append('cover', submitCover);
+        formData.append('name', submitName);
+        formData.append('description', submitDescription);
+        submitTags.forEach((tag, index) => {
+            formData.append(`tags[${index}]`, tag);
+        });
+
+        if (type === 'course') {
+            formData.append('term', submitTerm);
+        }
+        formData.append('startDate', submitStartDate);
+        formData.append('endDate', submitEndDate);
+
         if (!isEdit) {
-            if (submitName === '') {
-                alert('Enter name...');
-                return;
-            } else if (type === 'term' && submitStartDate === '0000-01-02' && submitEndDate === '0000-01-01') {
-                alert('Select time...');
-                return;
-            } else if ((submitStartDate === '' || submitEndDate === '') && !isTerm) {
-                alert('Select time...');
-                return;
-            } else if (submitTerm === '' && isTerm && type === 'course') {
-                alert('Select term...');
-                return;
-            }
-            console.log(submitStartDate);
-            const formData = new FormData();
-            formData.append('emoji', submitEmoji);
-            formData.append('color', submitColor);
-            formData.append('cover', submitCover);
-            formData.append('name', submitName);
-            formData.append('description', submitDescription);
-            submitTags.forEach((tag, index) => {
-                formData.append(`tags[${index}]`, tag);
-            });
-
-            if (type === 'course') {
-                formData.append('term', submitTerm);
-            }
-            formData.append('startDate', submitStartDate);
-            formData.append('endDate', submitEndDate);
-
             //Goi API
             try {
                 if (type === 'course' && isEdit === false) {
@@ -175,7 +165,15 @@ function CreateObject({
                 alert('Unkown error');
             }
         } else {
-            console.log('hehe');
+            formData.append('courseId', editData._id);
+            try {
+                const res = await updateCourseApi(formData);
+
+                console.log(res);
+            } catch (error) {
+                console.error('Update failed:', error);
+                alert('Unkown error');
+            }
         }
     };
     // Select

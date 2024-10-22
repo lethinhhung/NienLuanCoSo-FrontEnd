@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import { Card, Avatar, Popconfirm, Button, Spin, Tooltip, Badge, Flex } from 'antd';
+import { Card, Avatar, Popconfirm, Button, Spin, Tooltip, Badge, Flex, Divider } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 
@@ -105,7 +105,6 @@ function CourseItem({ data, loading, onDelete, termsInfo }) {
                 style={{ backgroundColor: data.color }}
                 hoverable
                 loading={loading}
-                bordered={false}
                 className={cx('wrapper')}
                 cover={
                     <img

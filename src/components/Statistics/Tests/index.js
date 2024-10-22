@@ -148,10 +148,7 @@ function Tests({ statisticsInfo, testOptions, testsChartData, testsInfo, onTests
     // Edit test
 
     const handleDeleteTest = async (test) => {
-        const result = await deleteTestApi(test);
-        if (result.success) {
-            alert('Success');
-        } else alert('Failed');
+        await deleteTestApi(test);
 
         onTestsChange();
     };
@@ -295,7 +292,7 @@ function Tests({ statisticsInfo, testOptions, testsChartData, testsInfo, onTests
                                 <Col span={24}>
                                     <Flex justify="space-between" align="center">
                                         <Flex wrap>
-                                            <Flex justify="center" style={{ width: '50px', height: '50px' }}>
+                                            <Flex justify="center" style={{ width: '100px', height: '50px' }}>
                                                 <Title style={{ color: 'white' }}>
                                                     {test.score === -1 ? 'N' : test.score}
                                                 </Title>

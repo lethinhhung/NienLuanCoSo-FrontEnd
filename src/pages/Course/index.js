@@ -143,7 +143,7 @@ function Course() {
                 hoverable
                 title="Course overview"
                 bordered={false}
-                extra={<EditDescription type="course" />}
+                extra={<EditDescription type="course" editData={courseInfo} />}
             >
                 <Meta avatar={<h1>{courseInfo.emoji}</h1>} title="Description" description={courseInfo.description} />
 
