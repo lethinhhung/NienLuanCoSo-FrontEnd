@@ -1,4 +1,4 @@
-import { Image, Avatar, Card, Flex, Divider, Progress, Select, Row, Col, Button, Input, Modal } from 'antd';
+import { Image, Card, Flex, Input } from 'antd';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -7,7 +7,7 @@ import styles from './Term.module.scss';
 import convertAvatarPath from '~/utils/convertAvatarPath';
 import CustomList from '~/components/CustomList';
 import EditDescription from '~/components/EditDescription';
-import { getTermInfoApi, getTermsInfoApi } from '~/utils/api';
+import { getTermInfoApi } from '~/utils/api';
 import defaultCourseCover from '../../assets/images/default-term-cover.jpg';
 
 function Term() {
@@ -24,18 +24,6 @@ function Term() {
 
     //Modal
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const showModal = () => {
-        setIsModalVisible(true);
-    };
-
-    const handleOk = () => {
-        //Goi API
-        setIsModalVisible(false);
-    };
-
-    const handleCancel = () => {
-        setIsModalVisible(false);
-    };
     useEffect(() => {
         const fetchTermInfo = async () => {
             const termData = await getTermInfoApi(termId);
@@ -44,7 +32,7 @@ function Term() {
         };
 
         fetchTermInfo();
-    }, [isModalVisible, fetchData]);
+    }, [isModalVisible, fetchData, termId]);
 
     return (
         <Flex className={cx('wrapper')} wrap vertical align="center">

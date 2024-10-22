@@ -1,18 +1,11 @@
-import { Modal, Card, List, Avatar, Button, Popconfirm, Input, Tooltip } from 'antd';
+import { Modal, Card, List, Button, Tooltip } from 'antd';
 import classNames from 'classnames/bind';
 import { CloseOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import styles from './LessonsList.module.scss';
-import {
-    addCourseToTerm,
-    addCourseToTermApi,
-    getCourseInfoApi,
-    getCoursesInfoApi,
-    getCoursesInfoByIdsApi,
-    removeCourseFromTermApi,
-} from '~/utils/api';
+import { addCourseToTermApi, getCoursesInfoApi, getCoursesInfoByIdsApi, removeCourseFromTermApi } from '~/utils/api';
 
 function CustomList({ title = '', data, id = '', isModalVisible, setIsModalVisible, fetchData, setFetchData }) {
     const cx = classNames.bind(styles);
@@ -30,15 +23,8 @@ function CustomList({ title = '', data, id = '', isModalVisible, setIsModalVisib
     const [transformedData, setTransformedData] = useState();
     const [transformedCoursesData, setTransformedCoursesData] = useState();
 
-    const navigate = useNavigate();
-
     const showModal = () => {
         setIsModalVisible(true);
-    };
-
-    const handleOk = () => {
-        //Goi API
-        setIsModalVisible(false);
     };
 
     const handleCancel = () => {
@@ -66,17 +52,15 @@ function CustomList({ title = '', data, id = '', isModalVisible, setIsModalVisib
         };
 
         fetchCourseInfo();
-    }, [data, isModalVisible, fetchData]);
+    }, [data, isModalVisible, fetchData, id]);
 
     const handleRemoveFromTerm = async (courseId) => {
         const termId = id;
-        const result = await removeCourseFromTermApi(termId, courseId);
+        await removeCourseFromTermApi(termId, courseId);
         if (fetchData === false) {
             setFetchData(true);
         } else setFetchData(false);
     };
-
-    const hanldeDeleteCourse = () => {};
 
     return (
         <Card

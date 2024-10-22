@@ -1,15 +1,10 @@
-import { Row, Col, Flex, Space, Select, DatePicker } from 'antd';
+import { Row, Col, Flex, Select, DatePicker } from 'antd';
 import classNames from 'classnames/bind';
-import { useDebounce, useWindowDimensions } from '~/hooks';
 import { useEffect, useState } from 'react';
 
 import styles from './Terms.module.scss';
-import SearchBar from '~/components/SearchBar';
-import SearchBarLarge from '~/components/SearchBar/SearchBarLarge';
-import SearchBarSmall from '~/components/SearchBar/SearchBarSmall';
 import TermItem from '~/components/TermItem';
-import { getTermsInfoApi, getCoursesInfoApi } from '~/utils/api';
-import CourseItem from '~/components/CourseItem';
+import { getTermsInfoApi } from '~/utils/api';
 
 function Terms() {
     const cx = classNames.bind(styles);

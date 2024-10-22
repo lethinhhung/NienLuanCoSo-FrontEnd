@@ -1,13 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import {
     Typography,
-    Image,
-    Avatar,
     Card,
     Flex,
     Divider,
     Progress,
-    Select,
     Row,
     Col,
     Button,
@@ -19,25 +16,18 @@ import {
     InputNumber,
 } from 'antd';
 import classNames from 'classnames/bind';
-import { useParams } from 'react-router-dom';
-import {
-    CheckCircleOutlined,
-    CloseCircleOutlined,
-    DeleteOutlined,
-    EditOutlined,
-    PlusOutlined,
-    StarOutlined,
-} from '@ant-design/icons';
+
+import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 
 import styles from './Tests.module.scss';
 import Bar from '~/components/Charts/Bar';
 import getScoreColor from '~/utils/getScoreColor';
-import moment from 'moment';
+
 import { createNewTestApi, deleteTestApi, updateTestInfoApi } from '~/utils/api';
 
 function Tests({ statisticsInfo, testOptions, testsChartData, testsInfo, onTestsChange }) {
     const cx = classNames.bind(styles);
-    const { Meta } = Card;
+
     const { Title } = Typography;
     const [isTestModalVisible, setIsTestModalVisible] = useState(false);
     const [isModalVisible, setIsModalVisible] = useState(false);

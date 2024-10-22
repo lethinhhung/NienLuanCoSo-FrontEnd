@@ -58,7 +58,6 @@ function NewTag() {
 
     const handleTagColorPick = (value) => {
         if (value.toHex() === 'ffffff') {
-            // setTagPreview(<Tag>Preview</Tag>);
             setTagPreviewColor('');
         } else {
             setTagPreview(<Tag color={'#' + value.toHex()}>{tagPreviewName}</Tag>);

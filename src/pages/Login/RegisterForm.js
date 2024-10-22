@@ -26,7 +26,7 @@ function RegisterForm({ onRegister }) {
             alert('Unknown error!');
         }
 
-        if (setStatus === 'success') {
+        if (status === 'success') {
             alert('Register successfully!');
         }
     };

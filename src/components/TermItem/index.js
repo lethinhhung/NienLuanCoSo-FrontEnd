@@ -1,19 +1,18 @@
 import classNames from 'classnames/bind';
-import { Card, Avatar, Popconfirm, Button, Spin, Tooltip, Row, Col, Image, Divider, Badge } from 'antd';
+import { Card, Popconfirm, Button, Tooltip, Row, Col, Divider, Badge } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 
 import styles from './TermItem.module.scss';
-import { useEffect, useState } from 'react';
+
 import convertAvatarPath from '~/utils/convertAvatarPath';
 import { deleteTermApi } from '~/utils/api';
-import CustomList from '../CustomList';
+
 import defaultCourseCover from '../../assets/images/default-term-cover.jpg';
 
 function TermItem({ data, loading }) {
     const cx = classNames.bind(styles);
     const navigate = useNavigate();
-    const [renderKey, setRenderKey] = useState(false);
 
     const currentDate = new Date();
     const termStartDate = new Date(data.startDate);

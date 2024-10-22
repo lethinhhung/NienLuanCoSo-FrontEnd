@@ -1,7 +1,6 @@
 import { Flex, Layout, Affix, FloatButton, Tooltip } from 'antd';
-import { CaretUpOutlined, HomeOutlined, SettingOutlined, LogoutOutlined } from '@ant-design/icons';
+import { CaretUpOutlined, HomeOutlined } from '@ant-design/icons';
 import classNames from 'classnames/bind';
-import { Link } from 'react-router-dom';
 
 import styles from './CourseLayout.module.scss';
 import CustomHeader from './Header';
@@ -23,23 +22,6 @@ function CourseLayout({ children }) {
         overflow: 'hidden',
     };
 
-    const items = [
-        {
-            key: 'settings',
-            label: <Link to={'/profile'}>Settings</Link>,
-            icon: <SettingOutlined />,
-        },
-        {
-            key: 'logout',
-            label: (
-                <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
-                    Logout
-                </a>
-            ),
-            icon: <LogoutOutlined />,
-        },
-    ];
-
     useEffect(() => {
         if (width <= 500) {
             setIsHidden(true);
@@ -52,10 +34,6 @@ function CourseLayout({ children }) {
 
     const handleToHome = () => {
         navigate('/');
-    };
-
-    const handleToNewCourse = () => {
-        navigate('/create-new-course');
     };
 
     ///

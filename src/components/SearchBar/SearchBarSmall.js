@@ -1,9 +1,8 @@
-import { Flex, Input, Select } from 'antd';
+import { Flex, Input } from 'antd';
 import classNames from 'classnames/bind';
 
 import TagsDrawerClosable from '../TagsDrawerClosable';
 import styles from './SearchBar.module.scss';
-import { useState } from 'react';
 
 function SearchBarSmall({ onSearch, onTagsChange }) {
     const cx = classNames.bind(styles);

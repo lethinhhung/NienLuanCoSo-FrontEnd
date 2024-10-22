@@ -3,22 +3,12 @@ import classNames from 'classnames/bind';
 import 'suneditor/dist/css/suneditor.min.css';
 
 import styles from './Editor.module.scss';
-import { useDebounce } from '~/hooks';
-import { useState, useEffect, useRef } from 'react';
-import { addContentToLessonApi, getCourseInfoApi, getCoursesInfoApi } from '~/utils/api';
+import { useEffect, useRef } from 'react';
+import { addContentToLessonApi } from '~/utils/api';
 
 function Editor({ tipText, setTipText, lessonId, setColor, lessonContent }) {
     const cx = classNames.bind(styles);
 
-    // When the editor's content has changed, store it in state
-    // const handleOnChange = async (content) => {
-    //     setTipText('Changed and not saving...');
-    //     setLoading(true);
-    //     setTipText('Saving...');
-    //     const result = await getCoursesInfoApi();
-    //     setTipText('Saved');
-    //     setLoading(false);
-    // };
     const timeoutRef = useRef(null);
 
     const save = async (content) => {

@@ -8,7 +8,6 @@ import EmojiPicker from 'emoji-picker-react';
 import styles from './CreateObject.module.scss';
 import NewTag from '~/components/NewTag';
 import { getTagsInfoApi, getTermsInfoApi, createNewCourseApi, createNewTermApi, updateCourseApi } from '~/utils/api';
-import { addLessLoader } from 'customize-cra';
 
 function CreateObject({
     type = 'course',
@@ -72,7 +71,7 @@ function CreateObject({
         };
 
         fetchTagsAndTermsInfo();
-    }, [reRender]);
+    }, [reRender, tagsInfo, termsInfo]);
 
     const tagRender = (props) => {
         const { value, closable, onClose } = props;

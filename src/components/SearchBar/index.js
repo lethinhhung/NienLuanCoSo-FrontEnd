@@ -17,7 +17,7 @@ function SearchBar({ onSearch, onTagsChange }) {
         } else {
             setSearchBar(<SearchBarSmall onSearch={onSearch} onTagsChange={onTagsChange} />);
         }
-    }, [debounced, onSearch]);
+    }, [debounced, onSearch, onTagsChange]);
 
     return searchBar;
 }

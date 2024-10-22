@@ -1,21 +1,13 @@
-import {
-    LeftOutlined,
-    HomeOutlined,
-    UserOutlined,
-    AppstoreOutlined,
-    DashboardOutlined,
-    ProfileOutlined,
-    BarChartOutlined,
-} from '@ant-design/icons';
-import { Breadcrumb, Flex, Menu, Button, ConfigProvider } from 'antd';
+import { LeftOutlined, HomeOutlined, AppstoreOutlined, BarChartOutlined } from '@ant-design/icons';
+import { Breadcrumb, Flex, Button } from 'antd';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { useGetBrighterColor, useGetTextColorFromBackground } from '~/hooks';
+import { useGetTextColorFromBackground } from '~/hooks';
 import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
 import { Link, useNavigate } from 'react-router-dom';
-import { getCourseInfoApi, getLessonInfoApi, getStatisticsInfoApi } from '~/utils/api';
+import { getCourseInfoApi, getLessonInfoApi } from '~/utils/api';
 
 function Header() {
     const cx = classNames.bind(styles);
@@ -30,7 +22,6 @@ function Header() {
 
     const [courseInfo, setCourseInfo] = useState({});
     const [lessonInfo, setLessonInfo] = useState({});
-    const [statisticsInfo, setStatisticsInfo] = useState({});
 
     useEffect(() => {
         const fetchCourseInfo = async () => {
@@ -41,15 +32,10 @@ function Header() {
                 const lessonData = await getLessonInfoApi(lessonId);
                 setLessonInfo(lessonData);
             }
-
-            if (statisticsId !== undefined) {
-                const statisticsData = await getStatisticsInfoApi(statisticsId);
-                setStatisticsInfo(statisticsData);
-            }
         };
 
         fetchCourseInfo();
-    }, [window.location.href]);
+    }, [courseId, lessonId]);
 
     let data = [
         {

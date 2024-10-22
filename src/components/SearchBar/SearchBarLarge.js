@@ -1,6 +1,5 @@
-import { Input, Row, Col, Select } from 'antd';
+import { Input, Row, Col } from 'antd';
 import classNames from 'classnames/bind';
-import { useState } from 'react';
 
 import TagsDrawerClosable from '../TagsDrawerClosable';
 import styles from './SearchBar.module.scss';

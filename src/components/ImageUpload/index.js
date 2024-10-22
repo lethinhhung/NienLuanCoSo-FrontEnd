@@ -1,5 +1,3 @@
-import { InboxOutlined } from '@ant-design/icons';
-import { message, Upload } from 'antd';
 import { useState } from 'react';
 import classNames from 'classnames/bind';
 

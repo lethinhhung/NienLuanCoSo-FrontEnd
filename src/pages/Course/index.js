@@ -1,4 +1,4 @@
-import { Image, Avatar, Card, Flex, Divider, Row, Input, Popconfirm, Button, List, Modal, Badge } from 'antd';
+import { Image, Card, Flex, Divider, Row, Input, Popconfirm, Button, List, Modal, Badge } from 'antd';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
@@ -6,7 +6,6 @@ import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import moment from 'moment';
 
 import styles from './Course.module.scss';
-import CustomList from '~/components/CustomList';
 import TagsDrawer from '~/components/TagsDrawer';
 import EditDescription from '~/components/EditDescription';
 
@@ -15,16 +14,12 @@ import {
     deleteLessonApi,
     getCourseInfoApi,
     getLessonsInfoByIdsApi,
-    getProjectsInfoByIdsApi,
     getStatisticsInfoApi,
     getTermInfoApi,
-    getTestsInfoByIdsApi,
 } from '~/utils/api';
-import defaultTagsData from '~/components/DefaultTagColor';
+
 import convertAvatarPath from '~/utils/convertAvatarPath';
 import defaultCourseCover from '../../assets/images/default-course-cover.png';
-import { statistic } from 'antd/es/theme/internal';
-import { useProcessData } from '~/hooks';
 import StatisticsOverview from '~/components/StatisticsOverview';
 
 function Course() {

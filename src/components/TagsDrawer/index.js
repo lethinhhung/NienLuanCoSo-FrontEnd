@@ -3,7 +3,7 @@ import { Tag, Flex } from 'antd';
 import { useEffect, useState } from 'react';
 
 import styles from './TagsDrawer.module.scss';
-import { getTagsInfoApi, getTagsInfoByIdsApi } from '~/utils/api';
+import { getTagsInfoByIdsApi } from '~/utils/api';
 
 function TagsDrawer({ tagsIds, isClickable = false, onTagClick, isDefault = true, data }) {
     const cx = classNames.bind(styles);
@@ -16,8 +16,6 @@ function TagsDrawer({ tagsIds, isClickable = false, onTagClick, isDefault = true
             }
         }
     };
-
-    const [options, setOptions] = useState([]);
     const [tagsInfo, setTagsInfo] = useState([]);
 
     useEffect(() => {
@@ -31,7 +29,7 @@ function TagsDrawer({ tagsIds, isClickable = false, onTagClick, isDefault = true
 
             fetchTagsInfo();
         }
-    }, [tagsIds]);
+    }, [tagsIds, data, isDefault]);
 
     return (
         <Flex justify="flex-end" wrap gap="5px 0" className={cx('wrapper')}>

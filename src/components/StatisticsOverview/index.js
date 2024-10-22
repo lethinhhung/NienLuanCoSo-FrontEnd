@@ -1,27 +1,10 @@
 import { Flex, Progress, Row, Button, Tooltip, Col } from 'antd';
 import classNames from 'classnames/bind';
 
-import styles from './StatisticsOverview.module.scss';
+import { useNavigate } from 'react-router-dom';
+import { BarChartOutlined } from '@ant-design/icons';
 
-import {
-    createNewLessonApi,
-    deleteLessonApi,
-    getCourseInfoApi,
-    getLessonsInfoByIdsApi,
-    getProjectsInfoByIdsApi,
-    getProjectStepsInfoByIdsApi,
-    getStatisticsInfoApi,
-    getTestsInfoByIdsApi,
-} from '~/utils/api';
-import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import {
-    BarChartOutlined,
-    CheckCircleOutlined,
-    CloseCircleOutlined,
-    EditOutlined,
-    StarOutlined,
-} from '@ant-design/icons';
+import styles from './StatisticsOverview.module.scss';
 
 const StatisticsOverview = ({ data, courseInfo }) => {
     const cx = classNames.bind(styles);

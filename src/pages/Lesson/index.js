@@ -1,25 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
-import {
-    Image,
-    Avatar,
-    Card,
-    Flex,
-    Divider,
-    Progress,
-    Select,
-    Row,
-    Col,
-    Button,
-    Input,
-    Modal,
-    Spin,
-    Badge,
-} from 'antd';
+import { useEffect, useState } from 'react';
+import { Card, Flex, Button, Modal, Badge } from 'antd';
 import classNames from 'classnames/bind';
 import { useParams } from 'react-router-dom';
 
 import styles from './Lesson.module.scss';
-import { useDebounce, useWindowDimensions } from '~/hooks';
 import Editor from '~/components/Editor';
 import { getContentFromLessonApi, getLessonInfoApi } from '~/utils/api';
 
@@ -47,7 +31,7 @@ function Lesson() {
         };
 
         fetchLessonInfo();
-    }, []);
+    }, [lessonId]);
 
     const [isModalVisible, setIsModalVisible] = useState(false);
     const showModal = () => {

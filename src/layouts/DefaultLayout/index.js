@@ -1,4 +1,4 @@
-import { Flex, Layout, Affix, FloatButton, Button, Dropdown, Space, Tooltip } from 'antd';
+import { Flex, Layout, Affix, FloatButton, Dropdown, Space, Tooltip } from 'antd';
 import { CaretUpOutlined, HomeOutlined, PlusOutlined, SettingOutlined, LogoutOutlined } from '@ant-design/icons';
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
@@ -7,7 +7,6 @@ import styles from './DefaultLayout.module.scss';
 import CustomHeader from './Header';
 import CustomFooter from './Footer';
 import logo from '~/assets/images/logo.png';
-import defaultAvatar from '~/assets/images/default-avatar.png';
 import { useConvertAvatarPath, useWindowDimensions } from '~/hooks';
 import { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -40,6 +39,7 @@ function DefaultLayout({ children }) {
         },
         {
             key: 'logout',
+            // eslint-disable-next-line
             label: <a onClick={handleLogout}>Logout</a>,
             icon: <LogoutOutlined />,
         },

@@ -31,7 +31,7 @@ function TagsDrawerClosable({ border = true, onTagsChange }) {
         };
 
         fetchTagsInfo();
-    }, [selectClicked]);
+    }, [selectClicked, tagsInfo]);
 
     const tagRender = (props) => {
         const { value, closable, onClose } = props;

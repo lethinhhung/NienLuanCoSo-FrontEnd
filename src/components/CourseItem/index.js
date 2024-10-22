@@ -1,12 +1,11 @@
 import classNames from 'classnames/bind';
-import { Card, Avatar, Popconfirm, Button, Spin, Tooltip, Badge, Flex, Divider } from 'antd';
+import { Card, Popconfirm, Button, Tooltip, Badge, Flex } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 
 import styles from './CourseItem.module.scss';
 import TagsDrawer from '../TagsDrawer';
 import convertAvatarPath from '~/utils/convertAvatarPath';
-import { useEffect, useState } from 'react';
 import { deleteCourseApi } from '~/utils/api';
 import defaultCourseCover from '../../assets/images/default-course-cover.png';
 import moment from 'moment';

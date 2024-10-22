@@ -1,37 +1,24 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import {
     Typography,
-    Image,
-    Avatar,
     Card,
     Flex,
     Divider,
     Progress,
     Select,
     Row,
-    Col,
     Button,
     Modal,
     Badge,
     Tooltip,
     Input,
-    InputNumber,
     Popconfirm,
 } from 'antd';
 import classNames from 'classnames/bind';
-import { useParams } from 'react-router-dom';
-import {
-    CheckCircleOutlined,
-    CloseCircleOutlined,
-    DeleteOutlined,
-    EditOutlined,
-    PlusOutlined,
-    StarOutlined,
-} from '@ant-design/icons';
+
+import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 
 import styles from './Projects.module.scss';
-import Bar from '~/components/Charts/Bar';
-import getScoreColor from '~/utils/getScoreColor';
 import {
     createNewProjectApi,
     createNewProjectStepApi,
@@ -41,7 +28,6 @@ import {
 } from '~/utils/api';
 
 function Projects({ statisticsInfo, projectsInfo, onProjectsChange }) {
-    const { Meta } = Card;
     const { Title } = Typography;
     const cx = classNames.bind(styles);
     const [isAddModalVisible, setIsAddModalVisible] = useState(false);

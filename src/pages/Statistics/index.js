@@ -1,33 +1,15 @@
-import { useEffect, useRef, useState } from 'react';
-import {
-    Typography,
-    Image,
-    Avatar,
-    Card,
-    Flex,
-    Divider,
-    Progress,
-    Select,
-    Row,
-    Col,
-    Button,
-    Modal,
-    Badge,
-    Tooltip,
-} from 'antd';
+import { useEffect, useState } from 'react';
+import { Card, Flex, Progress, Row, Tooltip } from 'antd';
 import classNames from 'classnames/bind';
 import { useParams } from 'react-router-dom';
-import { CheckCircleOutlined, CloseCircleOutlined, StarOutlined } from '@ant-design/icons';
 
 import styles from './Statistics.module.scss';
-import Bar from '~/components/Charts/Bar';
+
 import getScoreColor from '~/utils/getScoreColor';
 import moment from 'moment';
 
 import {
-    getContentFromLessonApi,
     getCourseInfoApi,
-    getLessonInfoApi,
     getProjectsInfoByIdsApi,
     getProjectStepsInfoByIdsApi,
     getStatisticsInfoApi,
@@ -36,7 +18,7 @@ import {
 import Projects from '~/components/Statistics/Projects';
 import Tests from '~/components/Statistics/Tests';
 
-function Statistics({}) {
+function Statistics() {
     const { courseId, statisticsId } = useParams();
     const [statisticsInfo, setStatisticsInfo] = useState({});
     const [projectsInfo, setProjectsInfo] = useState([]);
@@ -54,8 +36,7 @@ function Statistics({}) {
     });
 
     const cx = classNames.bind(styles);
-    const { Meta } = Card;
-    const { Title } = Typography;
+
     const testOptions = {
         scales: {
             y: {
@@ -111,6 +92,7 @@ function Statistics({}) {
 
     useEffect(() => {
         fetchInfo();
+        // eslint-disable-next-line
     }, []);
 
     return (
