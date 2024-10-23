@@ -1,4 +1,4 @@
-import { Badge, Flex } from 'antd';
+import { Badge, Flex, Select } from 'antd';
 import classNames from 'classnames/bind';
 import styles from './Courses.module.scss';
 import { useEffect, useState } from 'react';
@@ -16,14 +16,15 @@ function Courses() {
     const [termsInfo, setTermsInfo] = useState([]);
     const [tagsInfo, setTagsInfo] = useState([]);
     const [selectedTags, setSelectedTags] = useState([]);
-    const [searchTerm, setSearchTerm] = useState('');
+    const [searchCourse, setSearchCourse] = useState('');
+    const [selectedStatus, setSelectedStatus] = useState('all');
 
     const handleCourseDelete = () => {
         setLoading(true);
     };
 
-    const handleSearch = (term) => {
-        setSearchTerm(term);
+    const handleSearch = (course) => {
+        setSearchCourse(course);
     };
 
     useEffect(() => {
@@ -40,24 +41,74 @@ function Courses() {
         fetchCoursesInfo();
     }, []);
 
+    // const filteredCourses = coursesInfo.filter((course) => {
+    //     const matchesSearchCourse = course.name.toLowerCase().includes(searchCourse.toLowerCase());
+    //     const matchesSelectedTags = selectedTags.every((selectedTag) =>
+    //         course.tags.some((tagId) => {
+    //             const tagName = tagsInfo.find((tag) => tag._id === tagId)?.name;
+    //             return tagName === selectedTag;
+    //         }),
+    //     );
+    //     return matchesSearchCourse && matchesSelectedTags;
+    // });
+
+    // const handleTagsChange = (tags) => {
+    //     setSelectedTags(tags);
+    // };
+
     const filteredCourses = coursesInfo.filter((course) => {
-        const matchesSearchTerm = course.name.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesSearchCourse = course.name.toLowerCase().includes(searchCourse.toLowerCase());
         const matchesSelectedTags = selectedTags.every((selectedTag) =>
             course.tags.some((tagId) => {
                 const tagName = tagsInfo.find((tag) => tag._id === tagId)?.name;
                 return tagName === selectedTag;
             }),
         );
-        return matchesSearchTerm && matchesSelectedTags;
+
+        const matchesSelectedStatus = (() => {
+            const currentDate = new Date();
+            const courseStartDate = new Date(course.startDate);
+            const courseEndDate = new Date(course.endDate);
+
+            if (selectedStatus === 'onprogress') {
+                return courseStartDate <= currentDate && courseEndDate >= currentDate;
+            } else if (selectedStatus === 'completed') {
+                return courseEndDate < currentDate;
+            } else if (selectedStatus === 'incoming') {
+                return courseStartDate > currentDate;
+            } else {
+                return true;
+            }
+        })();
+
+        return matchesSearchCourse && matchesSelectedTags && matchesSelectedStatus;
     });
 
     const handleTagsChange = (tags) => {
         setSelectedTags(tags);
     };
 
+    const handleStatusChange = (value) => {
+        setSelectedStatus(value);
+    };
+
     return (
         <div>
             <SearchBar onSearch={handleSearch} onTagsChange={handleTagsChange} />
+            <Flex className={cx('status-select')} style={{ width: '100%', marginTop: '15px' }} justify="center">
+                <Select
+                    defaultValue={'all'}
+                    placeholder="Status"
+                    style={{ width: 120 }}
+                    onChange={handleStatusChange}
+                    options={[
+                        { value: 'all', label: 'All' },
+                        { value: 'completed', label: 'Completed' },
+                        { value: 'onprogress', label: 'On Progress' },
+                        { value: 'incoming', label: 'Incoming' },
+                    ]}
+                />
+            </Flex>
             <LoadingSpin loading={loading}></LoadingSpin>
             <Flex className={cx('wrapper')} wrap gap="small" justify="space-evenly" align="center">
                 {filteredCourses.length > 0 ? (

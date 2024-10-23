@@ -20,6 +20,8 @@ function CustomList({ title = '', data, id = '', isModalVisible, setIsModalVisib
         }));
     };
 
+    const [loading, setLoading] = useState(true);
+
     const [transformedData, setTransformedData] = useState();
     const [transformedCoursesData, setTransformedCoursesData] = useState();
 
@@ -46,7 +48,7 @@ function CustomList({ title = '', data, id = '', isModalVisible, setIsModalVisib
             const coursesData = await getCoursesInfoByIdsApi(data);
             const allCoursesData = await getCoursesInfoApi();
 
-            const filteredCoursesData = allCoursesData.filter((course) => course.term !== id);
+            const filteredCoursesData = allCoursesData.filter((course) => course.term !== id && course.term === null);
             setTransformedCoursesData(transformData(filteredCoursesData));
             setTransformedData(transformData(coursesData));
         };

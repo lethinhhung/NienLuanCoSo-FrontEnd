@@ -1,4 +1,4 @@
-import { ColorPicker, Tag, Flex, Button, Input, Select, Switch, DatePicker, Divider } from 'antd';
+import { ColorPicker, Tag, Flex, Button, Input, Select, Switch, DatePicker, Divider, Alert } from 'antd';
 import classNames from 'classnames/bind';
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -308,6 +308,14 @@ function CreateObject({
                         <h1>{'Create a new ' + type}</h1>
                         <Divider></Divider>
                     </div>
+                    <div hidden={type === 'course'}>
+                        <Alert
+                            showIcon
+                            type="info"
+                            message="About Term"
+                            description="Each Term will include multiple Courses."
+                        ></Alert>
+                    </div>
                     <Flex className={cx('title-switch')} align="center">
                         <h2>Emoji</h2>
                         <Switch onChange={handleEmoji} checkedChildren="Custom" unCheckedChildren="Default" />
@@ -392,6 +400,7 @@ function CreateObject({
                     <div hidden={type === 'term'}>
                         <Flex className={cx('title-switch')} align="center">
                             <h2>Duration</h2>
+
                             <Switch
                                 onChange={handleDuration}
                                 checkedChildren="Term"
@@ -399,6 +408,12 @@ function CreateObject({
                                 defaultChecked
                             />
                         </Flex>
+                        <Alert
+                            message="About Course"
+                            description="Each course will belong to a Term or a specific time period."
+                            type="info"
+                            showIcon
+                        />
                         <div hidden={!isTerm}>
                             <Flex wrap align="center">
                                 <p style={{ minWidth: '80px', marginTop: '5px' }}>Pick a term</p>

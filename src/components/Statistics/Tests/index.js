@@ -14,6 +14,7 @@ import {
     Input,
     Popconfirm,
     InputNumber,
+    Alert,
 } from 'antd';
 import classNames from 'classnames/bind';
 
@@ -33,8 +34,8 @@ function Tests({ statisticsInfo, testOptions, testsChartData, testsInfo, onTests
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [submitTest, setSubmitTest] = useState({
         name: '',
-        gradeWeight: 0,
-        maxScore: 0,
+        gradeWeight: 0.1,
+        maxScore: 0.1,
         score: -1,
     });
 
@@ -58,8 +59,8 @@ function Tests({ statisticsInfo, testOptions, testsChartData, testsInfo, onTests
         setCurrentSubmitTest({});
         setSubmitTest({
             name: '',
-            gradeWeight: 0,
-            maxScore: 0,
+            gradeWeight: 0.1,
+            maxScore: 0.1,
             score: -1,
         });
     };
@@ -195,9 +196,20 @@ function Tests({ statisticsInfo, testOptions, testsChartData, testsInfo, onTests
                         <PlusOutlined />
                     </Button>
                     <Modal title={'Add test'} open={isModalVisible} onOk={handleAddOk} onCancel={handleCancel}>
+                        <Row>
+                            <Col span={24}>
+                                <Alert
+                                    message="How to use Tests"
+                                    description="The total 'Grade Weight' (GW) is the weight of the entire subject, and it must equal 100(%). The 'Max Score' (MS) is the maximum score of a test, and 'Score' (S) is the score you achieved, which cannot exceed the 'Max Score'. For example, Math has 2 tests. Test 1 has a GW of 30, an MS of 10, and an S of 9. Test 2 has a GW of 70, an MS of 10, and an S of 10. So the total score for the subject is (9/10)*30% + (10/10)*70% = 97%."
+                                    type="info"
+                                    showIcon
+                                />
+                            </Col>
+                        </Row>
                         <p>Name</p>
                         <Input onChange={handleChangeAddName} value={submitTest.name}></Input>
-                        <p>Grade weight</p>
+                        <p>Grade weight (total = 100)</p>
+
                         <InputNumber
                             onChange={handleChangeAddGradeWeight}
                             addonAfter="%"
