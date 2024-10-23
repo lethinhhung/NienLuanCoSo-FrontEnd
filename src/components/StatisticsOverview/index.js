@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import { BarChartOutlined } from '@ant-design/icons';
 
 import styles from './StatisticsOverview.module.scss';
+import moment from 'moment';
+import { format } from 'path-browserify';
 
 const StatisticsOverview = ({ data, courseInfo }) => {
     const cx = classNames.bind(styles);
@@ -31,7 +33,9 @@ const StatisticsOverview = ({ data, courseInfo }) => {
                                     ? 'Incoming'
                                     : currentDate > courseEndDate
                                     ? 'Completed'
-                                    : progression.toFixed(1)
+                                    : moment(courseStartDate).format('DD/MM/YYYY') +
+                                      ' - ' +
+                                      moment(courseEndDate).format('DD/MM/YYYY')
                             }
                         >
                             <Progress

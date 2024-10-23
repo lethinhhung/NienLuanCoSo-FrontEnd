@@ -1,4 +1,4 @@
-import { Image, Card, Flex, Input } from 'antd';
+import { Image, Card, Flex, Input, Progress, Tooltip, Badge } from 'antd';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -10,6 +10,7 @@ import EditDescription from '~/components/EditDescription';
 import { getTermInfoApi } from '~/utils/api';
 import defaultCourseCover from '../../assets/images/default-term-cover.jpg';
 import LoadingSpin from '~/components/LoadingSpin';
+import moment from 'moment';
 
 function Term() {
     const cx = classNames.bind(styles);
@@ -23,6 +24,11 @@ function Term() {
     const [loading, setLoading] = useState(true);
     const [termInfo, setTermInfo] = useState({});
     const [fetchData, setFetchData] = useState(false);
+
+    const currentDate = new Date();
+    const termStartDate = new Date(termInfo.startDate);
+    const termEndDate = new Date(termInfo.endDate);
+    const progression = (termEndDate - currentDate) / 1000 / 60 / 60 / 24;
 
     //Modal
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -58,6 +64,7 @@ function Term() {
                             />
                         </div>
                     </div>
+
                     <div className={cx('lessions-list-wrapper')}>
                         <CustomList
                             title="Courses"
@@ -68,6 +75,39 @@ function Term() {
                             fetchData={fetchData}
                             setFetchData={setFetchData}
                         />
+                    </div>
+                    <div className={cx('component-wrapper')}>
+                        <Card className={cx('notes')} hoverable title="Progession" bordered={false}>
+                            <Flex justify="space-between">
+                                <Badge
+                                    color={currentDate > termEndDate ? 'blue' : 'red'}
+                                    count={moment(termInfo.startDate).format('DD/MM/YYYY')}
+                                ></Badge>
+                                <Badge
+                                    color={currentDate > termEndDate ? 'blue' : 'red'}
+                                    count={moment(termInfo.endDate).format('DD/MM/YYYY')}
+                                ></Badge>
+                            </Flex>
+                            <Tooltip
+                                title={
+                                    currentDate < termStartDate
+                                        ? 'Incoming'
+                                        : currentDate > termEndDate
+                                        ? 'Completed'
+                                        : progression.toFixed(1) + '%'
+                                }
+                            >
+                                <Progress
+                                    percent={
+                                        currentDate < termStartDate
+                                            ? '0'
+                                            : currentDate > termEndDate
+                                            ? '100'
+                                            : progression.toFixed(1)
+                                    }
+                                />
+                            </Tooltip>
+                        </Card>
                     </div>
                     <div className={cx('component-wrapper')}>
                         <Card

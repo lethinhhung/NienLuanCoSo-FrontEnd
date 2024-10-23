@@ -71,6 +71,12 @@ p {
     box-shadow: var(--box-shadow);
 }
 
+@media (min-width: 501px) {
+    .content {
+        padding: 50px 70px 50px 70px;
+    }
+}
+
 .title-switch {
     padding: 10px 0 5px 0;
 }

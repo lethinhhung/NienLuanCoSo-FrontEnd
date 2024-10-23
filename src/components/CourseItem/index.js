@@ -101,6 +101,7 @@ function CourseItem({ data, loading, onDelete, termsInfo }) {
     return (
         <Badge.Ribbon text={`${startDate} ${endDate}`}>
             <Card
+                bordered={false}
                 style={{ backgroundColor: data.color }}
                 hoverable
                 loading={loading}

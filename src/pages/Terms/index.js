@@ -82,7 +82,6 @@ function Terms() {
         <div>
             <Row>
                 <Col offset={6} span={12}>
-                    {/* Select Component */}
                     <Flex className={cx('select-wrapper')} justify="center" wrap>
                         <div className={cx('time-select')}>
                             <RangePicker onChange={handleSelectTime} />
