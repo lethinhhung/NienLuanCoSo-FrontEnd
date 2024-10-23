@@ -9,6 +9,7 @@ import CustomList from '~/components/CustomList';
 import EditDescription from '~/components/EditDescription';
 import { getTermInfoApi } from '~/utils/api';
 import defaultCourseCover from '../../assets/images/default-term-cover.jpg';
+import LoadingSpin from '~/components/LoadingSpin';
 
 function Term() {
     const cx = classNames.bind(styles);
@@ -19,6 +20,7 @@ function Term() {
 
     const { TextArea } = Input;
 
+    const [loading, setLoading] = useState(true);
     const [termInfo, setTermInfo] = useState({});
     const [fetchData, setFetchData] = useState(false);
 
@@ -29,63 +31,73 @@ function Term() {
             const termData = await getTermInfoApi(termId);
 
             setTermInfo(termData);
+            setLoading(false);
         };
 
         fetchTermInfo();
     }, [isModalVisible, fetchData, termId]);
 
     return (
-        <Flex className={cx('wrapper')} wrap vertical align="center">
-            <div className={cx('image-wrapper')}>
-                <div className={cx('image')}>
-                    <Image
-                        style={{
-                            aspectRatio: '16/9',
-                            objectFit: 'cover',
-                            borderRadius: '20px',
-                            boxShadow: 'rgba(99, 99, 99, 0.8) 0px 2px 8px 0px',
-                            border: '10px solid ' + termInfo.color,
-                        }}
-                        width={'100%'}
-                        preview={false}
-                        src={termInfo.cover === '' ? defaultCourseCover : convertAvatarPath(termInfo.cover)}
-                    />
-                </div>
-            </div>
-            <div className={cx('lessions-list-wrapper')}>
-                <CustomList
-                    title="Courses"
-                    data={termInfo.courses}
-                    id={termInfo._id}
-                    isModalVisible={isModalVisible}
-                    setIsModalVisible={setIsModalVisible}
-                    fetchData={fetchData}
-                    setFetchData={setFetchData}
-                />
-            </div>
-            <div className={cx('component-wrapper')}>
-                <Card
-                    className={cx('notes')}
-                    hoverable
-                    title="Term overview"
-                    bordered={false}
-                    extra={<EditDescription type="term" editData={termInfo} isEdit={true} />}
-                >
-                    <Meta avatar={<h1>{termInfo.emoji}</h1>} title={termInfo.name} description={termInfo.description} />
-                </Card>
-            </div>
+        <>
+            <LoadingSpin loading={loading} />
+            <div hidden={loading}>
+                <Flex className={cx('wrapper')} wrap vertical align="center">
+                    <div className={cx('image-wrapper')}>
+                        <div className={cx('image')}>
+                            <Image
+                                style={{
+                                    aspectRatio: '16/9',
+                                    objectFit: 'cover',
+                                    borderRadius: '20px',
+                                    boxShadow: 'rgba(99, 99, 99, 0.8) 0px 2px 8px 0px',
+                                    border: '10px solid ' + termInfo.color,
+                                }}
+                                width={'100%'}
+                                preview={false}
+                                src={termInfo.cover === '' ? defaultCourseCover : convertAvatarPath(termInfo.cover)}
+                            />
+                        </div>
+                    </div>
+                    <div className={cx('lessions-list-wrapper')}>
+                        <CustomList
+                            title="Courses"
+                            data={termInfo.courses}
+                            id={termInfo._id}
+                            isModalVisible={isModalVisible}
+                            setIsModalVisible={setIsModalVisible}
+                            fetchData={fetchData}
+                            setFetchData={setFetchData}
+                        />
+                    </div>
+                    <div className={cx('component-wrapper')}>
+                        <Card
+                            className={cx('notes')}
+                            hoverable
+                            title="Term overview"
+                            bordered={false}
+                            extra={<EditDescription type="term" editData={termInfo} isEdit={true} />}
+                        >
+                            <Meta
+                                avatar={<h1>{termInfo.emoji}</h1>}
+                                title={termInfo.name}
+                                description={termInfo.description}
+                            />
+                        </Card>
+                    </div>
 
-            <div className={cx('component-wrapper')}>
-                <Card hoverable className={cx('notes')} title="Notes">
-                    <TextArea
-                        placeholder="Term notes..."
-                        autoSize={{
-                            minRows: 2,
-                        }}
-                    />
-                </Card>
+                    <div className={cx('component-wrapper')}>
+                        <Card hoverable className={cx('notes')} title="Notes">
+                            <TextArea
+                                placeholder="Term notes..."
+                                autoSize={{
+                                    minRows: 2,
+                                }}
+                            />
+                        </Card>
+                    </div>
+                </Flex>
             </div>
-        </Flex>
+        </>
     );
 }
 

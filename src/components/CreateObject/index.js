@@ -15,6 +15,7 @@ import {
     updateCourseApi,
     updateTermApi,
 } from '~/utils/api';
+import LoadingSpin from '../LoadingSpin';
 
 function CreateObject({
     type = 'course',
@@ -35,6 +36,7 @@ function CreateObject({
     const { TextArea } = Input;
     const { RangePicker } = DatePicker;
 
+    const [loading, setLoading] = useState(true);
     const [tagsOptions, setTagsOptions] = useState([]);
     const [termsOptions, setTermsOptions] = useState([]);
     const [reRender, setReRender] = useState('');
@@ -75,6 +77,7 @@ function CreateObject({
 
             setTagsOptions(newTagsOptions);
             setTermsOptions(newTermsOptions);
+            setLoading(false);
         };
 
         fetchTagsAndTermsInfo();
@@ -297,143 +300,157 @@ function CreateObject({
     };
 
     return (
-        <Flex vertical className={cx('content')}>
-            <div hidden={action === 'edit'}>
-                <h1>{'Create a new ' + type}</h1>
-                <Divider></Divider>
-            </div>
-            <Flex className={cx('title-switch')} align="center">
-                <h2>Emoji</h2>
-                <Switch onChange={handleEmoji} checkedChildren="Custom" unCheckedChildren="Default" />
-                <h2>{submitEmoji}</h2>
-            </Flex>
-            <Flex justify="center">
-                <div style={isEmojiDisabled ? { pointerEvents: 'none', opacity: '0.4' } : {}}>
-                    <EmojiPicker onEmojiClick={handleSelectEmoji} width={'295px'}></EmojiPicker>
-                </div>
-            </Flex>
-            <Flex className={cx('title-switch')} align="center">
-                <h2>Card color</h2>
+        <>
+            <LoadingSpin loading={loading}></LoadingSpin>
+            <div hidden={loading}>
+                <Flex vertical className={cx('content')}>
+                    <div hidden={action === 'edit'}>
+                        <h1>{'Create a new ' + type}</h1>
+                        <Divider></Divider>
+                    </div>
+                    <Flex className={cx('title-switch')} align="center">
+                        <h2>Emoji</h2>
+                        <Switch onChange={handleEmoji} checkedChildren="Custom" unCheckedChildren="Default" />
+                        <h2>{submitEmoji}</h2>
+                    </Flex>
+                    <Flex justify="center">
+                        <div style={isEmojiDisabled ? { pointerEvents: 'none', opacity: '0.4' } : {}}>
+                            <EmojiPicker onEmojiClick={handleSelectEmoji} width={'295px'}></EmojiPicker>
+                        </div>
+                    </Flex>
+                    <Flex className={cx('title-switch')} align="center">
+                        <h2>Card color</h2>
 
-                <Switch
-                    style={{ marginRight: '10px' }}
-                    onChange={handleColor}
-                    checkedChildren="Custom"
-                    unCheckedChildren="Default"
-                />
-                <div style={isColorDisabled ? { pointerEvents: 'none', opacity: '0.4' } : {}}>
-                    <ColorPicker
-                        value={submitColor}
-                        disabledAlpha
-                        defaultValue={'#624e88'}
-                        onChange={handleSelectColor}
-                    />
-                </div>
-            </Flex>
-            <Flex justify="center"></Flex>
-
-            <Flex className={cx('title-switch')} align="center">
-                <h2>Cover</h2>
-
-                <Switch onChange={handleCover} checkedChildren="Custom" unCheckedChildren="Default" />
-            </Flex>
-            <Flex justify="center">
-                <div style={isCoverDisabled ? { pointerEvents: 'none', opacity: '0.4' } : {}}>
-                    <div className={cx('upload-panel')}>
-                        <h3 className={cx('title')}>Upload an image</h3>
-                        {imagePreview && <img width={'100px'} src={imagePreview} alt="Preview" />}
-                        <form>
-                            <input
-                                type="file"
-                                alt="upload"
-                                accept="image/png, image/gif, image/jpeg"
-                                onChange={handleFileChange}
+                        <Switch
+                            style={{ marginRight: '10px' }}
+                            onChange={handleColor}
+                            checkedChildren="Custom"
+                            unCheckedChildren="Default"
+                        />
+                        <div style={isColorDisabled ? { pointerEvents: 'none', opacity: '0.4' } : {}}>
+                            <ColorPicker
+                                value={submitColor}
+                                disabledAlpha
+                                defaultValue={'#624e88'}
+                                onChange={handleSelectColor}
                             />
-                        </form>
-                    </div>
-                </div>
-            </Flex>
-            <h2 className={cx('title-alone')}>Name</h2>
-            <Input required onChange={handleSelectName} value={submitName}></Input>
-            <h2 className={cx('title-alone')}>Description</h2>
-            <TextArea
-                autoSize={{ minRows: 2, maxRows: 6 }}
-                placeholder={'Enter ' + type + ' description...'}
-                onChange={handleSelectDescription}
-                value={submitDescription}
-            ></TextArea>
-            <div hidden={type === 'term'}>
-                <h2 className={cx('title-alone')}>Tags</h2>
-                <Flex justify="space-between" align="center">
-                    <Select
-                        onClick={reRenderTagsAndTerms}
-                        style={{ width: '100%' }}
-                        className={cx('tags-drawer')}
-                        placeholder="Tags"
-                        mode="multiple"
-                        tagRender={tagRender}
-                        defaultValue={[]}
-                        options={tagsOptions}
-                        onChange={handleSelectTags}
-                    />
+                        </div>
+                    </Flex>
+                    <Flex justify="center"></Flex>
 
-                    <div style={{ marginLeft: '5px' }}>
-                        <NewTag />
-                    </div>
-                </Flex>
-            </div>
+                    <Flex className={cx('title-switch')} align="center">
+                        <h2>Cover</h2>
 
-            <div hidden={type === 'term'}>
-                <Flex className={cx('title-switch')} align="center">
-                    <h2>Duration</h2>
-                    <Switch onChange={handleDuration} checkedChildren="Term" unCheckedChildren="Time" defaultChecked />
-                </Flex>
-                <div hidden={!isTerm}>
-                    <Flex wrap align="center">
-                        <p style={{ minWidth: '80px', marginTop: '5px' }}>Pick a term</p>
-                        <Select
-                            options={termsOptions}
-                            required
-                            style={{ minWidth: '150px', marginTop: '5px' }}
-                            onClick={reRenderTagsAndTerms}
-                            defaultValue={[]}
-                            onChange={handleSelectTerm}
-                        ></Select>
-                        <Flex align="center" style={{ marginTop: '5px' }}>
-                            <p>or</p>
-                            <Button>
-                                <Link to="/create-new-term">Create a new Term</Link>
+                        <Switch onChange={handleCover} checkedChildren="Custom" unCheckedChildren="Default" />
+                    </Flex>
+                    <Flex justify="center">
+                        <div style={isCoverDisabled ? { pointerEvents: 'none', opacity: '0.4' } : {}}>
+                            <div className={cx('upload-panel')}>
+                                <h3 className={cx('title')}>Upload an image</h3>
+                                {imagePreview && <img width={'100px'} src={imagePreview} alt="Preview" />}
+                                <form>
+                                    <input
+                                        type="file"
+                                        alt="upload"
+                                        accept="image/png, image/gif, image/jpeg"
+                                        onChange={handleFileChange}
+                                    />
+                                </form>
+                            </div>
+                        </div>
+                    </Flex>
+                    <h2 className={cx('title-alone')}>Name</h2>
+                    <Input required onChange={handleSelectName} value={submitName}></Input>
+                    <h2 className={cx('title-alone')}>Description</h2>
+                    <TextArea
+                        autoSize={{ minRows: 2, maxRows: 6 }}
+                        placeholder={'Enter ' + type + ' description...'}
+                        onChange={handleSelectDescription}
+                        value={submitDescription}
+                    ></TextArea>
+                    <div hidden={type === 'term'}>
+                        <h2 className={cx('title-alone')}>Tags</h2>
+                        <Flex justify="space-between" align="center">
+                            <Select
+                                onClick={reRenderTagsAndTerms}
+                                style={{ width: '100%' }}
+                                className={cx('tags-drawer')}
+                                placeholder="Tags"
+                                mode="multiple"
+                                tagRender={tagRender}
+                                defaultValue={[]}
+                                options={tagsOptions}
+                                onChange={handleSelectTags}
+                            />
+
+                            <div style={{ marginLeft: '5px' }}>
+                                <NewTag />
+                            </div>
+                        </Flex>
+                    </div>
+
+                    <div hidden={type === 'term'}>
+                        <Flex className={cx('title-switch')} align="center">
+                            <h2>Duration</h2>
+                            <Switch
+                                onChange={handleDuration}
+                                checkedChildren="Term"
+                                unCheckedChildren="Time"
+                                defaultChecked
+                            />
+                        </Flex>
+                        <div hidden={!isTerm}>
+                            <Flex wrap align="center">
+                                <p style={{ minWidth: '80px', marginTop: '5px' }}>Pick a term</p>
+                                <Select
+                                    options={termsOptions}
+                                    required
+                                    style={{ minWidth: '150px', marginTop: '5px' }}
+                                    onClick={reRenderTagsAndTerms}
+                                    defaultValue={[]}
+                                    onChange={handleSelectTerm}
+                                ></Select>
+                                <Flex align="center" style={{ marginTop: '5px' }}>
+                                    <p>or</p>
+                                    <Button>
+                                        <Link to="/create-new-term">Create a new Term</Link>
+                                    </Button>
+                                </Flex>
+                            </Flex>
+                        </div>
+
+                        <div hidden={isTerm}>
+                            <Flex align="center">
+                                <p style={{ minWidth: '80px', marginTop: '5px' }}>Pick a time</p>
+                                <RangePicker required onChange={handleSelectTime} />
+                            </Flex>
+                        </div>
+                    </div>
+
+                    <div hidden={type === 'course'}>
+                        <div className={cx('title-alone')}>
+                            <h2>Duration</h2>
+                        </div>
+
+                        <Flex align="center">
+                            <p style={{ minWidth: '80px', marginTop: '5px' }}>Pick a time</p>
+                            <RangePicker required onChange={handleSelectTime} />
+                        </Flex>
+                    </div>
+                    <div>
+                        <Flex style={{ marginTop: '30px' }} justify="flex-end">
+                            <Button
+                                onClick={handleSubmit}
+                                size="large"
+                                style={{ backgroundColor: '#cb80ab', width: '100px' }}
+                            >
+                                <CheckOutlined />
                             </Button>
                         </Flex>
-                    </Flex>
-                </div>
-
-                <div hidden={isTerm}>
-                    <Flex align="center">
-                        <p style={{ minWidth: '80px', marginTop: '5px' }}>Pick a time</p>
-                        <RangePicker required onChange={handleSelectTime} />
-                    </Flex>
-                </div>
-            </div>
-
-            <div hidden={type === 'course'}>
-                <div className={cx('title-alone')}>
-                    <h2>Duration</h2>
-                </div>
-
-                <Flex align="center">
-                    <p style={{ minWidth: '80px', marginTop: '5px' }}>Pick a time</p>
-                    <RangePicker required onChange={handleSelectTime} />
+                    </div>
                 </Flex>
             </div>
-            <div>
-                <Flex style={{ marginTop: '30px' }} justify="flex-end">
-                    <Button onClick={handleSubmit} size="large" style={{ backgroundColor: '#cb80ab', width: '100px' }}>
-                        <CheckOutlined />
-                    </Button>
-                </Flex>
-            </div>
-        </Flex>
+        </>
     );
 }
 

@@ -11,14 +11,13 @@ function Terms() {
     const cx = classNames.bind(styles);
 
     const { RangePicker } = DatePicker;
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [termsInfo, setTermsInfo] = useState([]);
     const [filteredTerms, setFilteredTerms] = useState([]);
     const [selectedTime, setSelectedTime] = useState([]);
     const [selectedStatus, setSelectedStatus] = useState('all');
 
     useEffect(() => {
-        setLoading(true);
         const fetchCoursesInfo = async () => {
             const termsData = await getTermsInfoApi();
 

@@ -21,6 +21,7 @@ import {
 import convertAvatarPath from '~/utils/convertAvatarPath';
 import defaultCourseCover from '../../assets/images/default-course-cover.png';
 import StatisticsOverview from '~/components/StatisticsOverview';
+import LoadingSpin from '~/components/LoadingSpin';
 
 function Course() {
     const cx = classNames.bind(styles);
@@ -29,6 +30,7 @@ function Course() {
     const [inputLessonName, setInputLessonName] = useState('');
     const [inputDescription, setInputDescription] = useState('');
     const [deleteTrigger, setDeleteTrigger] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     const { Meta } = Card;
 
@@ -59,6 +61,7 @@ function Course() {
             setCourseInfo(courseData);
             setTransformedData(transformData(lessonsData));
             setStatisticsInfo(statisticsData);
+            setLoading(false);
         };
 
         fetchCourseInfo();
@@ -116,134 +119,155 @@ function Course() {
     };
 
     return (
-        <Flex className={cx('wrapper')} wrap vertical align="center">
-            <div className={cx('image-wrapper')}>
-                <div className={cx('image')}>
-                    <Image
-                        style={{
-                            aspectRatio: '16/9',
-                            objectFit: 'cover',
-                            borderRadius: '20px',
-                            boxShadow: 'rgba(99, 99, 99, 0.8) 0px 2px 8px 0px',
-                            border: 'solid #624e88',
-                        }}
-                        width={'100%'}
-                        preview={false}
-                        src={courseInfo.cover === '' ? defaultCourseCover : convertAvatarPath(courseInfo.cover)}
-                    />
-                </div>
-            </div>
-            <Card
-                className={cx('overview')}
-                hoverable
-                title="Course overview"
-                bordered={false}
-                extra={<EditDescription type="course" editData={courseInfo} />}
-            >
-                <Meta avatar={<h1>{courseInfo.emoji}</h1>} title="Description" description={courseInfo.description} />
-
-                <Divider />
-                <Row style={{ marginBottom: '10px' }}>
-                    <h4>Infomations</h4>
-                </Row>
-                <Row>
-                    <Flex style={{ width: '100%', marginBottom: '5px' }} wrap justify="space-between" align="center">
-                        Durration:
-                        {courseInfo.term ? (
-                            <Badge count={termInfo.name}></Badge>
-                        ) : (
-                            <Badge
-                                count={
-                                    moment(courseInfo.startDate).format('DD/MM/YYYY') +
-                                    ' - ' +
-                                    moment(courseInfo.endDate).format('DD/MM/YYYY')
-                                }
-                            ></Badge>
-                        )}
-                    </Flex>
-                </Row>
-
-                <Row>
-                    <Flex style={{ width: '100%' }} wrap justify="space-between" align="center">
-                        Tags:
-                        <TagsDrawer tagsIds={courseInfo.tags} isDefault={false} />
-                    </Flex>
-                </Row>
-                <Row></Row>
-                <Divider />
-
-                <StatisticsOverview data={statisticsInfo} courseInfo={courseInfo}></StatisticsOverview>
-            </Card>
-
-            <div className={cx('notes-wrapper')}>
-                <Card hoverable className={cx('notes')} title="Notes">
-                    <TextArea
-                        placeholder="Course notes..."
-                        autoSize={{
-                            minRows: 2,
-                        }}
-                    />
-                </Card>
-            </div>
-
-            <div className={cx('lessions-list-wrapper')}>
-                <List
-                    header={
-                        <Flex wrap justify="space-between">
-                            <h3>Lessons</h3>
-                            <Button onClick={showModal}>
-                                <PlusOutlined />
-                            </Button>
-                            <Modal title="Add new lesson" open={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-                                <Input
-                                    value={inputLessonName}
-                                    onChange={handleInputLessonName}
-                                    placeholder="Enter lesson name..."
-                                />
-                                <p>Description</p>
-                                <TextArea
-                                    autoSize={{ minRows: 2, maxRows: 6 }}
-                                    placeholder={'Enter lesson description...'}
-                                    onChange={handleInputDescription}
-                                    value={inputDescription}
-                                ></TextArea>
-                            </Modal>
-                        </Flex>
-                    }
-                    style={{ width: '100%', backgroundColor: '#ffffff', padding: '24px', borderRadius: '7px' }}
-                    itemLayout="horizontal"
-                    dataSource={transformedData}
-                    renderItem={(item, index) => (
-                        <List.Item
-                            style={{
-                                border: '1px solid #ccc',
-                                borderRadius: '5px',
-                                marginBottom: '5px',
-                                padding: '15px',
-                            }}
-                            actions={[
-                                <Popconfirm
-                                    onConfirm={() => handleDeleteLesson(item._id)}
-                                    title={'Delete this lesson'}
-                                    description={'Are you sure to remove this lesson?'}
-                                    okText="Delete"
-                                    cancelText={'Cancel '}
-                                >
-                                    <Button>
-                                        <DeleteOutlined />
-                                    </Button>
-                                </Popconfirm>,
-                            ]}
-                        >
-                            <List.Item.Meta
-                                title={<Link to={'/course/' + courseInfo._id + '/' + item._id}>{item.title}</Link>}
-                                description={item.description}
+        <>
+            <LoadingSpin loading={loading}></LoadingSpin>
+            <div hidden={loading}>
+                <Flex className={cx('wrapper')} wrap vertical align="center">
+                    <div className={cx('image-wrapper')}>
+                        <div className={cx('image')}>
+                            <Image
+                                style={{
+                                    aspectRatio: '16/9',
+                                    objectFit: 'cover',
+                                    borderRadius: '20px',
+                                    boxShadow: 'rgba(99, 99, 99, 0.8) 0px 2px 8px 0px',
+                                    border: 'solid #624e88',
+                                }}
+                                width={'100%'}
+                                preview={false}
+                                src={courseInfo.cover === '' ? defaultCourseCover : convertAvatarPath(courseInfo.cover)}
                             />
-                        </List.Item>
-                    )}
-                ></List>
+                        </div>
+                    </div>
+                    <Card
+                        className={cx('overview')}
+                        hoverable
+                        title="Course overview"
+                        bordered={false}
+                        extra={<EditDescription type="course" editData={courseInfo} />}
+                    >
+                        <Meta
+                            avatar={<h1>{courseInfo.emoji}</h1>}
+                            title="Description"
+                            description={courseInfo.description}
+                        />
+
+                        <Divider />
+                        <Row style={{ marginBottom: '10px' }}>
+                            <h4>Infomations</h4>
+                        </Row>
+                        <Row>
+                            <Flex
+                                style={{ width: '100%', marginBottom: '5px' }}
+                                wrap
+                                justify="space-between"
+                                align="center"
+                            >
+                                Durration:
+                                {courseInfo.term ? (
+                                    <Badge count={termInfo.name}></Badge>
+                                ) : (
+                                    <Badge
+                                        count={
+                                            moment(courseInfo.startDate).format('DD/MM/YYYY') +
+                                            ' - ' +
+                                            moment(courseInfo.endDate).format('DD/MM/YYYY')
+                                        }
+                                    ></Badge>
+                                )}
+                            </Flex>
+                        </Row>
+
+                        <Row>
+                            <Flex style={{ width: '100%' }} wrap justify="space-between" align="center">
+                                Tags:
+                                <TagsDrawer tagsIds={courseInfo.tags} isDefault={false} />
+                            </Flex>
+                        </Row>
+                        <Row></Row>
+                        <Divider />
+
+                        <StatisticsOverview data={statisticsInfo} courseInfo={courseInfo}></StatisticsOverview>
+                    </Card>
+
+                    <div className={cx('notes-wrapper')}>
+                        <Card hoverable className={cx('notes')} title="Notes">
+                            <TextArea
+                                placeholder="Course notes..."
+                                autoSize={{
+                                    minRows: 2,
+                                }}
+                            />
+                        </Card>
+                    </div>
+
+                    <div className={cx('lessions-list-wrapper')}>
+                        <List
+                            header={
+                                <Flex wrap justify="space-between">
+                                    <h3>Lessons</h3>
+                                    <Button onClick={showModal}>
+                                        <PlusOutlined />
+                                    </Button>
+                                    <Modal
+                                        title="Add new lesson"
+                                        open={isModalVisible}
+                                        onOk={handleOk}
+                                        onCancel={handleCancel}
+                                    >
+                                        <Input
+                                            value={inputLessonName}
+                                            onChange={handleInputLessonName}
+                                            placeholder="Enter lesson name..."
+                                        />
+                                        <p>Description</p>
+                                        <TextArea
+                                            autoSize={{ minRows: 2, maxRows: 6 }}
+                                            placeholder={'Enter lesson description...'}
+                                            onChange={handleInputDescription}
+                                            value={inputDescription}
+                                        ></TextArea>
+                                    </Modal>
+                                </Flex>
+                            }
+                            style={{ width: '100%', backgroundColor: '#ffffff', padding: '24px', borderRadius: '7px' }}
+                            itemLayout="horizontal"
+                            dataSource={transformedData}
+                            renderItem={(item, index) => (
+                                <List.Item
+                                    style={{
+                                        border: '1px solid #ccc',
+                                        borderRadius: '5px',
+                                        marginBottom: '5px',
+                                        padding: '15px',
+                                    }}
+                                    actions={[
+                                        <Popconfirm
+                                            onConfirm={() => handleDeleteLesson(item._id)}
+                                            title={'Delete this lesson'}
+                                            description={'Are you sure to remove this lesson?'}
+                                            okText="Delete"
+                                            cancelText={'Cancel '}
+                                        >
+                                            <Button>
+                                                <DeleteOutlined />
+                                            </Button>
+                                        </Popconfirm>,
+                                    ]}
+                                >
+                                    <List.Item.Meta
+                                        title={
+                                            <Link to={'/course/' + courseInfo._id + '/' + item._id}>{item.title}</Link>
+                                        }
+                                        description={item.description}
+                                    />
+                                </List.Item>
+                            )}
+                        ></List>
+                    </div>
+                </Flex>
             </div>
-        </Flex>
+        </>
     );
 }
 

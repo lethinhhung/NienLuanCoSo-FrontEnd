@@ -17,8 +17,11 @@ import {
 } from '~/utils/api';
 import Projects from '~/components/Statistics/Projects';
 import Tests from '~/components/Statistics/Tests';
+import LoadingSpin from '~/components/LoadingSpin';
 
 function Statistics() {
+    const [loading, setLoading] = useState(true);
+
     const { courseId, statisticsId } = useParams();
     const [statisticsInfo, setStatisticsInfo] = useState({});
     const [projectsInfo, setProjectsInfo] = useState([]);
@@ -88,6 +91,7 @@ function Statistics() {
                 },
             ],
         }));
+        setLoading(false);
     };
 
     useEffect(() => {
@@ -96,47 +100,56 @@ function Statistics() {
     }, []);
 
     return (
-        <Flex className={cx('wrapper')} wrap vertical align="center">
-            <Card className={cx('overview')} hoverable title="Progression" bordered={false}>
-                <Row>
-                    <Flex justify="space-between" style={{ width: '100%' }}>
-                        <p>{moment(courseInfo.startDate).format('DD/MM/YYYY')}</p>
-                        <p>{moment(courseInfo.endDate).format('DD/MM/YYYY')}</p>
-                    </Flex>
-                </Row>
-                <Row>
-                    <Tooltip
-                        title={
-                            currentDate < courseStartDate
-                                ? 'Incoming'
-                                : currentDate > courseEndDate
-                                ? 'Completed'
-                                : progression.toFixed(1)
-                        }
-                    >
-                        <Progress
-                            percent={
-                                currentDate < courseStartDate
-                                    ? '0'
-                                    : currentDate > courseEndDate
-                                    ? '100'
-                                    : progression.toFixed(1)
-                            }
-                        />
-                    </Tooltip>
-                </Row>
-            </Card>
+        <>
+            <LoadingSpin loading={loading} />
+            <div hidden={loading}>
+                <Flex className={cx('wrapper')} wrap vertical align="center">
+                    <Card className={cx('overview')} hoverable title="Progression" bordered={false}>
+                        <Row>
+                            <Flex justify="space-between" style={{ width: '100%' }}>
+                                <p>{moment(courseInfo.startDate).format('DD/MM/YYYY')}</p>
+                                <p>{moment(courseInfo.endDate).format('DD/MM/YYYY')}</p>
+                            </Flex>
+                        </Row>
+                        <Row>
+                            <Tooltip
+                                title={
+                                    currentDate < courseStartDate
+                                        ? 'Incoming'
+                                        : currentDate > courseEndDate
+                                        ? 'Completed'
+                                        : progression.toFixed(1)
+                                }
+                            >
+                                <Progress
+                                    percent={
+                                        currentDate < courseStartDate
+                                            ? '0'
+                                            : currentDate > courseEndDate
+                                            ? '100'
+                                            : progression.toFixed(1)
+                                    }
+                                />
+                            </Tooltip>
+                        </Row>
+                    </Card>
 
-            <Tests
-                testsInfo={testsInfo}
-                testOptions={testOptions}
-                testsChartData={testsChartData}
-                statisticsInfo={statisticsInfo}
-                onTestsChange={fetchInfo}
-            />
+                    <Tests
+                        testsInfo={testsInfo}
+                        testOptions={testOptions}
+                        testsChartData={testsChartData}
+                        statisticsInfo={statisticsInfo}
+                        onTestsChange={fetchInfo}
+                    />
 
-            <Projects statisticsInfo={statisticsInfo} projectsInfo={projectsInfo} onProjectsChange={fetchInfo} />
-        </Flex>
+                    <Projects
+                        statisticsInfo={statisticsInfo}
+                        projectsInfo={projectsInfo}
+                        onProjectsChange={fetchInfo}
+                    />
+                </Flex>
+            </div>
+        </>
     );
 }
 

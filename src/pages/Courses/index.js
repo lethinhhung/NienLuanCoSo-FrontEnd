@@ -27,7 +27,6 @@ function Courses() {
     };
 
     useEffect(() => {
-        setLoading(true);
         const fetchCoursesInfo = async () => {
             const coursesData = await getCoursesInfoApi();
             const termsData = await getTermsInfoApi();
