@@ -1,37 +1,41 @@
 .wrapper {
-    height: 100vh;
-    width: 100vw;
     background-color: #ede8d0;
+    min-height: 100vh;
 }
 
 .logo-wrapper {
-    display: flex;
-    justify-content: center;
     // height: 100px;
 }
 
 .logo {
+    margin-top: 10px;
     padding: 10px;
     background-color: var(--primary);
     box-shadow: var(--box-shadow);
     border-radius: 50%;
 }
 
+.logo-small {
+    padding: 5px;
+    margin: 10px 0 0 20px;
+    background-color: var(--primary);
+    box-shadow: var(--box-shadow);
+    border-radius: 50%;
+}
+
 .form-wrapper {
-    display: flex;
-    justify-content: center;
+    width: 100%;
     margin-top: 50px;
 }
 
-.tabs {
-}
-
 .form {
-    min-width: 270px;
-    background-color: var(--primary);
-    padding: 50px 50px 15px 50px;
-    border-radius: 30px;
-    box-shadow: var(--box-shadow);
+    // min-width: 270px;
+    // background-color: var(--primary);
+    // padding: 50px 50px 15px 50px;
+    // border-radius: 30px;
+    // box-shadow: var(--box-shadow);
+    width: 300px;
+    height: 420px;
 }
 
 .input {
@@ -40,6 +44,13 @@
     border-radius: 999px;
 }
 
+.submit {
+    position: absolute;
+    right: 20px;
+    bottom: 0;
+}
+
 .submit-btn {
-    box-shadow: none;
+    width: var(--default-floating-button-size);
+    height: var(--default-floating-button-size);
 }

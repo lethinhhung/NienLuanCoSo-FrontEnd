@@ -50,6 +50,17 @@ function LoginForm() {
             onFinishFailed={onFinishFailed}
             autoComplete="off"
         >
+            {/* <Form.Item
+                wrapperCol={{
+                    span: 24,
+                }}
+            >
+                <Flex justify="center">
+                    <Button size="large" shape="square" className={cx('submit-btn')} type="primary" htmlType="submit">
+                        <RightOutlined />
+                    </Button>
+                </Flex>
+            </Form.Item> */}
             <Form.Item
                 name="name"
                 wrapperCol={{
@@ -79,21 +90,15 @@ function LoginForm() {
             >
                 <Input.Password className={cx('input')} placeholder="Password" />
             </Form.Item>
-
             <Form.Item
+                className={cx('submit')}
                 wrapperCol={{
                     span: 24,
                 }}
             >
-                <Flex justify="flex-end">
-                    <Button
-                        shape="circle"
-                        icon={<RightOutlined />}
-                        className={cx('submit-btn')}
-                        type="primary"
-                        htmlType="submit"
-                    ></Button>
-                </Flex>
+                <Button size="large" shape="circle" className={cx('submit-btn')} type="primary" htmlType="submit">
+                    <RightOutlined />
+                </Button>
             </Form.Item>
         </Form>
     );

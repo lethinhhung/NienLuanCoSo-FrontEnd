@@ -53,6 +53,17 @@ function RegisterForm({ onRegister }) {
             onFinishFailed={onFinishFailed}
             autoComplete="off"
         >
+            {/* <Form.Item
+                wrapperCol={{
+                    span: 24,
+                }}
+            >
+                <Flex justify="center">
+                    <Button size="large" shape="square" className={cx('submit-btn')} type="primary" htmlType="submit">
+                        <RightOutlined />
+                    </Button>
+                </Flex>
+            </Form.Item> */}
             <Form.Item
                 name="name"
                 wrapperCol={{
@@ -126,14 +137,14 @@ function RegisterForm({ onRegister }) {
             >
                 <Input.Password className={cx('input')} placeholder="Retype password" />
             </Form.Item>
-
             <Form.Item
                 wrapperCol={{
                     span: 24,
                 }}
+                className={cx('submit')}
             >
-                <Flex justify="flex-end">
-                    <Button shape="circle" className={cx('submit-btn')} type="primary" htmlType="submit">
+                <Flex justify="center">
+                    <Button size="large" shape="circle" className={cx('submit-btn')} type="primary" htmlType="submit">
                         <RightOutlined />
                     </Button>
                 </Flex>
