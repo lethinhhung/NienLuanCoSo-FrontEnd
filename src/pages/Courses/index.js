@@ -40,7 +40,6 @@ function Courses() {
 
         fetchCoursesInfo();
     }, []);
-    console.log(coursesInfo);
 
     // const filteredCourses = coursesInfo.filter((course) => {
     //     const matchesSearchCourse = course.name.toLowerCase().includes(searchCourse.toLowerCase());

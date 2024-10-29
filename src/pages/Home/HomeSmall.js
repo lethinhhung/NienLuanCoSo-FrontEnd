@@ -16,7 +16,7 @@ function HomeSmall({ data, handleNext }) {
     return (
         <>
             <Flex vertical align="center" justify="space-between" className={cx('wrapper')}>
-                <Flex style={{ padding: '10px 10px 0 10px' }} warp align="center" justify="center">
+                <Flex style={{ padding: '10px 10px 0 10px' }} align="center" justify="center">
                     <Image width={'100px'} preview={false} src={logo}></Image>
                 </Flex>
 
