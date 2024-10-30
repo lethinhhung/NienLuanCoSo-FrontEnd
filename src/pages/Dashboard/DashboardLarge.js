@@ -1,4 +1,4 @@
-import { Calendar, Card, Row, Col, Divider, Progress, Flex, Select } from 'antd';
+import { Calendar, Card, Row, Col, Divider, Progress, Flex, Select, Input } from 'antd';
 import classNames from 'classnames/bind';
 import Doughnut from '~/components/Charts/Doughnut';
 import Pie from '~/components/Charts/Pie';
@@ -7,13 +7,17 @@ import { Chart, ArcElement } from 'chart.js';
 
 import styles from './Dashboard.module.scss';
 import { Link } from 'react-router-dom';
+import CustomBar from '~/components/Charts/Bar';
+import CustomPie from '~/components/Charts/Pie';
 
 Chart.register(ArcElement);
 function DashboardLarge() {
     const cx = classNames.bind(styles);
 
+    const { TextArea } = Input;
+
     const data = {
-        labels: ['Red', 'Blue', 'Yellow'],
+        labels: ['Course 1', 'Course 2', 'Course 3'],
         datasets: [
             {
                 label: 'My First Dataset',
@@ -34,64 +38,98 @@ function DashboardLarge() {
         <div className={cx('large-wrapper')}>
             <Row>
                 <Col className={cx('large-col')} span={8}>
-                    <Card hoverable className={cx('large-card')} title="Progression" bordered={false}>
-                        <Flex justify="space-between" align="center">
-                            <p>Term:</p>
+                    <Card hoverable className={cx('large-card')} title="Notes" bordered={false}>
+                        <TextArea
+                            placeholder="Notes..."
+                            autoSize={{
+                                minRows: 2,
+                            }}
+                        />
+                    </Card>
+                    <Card
+                        hoverable
+                        className={cx('large-card')}
+                        title="Grade range percentage"
+                        bordered={false}
+                        style={{}}
+                    >
+                        <CustomPie data={data} />
+                    </Card>
+                    <Card hoverable className={cx('large-card')} title="Statistics" bordered={false}>
+                        <p>Total courses</p>
+                        <Divider></Divider>
+                        <p>Total terms</p>
+                        <Divider></Divider>
+                        <p>Total projects</p>
+                        <Divider></Divider>
+                        <p>Total tests</p>
+                    </Card>
+                </Col>
+                <Col className={cx('large-col')} span={8}>
+                    <Card
+                        hoverable
+                        className={cx('large-card')}
+                        title="Progression"
+                        bordered={false}
+                        extra={
                             <Select
                                 placeholder="Term"
                                 style={{ width: 120 }}
                                 options={[
-                                    { value: '2023', label: '2023' },
-                                    { value: '2024', label: '2025' },
-                                    { value: '2026', label: '2026' },
+                                    { value: 'current', label: 'Current' },
+                                    { value: 'incoming', label: 'Incoming' },
+                                    { value: 'completed', label: 'Completed' },
                                 ]}
-                                defaultValue={2023}
+                                defaultValue={'current'}
                             ></Select>
-                        </Flex>
-                        <Divider></Divider>
+                        }
+                    >
                         <p>Courses</p>
-                        <Flex justify="center">
-                            <Progress type="circle" percent={75} />
-                        </Flex>
+                        <Progress percent={75} />
                         <Divider />
-                        <p>Tests</p>
-
-                        <Flex justify="center">
-                            <Progress type="circle" percent={75} />
-                        </Flex>
-
+                        <p>Terms</p>
+                        <Progress percent={75} />
                         <Divider />
                         <p>Projects</p>
-                        <Pie data={data}></Pie>
-                    </Card>
-                </Col>
-                <Col className={cx('large-col')} span={8}>
-                    <Card hoverable className={cx('large-card')} title="Incoming events" bordered={false}>
-                        <p>Tests</p>
-                        <Divider></Divider>
-                        <p>Projects</p>
-                        <Divider></Divider>
-                        <p>More...t</p>
-                    </Card>
-                    <Card hoverable className={cx('large-card')} title="Statistics" bordered={false}>
-                        <Link to="/courses">Total courses</Link>
-                        <Divider />
-                        <Link to="/terms">Total terms</Link>
-                        <Divider />
-                        <p>More...</p>
-                    </Card>
-                </Col>
-                <Col className={cx('large-col')} span={8}>
-                    <Card hoverable className={cx('large-card')} title="Overall" bordered={false} style={{}}>
-                        <Line></Line>
+                        <Progress percent={75} />
                     </Card>
                     <Card hoverable className={cx('large-card')} title="Calendar" bordered={false} style={{}}>
                         <Calendar fullscreen={false}></Calendar>
                     </Card>
-                    <Card hoverable className={cx('large-card')} title="Card title" bordered={false} style={{}}>
-                        <p>Card content</p>
-                        <p>Card content</p>
-                        <p>Card content</p>
+                </Col>
+
+                <Col className={cx('large-col')} span={8}>
+                    <Card hoverable className={cx('large-card')} title="Courses grade" bordered={false} style={{}}>
+                        <Line></Line>
+                    </Card>
+                    <Card
+                        hoverable
+                        className={cx('large-card')}
+                        title="Term grades"
+                        bordered={false}
+                        style={{}}
+                        extra={
+                            <Select
+                                placeholder="Term"
+                                style={{ width: 120 }}
+                                options={[{ value: 'term1', label: 'Term1' }]}
+                                defaultValue={'term1'}
+                            ></Select>
+                        }
+                    >
+                        <CustomBar data={data} />
+                    </Card>
+
+                    <Card
+                        hoverable
+                        className={cx('large-card')}
+                        title="Incomplete projects"
+                        bordered={false}
+                        style={{}}
+                    >
+                        <p>Project 1</p>
+                        <p>Project 2</p>
+                        <p>Project 3</p>
                     </Card>
                 </Col>
             </Row>

@@ -110,7 +110,7 @@ function Courses() {
                 />
             </Flex>
             <LoadingSpin loading={loading}></LoadingSpin>
-            <Flex className={cx('wrapper')} wrap gap="small" justify="space-evenly" align="center">
+            <Flex className={cx('wrapper')} wrap gap="large" justify="space-evenly" align="center">
                 {filteredCourses.length > 0 ? (
                     filteredCourses.map((data, index) => (
                         <CourseItem onDelete={handleCourseDelete} key={index} data={data} termsInfo={termsInfo} />
