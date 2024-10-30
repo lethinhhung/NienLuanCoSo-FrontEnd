@@ -37,6 +37,7 @@ function CreateObject({
     const { RangePicker } = DatePicker;
 
     const [loading, setLoading] = useState(true);
+
     const [tagsOptions, setTagsOptions] = useState([]);
     const [termsOptions, setTermsOptions] = useState([]);
     const [reRender, setReRender] = useState('');
@@ -96,6 +97,7 @@ function CreateObject({
             event.preventDefault();
             event.stopPropagation();
         };
+
         return (
             <Tag
                 color={color}
