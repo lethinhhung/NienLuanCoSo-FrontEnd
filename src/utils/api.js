@@ -132,6 +132,23 @@ const updateCourseApi = async (formData) => {
     }
 };
 
+const updateCourseNoteApi = async (courseId, newNote) => {
+    const URL_API = '/v1/api/update-course-note';
+
+    const data = {
+        courseId,
+        newNote,
+    };
+
+    try {
+        const res = await axios.post(URL_API, data);
+        return res;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
 // Term
 
 const createNewTermApi = async (formData) => {
@@ -198,6 +215,23 @@ const updateTermApi = async (formData) => {
 
     try {
         const res = await axios.post(URL_API, formData);
+        return res;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
+const updateTermNoteApi = async (termId, newNote) => {
+    const URL_API = '/v1/api/update-term-note';
+
+    const data = {
+        termId,
+        newNote,
+    };
+
+    try {
+        const res = await axios.post(URL_API, data);
         return res;
     } catch (error) {
         console.error(error);
@@ -536,4 +570,6 @@ export {
     getTestsInfoByIdsApi,
     updateTestScoreApi,
     updateTestInfoApi,
+    updateCourseNoteApi,
+    updateTermNoteApi,
 };

@@ -1,4 +1,4 @@
-import { Flex, Layout, Affix, FloatButton, Dropdown, Space, Tooltip } from 'antd';
+import { Flex, Layout, Affix, FloatButton, Dropdown, Space, Tooltip, Spin } from 'antd';
 import { CaretUpOutlined, HomeOutlined, PlusOutlined, SettingOutlined, LogoutOutlined } from '@ant-design/icons';
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
@@ -24,6 +24,7 @@ function DefaultLayout({ children }) {
     const { logout } = useAuth();
 
     const [isHidden, setIsHidden] = useState(true);
+    const [loading, setLoading] = useState(true);
 
     const layoutStyle = {
         overflow: 'hidden',
@@ -89,6 +90,7 @@ function DefaultLayout({ children }) {
             const accountInfo = await getAccountInfoApi();
 
             setInfo(accountInfo.info);
+            setLoading(false);
         };
 
         fetchAccountInfo();
@@ -123,17 +125,22 @@ function DefaultLayout({ children }) {
                                             padding: '10px',
                                         }}
                                     >
-                                        {/* <MehOutlined style={{ fontSize: '40px' }} /> */}
-                                        <img
-                                            style={{
-                                                width: '100%',
-                                                height: '100%',
-                                                objectFit: 'cover',
-                                                borderRadius: '9999px',
-                                            }}
-                                            src={info.avatarPath ? convertAvatarPath(info.avatarPath) : defaultAvatar}
-                                            alt="avatar"
-                                        />
+                                        {loading ? (
+                                            <Spin style={{ marginTop: '-8px' }} spinning={loading}></Spin>
+                                        ) : (
+                                            <img
+                                                style={{
+                                                    width: '100%',
+                                                    height: '100%',
+                                                    objectFit: 'cover',
+                                                    borderRadius: '9999px',
+                                                }}
+                                                src={
+                                                    info.avatarPath ? convertAvatarPath(info.avatarPath) : defaultAvatar
+                                                }
+                                                alt="avatar"
+                                            />
+                                        )}
                                     </div>
                                 </button>
                             </Dropdown>

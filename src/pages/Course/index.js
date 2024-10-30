@@ -2,7 +2,7 @@ import { Image, Card, Flex, Divider, Row, Input, Popconfirm, Button, List, Modal
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
+import { CheckOutlined, DeleteOutlined, PlusOutlined, SaveOutlined } from '@ant-design/icons';
 import moment from 'moment';
 
 import styles from './Course.module.scss';
@@ -16,6 +16,7 @@ import {
     getLessonsInfoByIdsApi,
     getStatisticsInfoApi,
     getTermInfoApi,
+    updateCourseNoteApi,
 } from '~/utils/api';
 
 import convertAvatarPath from '~/utils/convertAvatarPath';
@@ -61,6 +62,7 @@ function Course() {
             setCourseInfo(courseData);
             setTransformedData(transformData(lessonsData));
             setStatisticsInfo(statisticsData);
+            setNote(courseData.note);
             setLoading(false);
         };
 
@@ -116,6 +118,23 @@ function Course() {
             alert('Lesson deleted');
             setDeleteTrigger(!deleteTrigger);
         }
+    };
+
+    const [note, setNote] = useState('');
+    const [noteIcon, setNoteIcon] = useState(<CheckOutlined />);
+    const [noteColor, setNoteColor] = useState('#1677ff');
+
+    const handleChangeNote = (e) => {
+        setNoteColor('#F5222D');
+        setNoteIcon(<SaveOutlined />);
+        setNote(e.target.value);
+    };
+
+    const handleSaveNote = async () => {
+        const newNote = note;
+        await updateCourseNoteApi(courseId, newNote);
+        setNoteColor('#1677ff');
+        setNoteIcon(<CheckOutlined />);
     };
 
     return (
@@ -191,8 +210,23 @@ function Course() {
                     </Card>
 
                     <div className={cx('notes-wrapper')}>
-                        <Card hoverable className={cx('notes')} title="Notes">
+                        <Card
+                            hoverable
+                            className={cx('notes')}
+                            title="Notes"
+                            extra={
+                                <Button
+                                    shape="circle"
+                                    size="large"
+                                    style={{ backgroundColor: noteColor, color: 'white' }}
+                                    onClick={handleSaveNote}
+                                    icon={noteIcon}
+                                ></Button>
+                            }
+                        >
                             <TextArea
+                                onChange={handleChangeNote}
+                                value={note}
                                 placeholder="Course notes..."
                                 autoSize={{
                                     minRows: 2,

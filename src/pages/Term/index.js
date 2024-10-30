@@ -1,13 +1,14 @@
-import { Image, Card, Flex, Input, Progress, Tooltip, Badge } from 'antd';
+import { Image, Card, Flex, Input, Progress, Tooltip, Badge, Button } from 'antd';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { CheckOutlined, SaveOutlined } from '@ant-design/icons';
 
 import styles from './Term.module.scss';
 import convertAvatarPath from '~/utils/convertAvatarPath';
 import CustomList from '~/components/CustomList';
 import EditDescription from '~/components/EditDescription';
-import { getTermInfoApi } from '~/utils/api';
+import { getTermInfoApi, updateCourseNoteApi, updateTermNoteApi } from '~/utils/api';
 import defaultCourseCover from '../../assets/images/default-term-cover.jpg';
 import LoadingSpin from '~/components/LoadingSpin';
 import moment from 'moment';
@@ -30,6 +31,10 @@ function Term() {
     const termEndDate = new Date(termInfo.endDate);
     const progression = (termEndDate - currentDate) / 1000 / 60 / 60 / 24;
 
+    const [note, setNote] = useState('');
+    const [noteIcon, setNoteIcon] = useState(<CheckOutlined />);
+    const [noteColor, setNoteColor] = useState('#1677ff');
+
     //Modal
     const [isModalVisible, setIsModalVisible] = useState(false);
     useEffect(() => {
@@ -38,10 +43,24 @@ function Term() {
 
             setTermInfo(termData);
             setLoading(false);
+            setNote(termData.note);
         };
 
         fetchTermInfo();
     }, [isModalVisible, fetchData, termId]);
+
+    const handleChangeNote = (e) => {
+        setNoteColor('#F5222D');
+        setNoteIcon(<SaveOutlined />);
+        setNote(e.target.value);
+    };
+
+    const handleSaveNote = async () => {
+        const newNote = note;
+        await updateTermNoteApi(termId, newNote);
+        setNoteColor('#1677ff');
+        setNoteIcon(<CheckOutlined />);
+    };
 
     return (
         <>
@@ -126,8 +145,23 @@ function Term() {
                     </div>
 
                     <div className={cx('component-wrapper')}>
-                        <Card hoverable className={cx('notes')} title="Notes">
+                        <Card
+                            hoverable
+                            className={cx('notes')}
+                            title="Notes"
+                            extra={
+                                <Button
+                                    shape="circle"
+                                    size="large"
+                                    style={{ backgroundColor: noteColor, color: 'white' }}
+                                    onClick={handleSaveNote}
+                                    icon={noteIcon}
+                                ></Button>
+                            }
+                        >
                             <TextArea
+                                onChange={handleChangeNote}
+                                value={note}
                                 placeholder="Term notes..."
                                 autoSize={{
                                     minRows: 2,
