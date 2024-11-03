@@ -12,6 +12,7 @@ import { getTermInfoApi, updateCourseNoteApi, updateTermNoteApi } from '~/utils/
 import defaultCourseCover from '../../assets/images/default-term-cover.jpg';
 import LoadingSpin from '~/components/LoadingSpin';
 import moment from 'moment';
+import PageTitle from '~/components/PageTitle';
 
 function Term() {
     const cx = classNames.bind(styles);
@@ -64,6 +65,7 @@ function Term() {
 
     return (
         <>
+            <PageTitle title={termInfo.name ? termInfo.name : 'Term'} />
             <LoadingSpin loading={loading} />
             <div hidden={loading}>
                 <Flex className={cx('wrapper')} wrap vertical align="center">

@@ -23,6 +23,7 @@ import convertAvatarPath from '~/utils/convertAvatarPath';
 import defaultCourseCover from '../../assets/images/default-course-cover.png';
 import StatisticsOverview from '~/components/StatisticsOverview';
 import LoadingSpin from '~/components/LoadingSpin';
+import PageTitle from '~/components/PageTitle';
 
 function Course() {
     const cx = classNames.bind(styles);
@@ -139,6 +140,7 @@ function Course() {
 
     return (
         <>
+            <PageTitle title={courseInfo.name ? courseInfo.name : 'Course'} />
             <LoadingSpin loading={loading}></LoadingSpin>
             <div hidden={loading}>
                 <Flex className={cx('wrapper')} wrap vertical align="center">

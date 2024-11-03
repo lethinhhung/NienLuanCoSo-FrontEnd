@@ -31,6 +31,7 @@ import reactCover from '~/assets/images/react-cover.png';
 import gitCover from '~/assets/images/git-cover.png';
 import iotCover from '~/assets/images/iot-cover.jpg';
 import HomeSmall from './HomeSmall';
+import PageTitle from '~/components/PageTitle';
 
 function Home() {
     const { Title } = Typography;
@@ -77,10 +78,17 @@ function Home() {
     if (width > 900 && height > 800) {
         return (
             <div>
+                <PageTitle title={'Welcome'} />
                 <HomeLarge data={data} handleNext={handleNext} />
             </div>
         );
-    } else return <HomeSmall data={data} handleNext={handleNext} />;
+    } else
+        return (
+            <div>
+                <PageTitle title={'Welcome'} />
+                <HomeSmall data={data} handleNext={handleNext} />
+            </div>
+        );
 }
 
 export default Home;

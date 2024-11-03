@@ -7,6 +7,7 @@ import SearchBar from '~/components/SearchBar';
 import CourseItem from '~/components/CourseItem';
 import { getCoursesInfoApi, getTermsInfoApi, getTagsInfoApi } from '~/utils/api';
 import LoadingSpin from '~/components/LoadingSpin';
+import PageTitle from '~/components/PageTitle';
 
 function Courses() {
     const cx = classNames.bind(styles);
@@ -94,6 +95,7 @@ function Courses() {
 
     return (
         <div>
+            <PageTitle title={'Courses'} />
             <SearchBar onSearch={handleSearch} onTagsChange={handleTagsChange} />
             <Flex className={cx('status-select')} style={{ width: '100%', marginTop: '15px' }} justify="center">
                 <Select

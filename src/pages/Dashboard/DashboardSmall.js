@@ -84,7 +84,7 @@ function DashboardSmall() {
                         <Line></Line>
                     </Card>
                     <Card hoverable className={cx('small-card')} title="Calendar" bordered={false} style={{}}>
-                        <Calendar fullscreen={false}></Calendar>
+                        <Calendar fullscreen={true}></Calendar>
                     </Card>
                     <Card hoverable className={cx('small-card')} title="Card title" bordered={false} style={{}}>
                         <p>Card content</p>

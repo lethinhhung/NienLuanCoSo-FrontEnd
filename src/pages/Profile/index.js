@@ -7,6 +7,7 @@ import { useConvertAvatarPath } from '~/hooks';
 import { updateUserApi, getAccountInfoApi } from '~/utils/api';
 import styles from './Profile.module.scss';
 import LoadingSpin from '~/components/LoadingSpin';
+import PageTitle from '~/components/PageTitle';
 
 function Profile() {
     const cx = classNames.bind(styles);
@@ -91,73 +92,76 @@ function Profile() {
     };
 
     return (
-        <Flex vertical>
-            <Row style={{ height: '20px' }}></Row>
-            <Row>
-                <Col span={2}></Col>
-                <Col span={20}>
-                    <Card
-                        title="Account information"
-                        bordered={false}
-                        extra={
-                            <div>
-                                <Button onClick={showModal}>Edit</Button>
-                                <Modal
-                                    title={<h2>{'Edit profile'}</h2>}
-                                    open={isModalVisible}
-                                    onOk={handleOk}
-                                    onCancel={handleCancel}
-                                >
-                                    <Flex vertical className={cx('panel')}>
-                                        <h3 className={cx('title')}>Upload an avatar</h3>
-                                        {imagePreview && <img width={'100px'} src={imagePreview} alt="Preview" />}
-                                        <form>
-                                            <input
-                                                type="file"
-                                                alt="upload"
-                                                accept="image/png, image/gif, image/jpeg"
-                                                onChange={handleFileChange}
-                                            />
-                                        </form>
-                                        <h3 className={cx('title')}>Description</h3>
-                                        <TextArea
-                                            autoSize={{ minRows: 2, maxRows: 6 }}
-                                            placeholder={'Enter description...'}
-                                            onChange={handleDescriptionChange}
-                                            value={description}
-                                        ></TextArea>
-                                    </Flex>
-                                </Modal>
-                            </div>
-                        }
-                        style={{
-                            width: '100%',
-                        }}
-                    >
-                        <Row>
-                            <Col span={6}>
-                                <LoadingSpin loading={loading} />
-                                <div hidden={loading}>
-                                    <Image width={'100%'} src={avatarPath || defaultAvatar} />
+        <div>
+            <PageTitle title={'Profile'} />
+            <Flex vertical>
+                <Row style={{ height: '20px' }}></Row>
+                <Row>
+                    <Col span={2}></Col>
+                    <Col span={20}>
+                        <Card
+                            title="Account information"
+                            bordered={false}
+                            extra={
+                                <div>
+                                    <Button onClick={showModal}>Edit</Button>
+                                    <Modal
+                                        title={<h2>{'Edit profile'}</h2>}
+                                        open={isModalVisible}
+                                        onOk={handleOk}
+                                        onCancel={handleCancel}
+                                    >
+                                        <Flex vertical className={cx('panel')}>
+                                            <h3 className={cx('title')}>Upload an avatar</h3>
+                                            {imagePreview && <img width={'100px'} src={imagePreview} alt="Preview" />}
+                                            <form>
+                                                <input
+                                                    type="file"
+                                                    alt="upload"
+                                                    accept="image/png, image/gif, image/jpeg"
+                                                    onChange={handleFileChange}
+                                                />
+                                            </form>
+                                            <h3 className={cx('title')}>Description</h3>
+                                            <TextArea
+                                                autoSize={{ minRows: 2, maxRows: 6 }}
+                                                placeholder={'Enter description...'}
+                                                onChange={handleDescriptionChange}
+                                                value={description}
+                                            ></TextArea>
+                                        </Flex>
+                                    </Modal>
                                 </div>
-                            </Col>
-                            <Col span={18} style={{ paddingLeft: '20px' }}>
-                                <Card
-                                    title={'Name: ' + info.name}
-                                    bordered
-                                    style={{
-                                        width: '100%',
-                                    }}
-                                >
-                                    {info.description}
-                                </Card>
-                            </Col>
-                        </Row>
-                    </Card>
-                </Col>
-                <Col span={2}></Col>
-            </Row>
-        </Flex>
+                            }
+                            style={{
+                                width: '100%',
+                            }}
+                        >
+                            <Row>
+                                <Col span={6}>
+                                    <LoadingSpin loading={loading} />
+                                    <div hidden={loading}>
+                                        <Image width={'100%'} src={avatarPath || defaultAvatar} />
+                                    </div>
+                                </Col>
+                                <Col span={18} style={{ paddingLeft: '20px' }}>
+                                    <Card
+                                        title={'Name: ' + info.name}
+                                        bordered
+                                        style={{
+                                            width: '100%',
+                                        }}
+                                    >
+                                        {info.description}
+                                    </Card>
+                                </Col>
+                            </Row>
+                        </Card>
+                    </Col>
+                    <Col span={2}></Col>
+                </Row>
+            </Flex>
+        </div>
     );
 }
 

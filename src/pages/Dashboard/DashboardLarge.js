@@ -1,4 +1,4 @@
-import { Calendar, Card, Row, Col, Divider, Progress, Flex, Select, Input } from 'antd';
+import { Calendar, Card, Row, Col, Divider, Progress, Flex, Select, Input, Badge } from 'antd';
 import classNames from 'classnames/bind';
 import Doughnut from '~/components/Charts/Doughnut';
 import Pie from '~/components/Charts/Pie';
@@ -9,6 +9,7 @@ import styles from './Dashboard.module.scss';
 import { Link } from 'react-router-dom';
 import CustomBar from '~/components/Charts/Bar';
 import CustomPie from '~/components/Charts/Pie';
+import moment from 'moment';
 
 Chart.register(ArcElement);
 function DashboardLarge() {
@@ -32,6 +33,41 @@ function DashboardLarge() {
         cutout: 70,
         borderRadius: 50,
         borderWidth: 0,
+    };
+
+    const handleSelectDate = (value) => {
+        console.log(moment(value.$d).format('DD/MM/YYYY'));
+    };
+
+    const getListData = (value) => {
+        let listData;
+        switch (value.date()) {
+            case 8:
+                listData = [{ type: 'warning' }];
+                break;
+            case 10:
+                listData = [{ type: 'success' }];
+                break;
+            case 15:
+                listData = [{ type: 'error' }];
+                break;
+            default:
+                listData = [];
+        }
+        return listData || [];
+    };
+
+    const dateCellRender = (value) => {
+        const listData = getListData(value);
+        return (
+            <ul className="events">
+                {listData.map((item, index) => (
+                    <li key={index}>
+                        <Badge status={item.type} />
+                    </li>
+                ))}
+            </ul>
+        );
     };
 
     return (
@@ -93,8 +129,13 @@ function DashboardLarge() {
                         <p>Projects</p>
                         <Progress percent={75} />
                     </Card>
-                    <Card hoverable className={cx('large-card')} title="Calendar" bordered={false} style={{}}>
-                        <Calendar fullscreen={false}></Calendar>
+                    <Card hoverable className={cx('large-card')} title="Calendar" bordered={false}>
+                        <Calendar
+                            cellRender={dateCellRender}
+                            onSelect={handleSelectDate}
+                            fullscreen={true}
+                            style={{ height: '500px' }}
+                        ></Calendar>
                     </Card>
                 </Col>
 

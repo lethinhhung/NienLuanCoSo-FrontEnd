@@ -18,6 +18,7 @@ import {
 import Projects from '~/components/Statistics/Projects';
 import Tests from '~/components/Statistics/Tests';
 import LoadingSpin from '~/components/LoadingSpin';
+import PageTitle from '~/components/PageTitle';
 
 function Statistics() {
     const [loading, setLoading] = useState(true);
@@ -101,6 +102,7 @@ function Statistics() {
 
     return (
         <>
+            <PageTitle title={courseInfo.name ? courseInfo.name + ' statistics' : 'Statistic'} />
             <LoadingSpin loading={loading} />
             <div hidden={loading}>
                 <Flex className={cx('wrapper')} wrap vertical align="center">

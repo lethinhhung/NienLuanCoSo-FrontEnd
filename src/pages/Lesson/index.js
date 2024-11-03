@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 import styles from './Lesson.module.scss';
 import Editor from '~/components/Editor';
 import { getContentFromLessonApi, getLessonInfoApi } from '~/utils/api';
+import PageTitle from '~/components/PageTitle';
 
 function Lesson() {
     const cardColor = '#624e88';
@@ -48,44 +49,47 @@ function Lesson() {
     };
 
     return (
-        <Flex className={cx('wrapper')} wrap vertical align="center">
-            <Flex wrap justify="center" className={cx('overview-wrapper')}>
-                <Card
-                    className={cx('overview')}
-                    hoverable
-                    title={<h2>{lessonInfo.name}</h2>}
-                    bordered={false}
-                    extra={
-                        <div>
-                            <Button onClick={showModal}>Edit</Button>
-                            <Modal
-                                title={<h2>{'Edit lesson details'}</h2>}
-                                open={isModalVisible}
-                                onOk={handleOk}
-                                onCancel={handleCancel}
-                            ></Modal>
-                        </div>
-                    }
-                >
-                    <Meta title="Description" description={lessonInfo.description} />
-                </Card>
-            </Flex>
-            <div style={{ width: '100%', justifyContent: 'center', display: 'flex' }}>
-                <Badge color={color} count={tipText}></Badge>
-            </div>
-            <Flex wrap justify="center">
-                <div style={{ backgroundColor: cardColor }} className={cx('editor-wrapper')}>
-                    <Editor
-                        tipText={tipText}
-                        setTipText={setTipText}
-                        className={cx('editor')}
-                        lessonId={lessonId}
-                        setColor={setColor}
-                        lessonContent={lessonContent}
-                    />
+        <div>
+            <PageTitle title={lessonInfo.name ? lessonInfo.name : 'Lesson'} />
+            <Flex className={cx('wrapper')} wrap vertical align="center">
+                <Flex wrap justify="center" className={cx('overview-wrapper')}>
+                    <Card
+                        className={cx('overview')}
+                        hoverable
+                        title={<h2>{lessonInfo.name}</h2>}
+                        bordered={false}
+                        extra={
+                            <div>
+                                <Button onClick={showModal}>Edit</Button>
+                                <Modal
+                                    title={<h2>{'Edit lesson details'}</h2>}
+                                    open={isModalVisible}
+                                    onOk={handleOk}
+                                    onCancel={handleCancel}
+                                ></Modal>
+                            </div>
+                        }
+                    >
+                        <Meta title="Description" description={lessonInfo.description} />
+                    </Card>
+                </Flex>
+                <div style={{ width: '100%', justifyContent: 'center', display: 'flex' }}>
+                    <Badge color={color} count={tipText}></Badge>
                 </div>
+                <Flex wrap justify="center">
+                    <div style={{ backgroundColor: cardColor }} className={cx('editor-wrapper')}>
+                        <Editor
+                            tipText={tipText}
+                            setTipText={setTipText}
+                            className={cx('editor')}
+                            lessonId={lessonId}
+                            setColor={setColor}
+                            lessonContent={lessonContent}
+                        />
+                    </div>
+                </Flex>
             </Flex>
-        </Flex>
+        </div>
     );
 }
 

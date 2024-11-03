@@ -6,6 +6,7 @@ import styles from './Terms.module.scss';
 import TermItem from '~/components/TermItem';
 import { getTermsInfoApi } from '~/utils/api';
 import LoadingSpin from '~/components/LoadingSpin';
+import PageTitle from '~/components/PageTitle';
 
 function Terms() {
     const cx = classNames.bind(styles);
@@ -80,6 +81,7 @@ function Terms() {
     };
     return (
         <div>
+            <PageTitle title={'Terms'} />
             <Row>
                 <Col offset={6} span={12}>
                     <Flex className={cx('select-wrapper')} justify="center" wrap>

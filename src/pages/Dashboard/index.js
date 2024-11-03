@@ -1,3 +1,4 @@
+import PageTitle from '~/components/PageTitle';
 import DashboardLarge from './DashboardLarge';
 import DashboardMedium from './DashboardMedium';
 import DashboardSmall from './DashboardSmall';
@@ -7,11 +8,26 @@ function Dashboard() {
     const { width } = useWindowDimensions();
 
     if (width > 1150) {
-        return <DashboardLarge />;
+        return (
+            <div>
+                <PageTitle title={'Dashboard'} />
+                <DashboardLarge />
+            </div>
+        );
     } else if (width <= 1150 && width > 850) {
-        return <DashboardMedium />;
+        return (
+            <div>
+                <PageTitle title={'Dashboard'} />
+                <DashboardMedium />
+            </div>
+        );
     } else {
-        return <DashboardSmall />;
+        return (
+            <div>
+                <PageTitle title={'Dashboard'} />
+                <DashboardSmall />
+            </div>
+        );
     }
 }
 
