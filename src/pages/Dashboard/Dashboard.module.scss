@@ -1,8 +1,14 @@
 .large-wrapper {
-    padding: 20px 250px;
+    padding: 20px 200px;
 }
 
 @media (max-width: 1500px) {
+    .large-wrapper {
+        padding: 20px 20px;
+    }
+}
+
+@media (min-width: 1501px) and (max-width: 1800px) {
     .large-wrapper {
         padding: 20px 50px;
     }
@@ -19,4 +25,23 @@
 }
 .small-card {
     margin: 10px;
+}
+
+.calendar {
+    border-radius: 10px;
+}
+
+@keyframes moveUpDown {
+    0%,
+    100% {
+        transform: translateY(10px);
+    }
+    50% {
+        transform: translateY(0);
+    }
+}
+
+.scrollable {
+    animation: moveUpDown 2s infinite;
+    cursor: default;
 }

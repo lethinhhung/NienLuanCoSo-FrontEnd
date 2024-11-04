@@ -446,7 +446,7 @@ const updateProjectStepApi = async (projectStepId, status, name) => {
 };
 
 // Test
-const createNewTestApi = async (name, gradeWeight, maxScore, score, statisticsId) => {
+const createNewTestApi = async (name, gradeWeight, maxScore, score, statisticsId, date) => {
     const URL_API = '/v1/api/create-new-test';
     const data = {
         name,
@@ -454,6 +454,7 @@ const createNewTestApi = async (name, gradeWeight, maxScore, score, statisticsId
         maxScore,
         score,
         statisticsId,
+        date,
     };
 
     try {
@@ -530,6 +531,18 @@ const updateTestInfoApi = async (testId, name, gradeWeight, maxScore, score) => 
     }
 };
 
+const getAllTestsInfoApi = async () => {
+    const URL_API = '/v1/api/get-all-tests-info';
+
+    try {
+        const res = await axios.get(URL_API);
+        return res;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
 export {
     createUserApi,
     loginApi,
@@ -572,4 +585,5 @@ export {
     updateTestInfoApi,
     updateCourseNoteApi,
     updateTermNoteApi,
+    getAllTestsInfoApi,
 };

@@ -15,6 +15,7 @@ import {
     Popconfirm,
     InputNumber,
     Alert,
+    DatePicker,
 } from 'antd';
 import classNames from 'classnames/bind';
 
@@ -25,6 +26,8 @@ import Bar from '~/components/Charts/Bar';
 import getScoreColor from '~/utils/getScoreColor';
 
 import { createNewTestApi, deleteTestApi, updateTestInfoApi } from '~/utils/api';
+import moment from 'moment';
+import dayjs from 'dayjs';
 
 function Tests({ statisticsInfo, testOptions, testsChartData, testsInfo, onTestsChange }) {
     const cx = classNames.bind(styles);
@@ -37,6 +40,7 @@ function Tests({ statisticsInfo, testOptions, testsChartData, testsInfo, onTests
         gradeWeight: 0.1,
         maxScore: 0.1,
         score: -1,
+        date: dayjs(),
     });
 
     const [currentTest, setCurrentTest] = useState({});
@@ -62,6 +66,7 @@ function Tests({ statisticsInfo, testOptions, testsChartData, testsInfo, onTests
             gradeWeight: 0.1,
             maxScore: 0.1,
             score: -1,
+            date: dayjs(),
         });
     };
 
@@ -78,9 +83,9 @@ function Tests({ statisticsInfo, testOptions, testsChartData, testsInfo, onTests
     };
 
     const handleAddOk = async () => {
-        const { name, gradeWeight, maxScore, score } = submitTest;
+        const { name, gradeWeight, maxScore, score, date } = submitTest;
         const statisticsId = statisticsInfo._id;
-        const result = await createNewTestApi(name, gradeWeight, maxScore, score, statisticsId);
+        const result = await createNewTestApi(name, gradeWeight, maxScore, score, statisticsId, date);
         console.log(result);
         setIsModalVisible(false);
         setCurrentTest({});
@@ -90,6 +95,7 @@ function Tests({ statisticsInfo, testOptions, testsChartData, testsInfo, onTests
             gradeWeight: 0,
             maxScore: 0,
             score: -1,
+            date: dayjs(),
         });
         onTestsChange();
     };
@@ -136,6 +142,13 @@ function Tests({ statisticsInfo, testOptions, testsChartData, testsInfo, onTests
         }
     };
 
+    const handleChangeAddDate = (date, dateString) => {
+        setSubmitTest({
+            ...submitTest,
+            date: dateString,
+        });
+        console.log(submitTest.date);
+    };
     // Edit test
 
     const handleDeleteTest = async (test) => {
@@ -227,12 +240,30 @@ function Tests({ statisticsInfo, testOptions, testsChartData, testsInfo, onTests
                             step="0.1"
                         />
                         <p>Your score</p>
-                        <InputNumber
-                            onChange={handleChangeAddScore}
-                            value={submitTest.score}
-                            min={-1}
-                            max={100}
-                            step="0.1"
+                        <Flex wrap align="center" gap={5}>
+                            <InputNumber
+                                onChange={handleChangeAddScore}
+                                value={submitTest.score}
+                                min={-1}
+                                max={100}
+                                step="0.1"
+                                style={{ height: '32px' }}
+                            />
+                            <Alert
+                                style={{ maxWidth: '270px' }}
+                                message="Leave -1.0 if you haven't done yet."
+                                type="info"
+                                showIcon
+                            ></Alert>
+                        </Flex>
+                        <p>Date</p>
+                        <DatePicker
+                            format={{
+                                format: 'YYYY-MM-DD',
+                                type: 'mask',
+                            }}
+                            onChange={handleChangeAddDate}
+                            value={dayjs(submitTest.date)}
                         />
                     </Modal>
                 </>
@@ -277,6 +308,14 @@ function Tests({ statisticsInfo, testOptions, testsChartData, testsInfo, onTests
                 </Flex>
             </Row>
             <Divider />
+            <Row>
+                <Col span={24} style={{ padding: '0 20px 20px 20px' }}>
+                    <Alert
+                        message={"If the current value is N, it means the test hasn't been graded yet"}
+                        showIcon
+                    ></Alert>
+                </Col>
+            </Row>
             {testsInfo.map((test, index) => (
                 <Row key={index}>
                     <Col span={24}>

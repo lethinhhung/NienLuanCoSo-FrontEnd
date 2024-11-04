@@ -4,18 +4,26 @@ import Doughnut from '~/components/Charts/Doughnut';
 import Pie from '~/components/Charts/Pie';
 import Line from '~/components/Charts/Line';
 import { Chart, ArcElement } from 'chart.js';
+import { DownOutlined } from '@ant-design/icons';
 
 import styles from './Dashboard.module.scss';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import CustomBar from '~/components/Charts/Bar';
 import CustomPie from '~/components/Charts/Pie';
 import moment from 'moment';
+import CustomCalendar from '~/components/CustomCalendar';
+import { useState } from 'react';
+import dayjs from 'dayjs';
 
 Chart.register(ArcElement);
-function DashboardLarge() {
+function DashboardLarge({ dateCellRender, testsInfo }) {
     const cx = classNames.bind(styles);
 
+    const navigate = useNavigate();
+
     const { TextArea } = Input;
+    const [eventDateTitle, setEventDateTitle] = useState('');
+    const [event, setEvent] = useState([]);
 
     const data = {
         labels: ['Course 1', 'Course 2', 'Course 3'],
@@ -36,7 +44,17 @@ function DashboardLarge() {
     };
 
     const handleSelectDate = (value) => {
-        console.log(moment(value.$d).format('DD/MM/YYYY'));
+        const selectedDate = moment(value.$d).format('DD/MM/YYYY');
+        setEventDateTitle(selectedDate);
+        const events = [];
+        for (const test of testsInfo) {
+            if (moment(test.date).format('DD/MM/YYYY') === selectedDate) {
+                events.push(test);
+            }
+        }
+        if (events) {
+            setEvent(events);
+        }
     };
 
     const getListData = (value) => {
@@ -57,17 +75,8 @@ function DashboardLarge() {
         return listData || [];
     };
 
-    const dateCellRender = (value) => {
-        const listData = getListData(value);
-        return (
-            <ul className="events">
-                {listData.map((item, index) => (
-                    <li key={index}>
-                        <Badge status={item.type} />
-                    </li>
-                ))}
-            </ul>
-        );
+    const handleSelectTest = (e) => {
+        navigate('/course/' + e.courseId);
     };
 
     return (
@@ -129,17 +138,6 @@ function DashboardLarge() {
                         <p>Projects</p>
                         <Progress percent={75} />
                     </Card>
-                    <Card hoverable className={cx('large-card')} title="Calendar" bordered={false}>
-                        <Calendar
-                            cellRender={dateCellRender}
-                            onSelect={handleSelectDate}
-                            fullscreen={true}
-                            style={{ height: '500px' }}
-                        ></Calendar>
-                    </Card>
-                </Col>
-
-                <Col className={cx('large-col')} span={8}>
                     <Card hoverable className={cx('large-card')} title="Courses grade" bordered={false} style={{}}>
                         <Line></Line>
                     </Card>
@@ -171,6 +169,51 @@ function DashboardLarge() {
                         <p>Project 1</p>
                         <p>Project 2</p>
                         <p>Project 3</p>
+                    </Card>
+                </Col>
+
+                <Col className={cx('large-col')} span={8}>
+                    <Card
+                        hoverable
+                        className={cx('large-card')}
+                        title={eventDateTitle === '' ? 'Select a date to view tests' : 'On ' + eventDateTitle}
+                        bordered={false}
+                    >
+                        <div style={{ height: '130px', overflowY: 'auto' }}>
+                            <ul style={{ listStyleType: 'none' }}>
+                                {event.length === 0 ? (
+                                    <Flex justify="center">
+                                        <Badge count={'Empty'}></Badge>
+                                    </Flex>
+                                ) : (
+                                    event.map((e, index) => (
+                                        <li key={index}>
+                                            <div
+                                                onClick={() => handleSelectTest(e)}
+                                                style={{
+                                                    borderRadius: '5px',
+                                                    padding: '5px 10px',
+                                                    marginBottom: '5px',
+                                                    backgroundColor: e.score === -1 ? '#FF4D4F' : '#1677FF',
+                                                }}
+                                            >
+                                                <h3>{e.name}</h3>
+                                                {e.courseName}
+                                            </div>
+                                        </li>
+                                    ))
+                                )}
+                            </ul>
+                        </div>
+                    </Card>
+                    <Card hoverable className={cx('large-card')} title="Calendar" bordered={false}>
+                        <div className={cx('calendar')} style={{ height: '500px', overflowY: 'auto' }}>
+                            <Calendar cellRender={dateCellRender} onSelect={handleSelectDate} />
+                            {/* <CustomCalendar cellRender={dateCellRender} onSelect={handleSelectDate} /> */}
+                        </div>
+                        <Flex justify="center">
+                            <DownOutlined className={cx('scrollable')} />
+                        </Flex>
                     </Card>
                 </Col>
             </Row>

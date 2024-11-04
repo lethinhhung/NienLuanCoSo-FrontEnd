@@ -9,6 +9,7 @@ import getScoreColor from '~/utils/getScoreColor';
 import moment from 'moment';
 
 import {
+    getAllTestsInfoApi,
     getCourseInfoApi,
     getProjectsInfoByIdsApi,
     getProjectStepsInfoByIdsApi,
