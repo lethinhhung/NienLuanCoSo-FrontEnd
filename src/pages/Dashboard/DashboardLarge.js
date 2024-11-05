@@ -76,7 +76,7 @@ function DashboardLarge({ dateCellRender, testsInfo }) {
     };
 
     const handleSelectTest = (e) => {
-        navigate('/course/' + e.courseId);
+        navigate('/course/' + e.courseId + '/statistics/' + e.statisticsId);
     };
 
     return (
@@ -197,8 +197,13 @@ function DashboardLarge({ dateCellRender, testsInfo }) {
                                                     backgroundColor: e.score === -1 ? '#FF4D4F' : '#1677FF',
                                                 }}
                                             >
-                                                <h3>{e.name}</h3>
-                                                {e.courseName}
+                                                <Flex justify="space-between">
+                                                    <div>
+                                                        <h3>{e.name}</h3>
+                                                        {e.courseName}
+                                                    </div>
+                                                    <h1>{e.score === -1 ? '' : e.score}</h1>
+                                                </Flex>
                                             </div>
                                         </li>
                                     ))

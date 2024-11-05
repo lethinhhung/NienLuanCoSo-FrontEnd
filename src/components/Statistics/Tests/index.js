@@ -73,8 +73,8 @@ function Tests({ statisticsInfo, testOptions, testsChartData, testsInfo, onTests
     const handleOk = async (test) => {
         //Goi API
         const testId = currentSubmitTest._id;
-        const { name, gradeWeight, maxScore, score } = currentSubmitTest;
-        const result = await updateTestInfoApi(testId, name, gradeWeight, maxScore, score);
+        const { name, gradeWeight, maxScore, score, date } = currentSubmitTest;
+        const result = await updateTestInfoApi(testId, name, gradeWeight, maxScore, score, date);
         console.log(result);
         setIsTestModalVisible(false);
         setCurrentTest({});
@@ -92,8 +92,8 @@ function Tests({ statisticsInfo, testOptions, testsChartData, testsInfo, onTests
         setCurrentSubmitTest({});
         setSubmitTest({
             name: '',
-            gradeWeight: 0,
-            maxScore: 0,
+            gradeWeight: 0.1,
+            maxScore: 0.1,
             score: -1,
             date: dayjs(),
         });
@@ -143,6 +143,14 @@ function Tests({ statisticsInfo, testOptions, testsChartData, testsInfo, onTests
     };
 
     const handleChangeAddDate = (date, dateString) => {
+        if (dateString === '') {
+            setSubmitTest({
+                ...submitTest,
+                date: dayjs(),
+            });
+            return;
+        }
+
         setSubmitTest({
             ...submitTest,
             date: dateString,
@@ -195,6 +203,20 @@ function Tests({ statisticsInfo, testOptions, testsChartData, testsInfo, onTests
         } else {
             setCurrentSubmitTest(currentSubmitTest);
         }
+    };
+
+    const handleChangeDate = (date, dateString) => {
+        if (dateString === '') {
+            setCurrentSubmitTest({
+                ...currentSubmitTest,
+                date: dayjs(),
+            });
+            return;
+        }
+        setCurrentSubmitTest({
+            ...currentSubmitTest,
+            date: dateString,
+        });
     };
 
     return (
@@ -381,6 +403,15 @@ function Tests({ statisticsInfo, testOptions, testsChartData, testsInfo, onTests
                                                     min={0}
                                                     max={100}
                                                     step="0.1"
+                                                />
+                                                <p>Date</p>
+                                                <DatePicker
+                                                    format={{
+                                                        format: 'YYYY-MM-DD',
+                                                        type: 'mask',
+                                                    }}
+                                                    onChange={handleChangeDate}
+                                                    value={dayjs(currentSubmitTest.date)}
                                                 />
                                             </Modal>
                                             <Popconfirm

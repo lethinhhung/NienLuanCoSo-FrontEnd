@@ -512,7 +512,7 @@ const updateTestScoreApi = async (testId, newScore) => {
     }
 };
 
-const updateTestInfoApi = async (testId, name, gradeWeight, maxScore, score) => {
+const updateTestInfoApi = async (testId, name, gradeWeight, maxScore, score, date) => {
     const URL_API = '/v1/api/update-test-info';
     const data = {
         testId,
@@ -520,6 +520,7 @@ const updateTestInfoApi = async (testId, name, gradeWeight, maxScore, score) => 
         gradeWeight,
         maxScore,
         score,
+        date,
     };
 
     try {
