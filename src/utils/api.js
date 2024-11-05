@@ -544,6 +544,23 @@ const getAllTestsInfoApi = async () => {
     }
 };
 
+// Etc
+
+const updateUserNoteApi = async (newNote) => {
+    const URL_API = '/v1/api/update-user-note';
+    const data = {
+        newNote,
+    };
+
+    try {
+        const res = await axios.post(URL_API, data);
+        return res;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
 export {
     createUserApi,
     loginApi,
@@ -587,4 +604,5 @@ export {
     updateCourseNoteApi,
     updateTermNoteApi,
     getAllTestsInfoApi,
+    updateUserNoteApi,
 };

@@ -1,4 +1,4 @@
-import { Calendar, Card, Row, Col, Divider, Progress, Flex, Select, Input, Badge } from 'antd';
+import { Calendar, Card, Row, Col, Divider, Progress, Flex, Select, Input, Badge, Button } from 'antd';
 import classNames from 'classnames/bind';
 import Doughnut from '~/components/Charts/Doughnut';
 import Pie from '~/components/Charts/Pie';
@@ -14,9 +14,10 @@ import moment from 'moment';
 import CustomCalendar from '~/components/CustomCalendar';
 import { useState } from 'react';
 import dayjs from 'dayjs';
+import Note from '~/components/Note';
 
 Chart.register(ArcElement);
-function DashboardLarge({ dateCellRender, testsInfo }) {
+function DashboardLarge({ note, handleNoteChange, dateCellRender, testsInfo }) {
     const cx = classNames.bind(styles);
 
     const navigate = useNavigate();
@@ -83,14 +84,27 @@ function DashboardLarge({ dateCellRender, testsInfo }) {
         <div className={cx('large-wrapper')}>
             <Row>
                 <Col className={cx('large-col')} span={8}>
-                    <Card hoverable className={cx('large-card')} title="Notes" bordered={false}>
+                    {/* <Card hoverable className={cx('large-card')} title="Notes" bordered={false} extra={
+                                <Button
+                                    shape="circle"
+                                    size="large"
+                                    style={{ backgroundColor: noteColor, color: 'white' }}
+                                    onClick={handleSaveNote}
+                                    icon={noteIcon}
+                                ></Button>
+                            }>
                         <TextArea
                             placeholder="Notes..."
                             autoSize={{
                                 minRows: 2,
                             }}
+                            value={note}
+                            onChange={handleNoteChange}
                         />
-                    </Card>
+                    </Card> */}
+                    <div className={cx('large-card')}>
+                        <Note type="user" />
+                    </div>
                     <Card
                         hoverable
                         className={cx('large-card')}

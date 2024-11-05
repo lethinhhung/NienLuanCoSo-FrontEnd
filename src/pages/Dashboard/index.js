@@ -4,7 +4,7 @@ import DashboardMedium from './DashboardMedium';
 import DashboardSmall from './DashboardSmall';
 import { useWindowDimensions } from '~/hooks';
 import { useEffect, useState } from 'react';
-import { getAllTestsInfoApi } from '~/utils/api';
+import { getAccountInfoApi, getAllTestsInfoApi } from '~/utils/api';
 import moment from 'moment';
 import { Badge } from 'antd';
 import { InfoCircleOutlined } from '@ant-design/icons';
@@ -13,10 +13,14 @@ function Dashboard() {
     const { width } = useWindowDimensions();
 
     const [testsInfo, setTestsInfo] = useState([]);
+    const [note, setNote] = useState('');
 
     const fetchInfo = async () => {
         const testsData = await getAllTestsInfoApi();
+        const userData = await getAccountInfoApi();
+
         setTestsInfo(testsData);
+        setNote(userData.info.note);
     };
 
     useEffect(() => {
@@ -32,11 +36,20 @@ function Dashboard() {
         return testDates.includes(date) ? <Badge dot={'success'} /> : null;
     };
 
+    const handleNoteChange = (e) => {
+        setNote(e.target.value);
+    };
+
     if (width > 1150) {
         return (
             <div>
                 <PageTitle title={'Dashboard'} />
-                <DashboardLarge dateCellRender={dateCellRender} testsInfo={testsInfo} />
+                <DashboardLarge
+                    note={note}
+                    handleNoteChange={handleNoteChange}
+                    dateCellRender={dateCellRender}
+                    testsInfo={testsInfo}
+                />
             </div>
         );
     } else if (width <= 1150 && width > 850) {

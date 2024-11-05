@@ -24,6 +24,7 @@ import defaultCourseCover from '../../assets/images/default-course-cover.png';
 import StatisticsOverview from '~/components/StatisticsOverview';
 import LoadingSpin from '~/components/LoadingSpin';
 import PageTitle from '~/components/PageTitle';
+import Note from '~/components/Note';
 
 function Course() {
     const cx = classNames.bind(styles);
@@ -212,7 +213,7 @@ function Course() {
                     </Card>
 
                     <div className={cx('notes-wrapper')}>
-                        <Card
+                        {/* <Card
                             hoverable
                             className={cx('notes')}
                             title="Notes"
@@ -234,7 +235,8 @@ function Course() {
                                     minRows: 2,
                                 }}
                             />
-                        </Card>
+                        </Card> */}
+                        <Note type="course" courseId={courseInfo._id} />
                     </div>
 
                     <div className={cx('lessions-list-wrapper')}>
