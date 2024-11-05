@@ -1,0 +1,22 @@
+.large-card {
+    margin: 10px;
+}
+
+.calendar {
+    border-radius: 10px;
+}
+
+@keyframes moveUpDown {
+    0%,
+    100% {
+        transform: translateY(10px);
+    }
+    50% {
+        transform: translateY(0);
+    }
+}
+
+.scrollable {
+    animation: moveUpDown 2s infinite;
+    cursor: default;
+}

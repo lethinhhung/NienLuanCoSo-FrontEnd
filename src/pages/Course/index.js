@@ -24,7 +24,7 @@ import defaultCourseCover from '../../assets/images/default-course-cover.png';
 import StatisticsOverview from '~/components/StatisticsOverview';
 import LoadingSpin from '~/components/LoadingSpin';
 import PageTitle from '~/components/PageTitle';
-import Note from '~/components/Note';
+import Note from '~/components/DashBoard/Note';
 
 function Course() {
     const cx = classNames.bind(styles);

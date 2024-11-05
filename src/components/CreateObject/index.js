@@ -74,6 +74,8 @@ function CreateObject({
             const newTermsOptions = termsInfo.map((term) => ({
                 id: term._id,
                 value: term.name,
+                startDate: term.startDate,
+                enđate: term.endDate,
             }));
 
             setTagsOptions(newTagsOptions);
@@ -229,7 +231,6 @@ function CreateObject({
     };
 
     const handleSelectTerm = (value) => {
-        console.log(value);
         setSubmitTerm(value);
     };
 

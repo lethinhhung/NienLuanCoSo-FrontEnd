@@ -7,6 +7,7 @@ import { Chart, ArcElement } from 'chart.js';
 
 import styles from './Dashboard.module.scss';
 import { Link } from 'react-router-dom';
+import EventCalendar from '~/components/DashBoard/EventCalendar';
 
 Chart.register(ArcElement);
 function DashboardSmall() {
@@ -28,6 +29,7 @@ function DashboardSmall() {
         <div className={cx('small-wrapper')}>
             <Row>
                 <Col className={cx('small-col')} span={24}>
+                    <EventCalendar />
                     <Card hoverable className={cx('small-card')} title="Progression" bordered={false}>
                         <Flex justify="space-between" align="center">
                             <p>Term:</p>

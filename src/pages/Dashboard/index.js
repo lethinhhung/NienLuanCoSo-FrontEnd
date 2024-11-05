@@ -12,44 +12,11 @@ import { InfoCircleOutlined } from '@ant-design/icons';
 function Dashboard() {
     const { width } = useWindowDimensions();
 
-    const [testsInfo, setTestsInfo] = useState([]);
-    const [note, setNote] = useState('');
-
-    const fetchInfo = async () => {
-        const testsData = await getAllTestsInfoApi();
-        const userData = await getAccountInfoApi();
-
-        setTestsInfo(testsData);
-        setNote(userData.info.note);
-    };
-
-    useEffect(() => {
-        fetchInfo();
-    }, []);
-
-    const dateCellRender = (value) => {
-        const date = value.format('YYYY-MM-DD');
-        const testDates = testsInfo.map((test) => {
-            return moment(test.date).format('YYYY-MM-DD');
-        });
-
-        return testDates.includes(date) ? <Badge dot={'success'} /> : null;
-    };
-
-    const handleNoteChange = (e) => {
-        setNote(e.target.value);
-    };
-
     if (width > 1150) {
         return (
             <div>
                 <PageTitle title={'Dashboard'} />
-                <DashboardLarge
-                    note={note}
-                    handleNoteChange={handleNoteChange}
-                    dateCellRender={dateCellRender}
-                    testsInfo={testsInfo}
-                />
+                <DashboardLarge />
             </div>
         );
     } else if (width <= 1150 && width > 850) {
