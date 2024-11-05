@@ -16,6 +16,7 @@ import { useState } from 'react';
 import dayjs from 'dayjs';
 import Note from '~/components/DashBoard/Note';
 import EventCalendar from '~/components/DashBoard/EventCalendar';
+import TermGrades from '~/components/DashBoard/TermGrades';
 
 Chart.register(ArcElement);
 function DashboardLarge() {
@@ -87,6 +88,12 @@ function DashboardLarge() {
                     </Card>
                 </Col>
                 <Col className={cx('large-col')} span={8}>
+                    <div className={cx('large-card')}>
+                        <TermGrades />
+                    </div>
+                    <Card hoverable className={cx('large-card')} title="Courses grade" bordered={false} style={{}}>
+                        <Line></Line>
+                    </Card>
                     <Card
                         hoverable
                         className={cx('large-card')}
@@ -113,26 +120,6 @@ function DashboardLarge() {
                         <Divider />
                         <p>Projects</p>
                         <Progress percent={75} />
-                    </Card>
-                    <Card hoverable className={cx('large-card')} title="Courses grade" bordered={false} style={{}}>
-                        <Line></Line>
-                    </Card>
-                    <Card
-                        hoverable
-                        className={cx('large-card')}
-                        title="Term grades"
-                        bordered={false}
-                        style={{}}
-                        extra={
-                            <Select
-                                placeholder="Term"
-                                style={{ width: 120 }}
-                                options={[{ value: 'term1', label: 'Term1' }]}
-                                defaultValue={'term1'}
-                            ></Select>
-                        }
-                    >
-                        <CustomBar data={data} />
                     </Card>
 
                     <Card

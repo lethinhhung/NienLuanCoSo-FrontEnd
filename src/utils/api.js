@@ -561,6 +561,18 @@ const updateUserNoteApi = async (newNote) => {
     }
 };
 
+const getAllTermGradesApi = async () => {
+    const URL_API = '/v1/api/get-all-term-grades';
+
+    try {
+        const res = await axios.get(URL_API);
+        return res;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
 export {
     createUserApi,
     loginApi,
@@ -605,4 +617,5 @@ export {
     updateTermNoteApi,
     getAllTestsInfoApi,
     updateUserNoteApi,
+    getAllTermGradesApi,
 };
