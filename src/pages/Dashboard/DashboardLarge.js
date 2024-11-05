@@ -17,6 +17,7 @@ import dayjs from 'dayjs';
 import Note from '~/components/DashBoard/Note';
 import EventCalendar from '~/components/DashBoard/EventCalendar';
 import TermGrades from '~/components/DashBoard/TermGrades';
+import Statistics from '~/components/DashBoard/Statistics';
 
 Chart.register(ArcElement);
 function DashboardLarge() {
@@ -77,7 +78,7 @@ function DashboardLarge() {
                     >
                         <CustomPie data={data} />
                     </Card>
-                    <Card hoverable className={cx('large-card')} title="Statistics" bordered={false}>
+                    {/* <Card hoverable className={cx('large-card')} title="Statistics" bordered={false}>
                         <p>Total courses</p>
                         <Divider></Divider>
                         <p>Total terms</p>
@@ -85,7 +86,10 @@ function DashboardLarge() {
                         <p>Total projects</p>
                         <Divider></Divider>
                         <p>Total tests</p>
-                    </Card>
+                    </Card> */}
+                    <div className={cx('large-card')}>
+                        <Statistics />
+                    </div>
                 </Col>
                 <Col className={cx('large-col')} span={8}>
                     <div className={cx('large-card')}>

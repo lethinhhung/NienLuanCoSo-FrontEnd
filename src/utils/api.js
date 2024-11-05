@@ -573,6 +573,18 @@ const getAllTermGradesApi = async () => {
     }
 };
 
+const getUserStatisticsApi = async () => {
+    const URL_API = '/v1/api/get-user-statistics';
+
+    try {
+        const res = await axios.get(URL_API);
+        return res;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
 export {
     createUserApi,
     loginApi,
@@ -618,4 +630,5 @@ export {
     getAllTestsInfoApi,
     updateUserNoteApi,
     getAllTermGradesApi,
+    getUserStatisticsApi,
 };

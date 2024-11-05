@@ -5,7 +5,8 @@ import { DownOutlined } from '@ant-design/icons';
 
 import styles from './TermGrades.module.scss';
 import { useEffect, useState } from 'react';
-import { getAllTermGradesApi } from '~/utils/api';
+import { getAllTermGradesApi, getUserStatisticsApi } from '~/utils/api';
+import getScoreColor from '~/utils/getScoreColor';
 
 function TermGrades() {
     const cx = classNames.bind(styles);
@@ -28,6 +29,8 @@ function TermGrades() {
 
     const fetchInfo = async () => {
         const termGradesData = await getAllTermGradesApi();
+        const temp = await getUserStatisticsApi();
+        console.log(temp);
         setTermGrades(termGradesData);
     };
 
@@ -43,7 +46,7 @@ function TermGrades() {
                     {
                         label: termGrades[0].termName,
                         data: termGrades[0].courses.map((course) => course.score),
-                        backgroundColor: ['#EDF2F7', 'rgb(54, 162, 235)', 'rgb(255, 205, 86)'],
+                        backgroundColor: termGrades[0].courses.map((course) => getScoreColor(course.score / 10)),
                         hoverOffset: 4,
                     },
                 ],
