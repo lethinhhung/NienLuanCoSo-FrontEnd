@@ -585,6 +585,18 @@ const getUserStatisticsApi = async () => {
     }
 };
 
+const getAllCurrentApi = async () => {
+    const URL_API = '/v1/api/get-all-current';
+
+    try {
+        const res = await axios.get(URL_API);
+        return res;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
 export {
     createUserApi,
     loginApi,
@@ -631,4 +643,5 @@ export {
     updateUserNoteApi,
     getAllTermGradesApi,
     getUserStatisticsApi,
+    getAllCurrentApi,
 };

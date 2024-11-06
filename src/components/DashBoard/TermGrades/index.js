@@ -5,7 +5,7 @@ import { DownOutlined } from '@ant-design/icons';
 
 import styles from './TermGrades.module.scss';
 import { useEffect, useState } from 'react';
-import { getAllTermGradesApi, getUserStatisticsApi } from '~/utils/api';
+import { getAllTermGradesApi } from '~/utils/api';
 import getScoreColor from '~/utils/getScoreColor';
 
 function TermGrades() {
@@ -15,7 +15,6 @@ function TermGrades() {
     const [selectedTerm, setSelectedTerm] = useState('-1');
     const [termGrades, setTermGrades] = useState([]);
     const [data, setData] = useState({
-        // labels: termGrades[0].courses.map((course) => course.name),
         labels: ['1', '2', '3'],
         datasets: [
             {

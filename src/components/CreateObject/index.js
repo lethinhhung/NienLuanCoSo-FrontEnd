@@ -195,7 +195,7 @@ function CreateObject({
                     alert('Unkown error');
                 }
             } else if (type === 'term') {
-                formData.append('termId', editData._id);
+                formData.append('termId', submitTerm._id);
                 try {
                     const res = await updateTermApi(formData);
 

@@ -28,7 +28,7 @@ function GradeRange() {
 
     const fetchInfo = async () => {
         const testsGradeData = await getAllTestsInfoApi();
-        console.log(testsGradeData);
+
         setTestsGrade(testsGradeData);
     };
 
@@ -72,7 +72,6 @@ function GradeRange() {
         });
     }, [testsGrade]);
 
-    console.log(gradeRange);
     return (
         <Card hoverable className={cx('large-card')} title="Grade range percentage" bordered={false} style={{}}>
             <Flex justify="center" style={{ padding: '10px', height: '300px' }}>

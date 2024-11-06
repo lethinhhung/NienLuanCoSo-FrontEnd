@@ -19,6 +19,7 @@ import EventCalendar from '~/components/DashBoard/EventCalendar';
 import TermGrades from '~/components/DashBoard/TermGrades';
 import Statistics from '~/components/DashBoard/Statistics';
 import GradeRange from '~/components/DashBoard/GradeRange';
+import Current from '~/components/DashBoard/Current';
 
 Chart.register(ArcElement);
 function DashboardLarge() {
@@ -67,33 +68,9 @@ function DashboardLarge() {
                     <Card hoverable className={cx('large-card')} title="Courses grade" bordered={false} style={{}}>
                         <Line></Line>
                     </Card>
-                    <Card
-                        hoverable
-                        className={cx('large-card')}
-                        title="Progression"
-                        bordered={false}
-                        extra={
-                            <Select
-                                placeholder="Term"
-                                style={{ width: 120 }}
-                                options={[
-                                    { value: 'current', label: 'Current' },
-                                    { value: 'incoming', label: 'Incoming' },
-                                    { value: 'completed', label: 'Completed' },
-                                ]}
-                                defaultValue={'current'}
-                            ></Select>
-                        }
-                    >
-                        <p>Courses</p>
-                        <Progress percent={75} />
-                        <Divider />
-                        <p>Terms</p>
-                        <Progress percent={75} />
-                        <Divider />
-                        <p>Projects</p>
-                        <Progress percent={75} />
-                    </Card>
+                    <div className={cx('large-card')}>
+                        <Current />
+                    </div>
 
                     <Card
                         hoverable
