@@ -18,6 +18,7 @@ import Note from '~/components/DashBoard/Note';
 import EventCalendar from '~/components/DashBoard/EventCalendar';
 import TermGrades from '~/components/DashBoard/TermGrades';
 import Statistics from '~/components/DashBoard/Statistics';
+import GradeRange from '~/components/DashBoard/GradeRange';
 
 Chart.register(ArcElement);
 function DashboardLarge() {
@@ -48,45 +49,13 @@ function DashboardLarge() {
         <div className={cx('large-wrapper')}>
             <Row>
                 <Col className={cx('large-col')} span={8}>
-                    {/* <Card hoverable className={cx('large-card')} title="Notes" bordered={false} extra={
-                                <Button
-                                    shape="circle"
-                                    size="large"
-                                    style={{ backgroundColor: noteColor, color: 'white' }}
-                                    onClick={handleSaveNote}
-                                    icon={noteIcon}
-                                ></Button>
-                            }>
-                        <TextArea
-                            placeholder="Notes..."
-                            autoSize={{
-                                minRows: 2,
-                            }}
-                            value={note}
-                            onChange={handleNoteChange}
-                        />
-                    </Card> */}
                     <div className={cx('large-card')}>
                         <Note type="user" />
                     </div>
-                    <Card
-                        hoverable
-                        className={cx('large-card')}
-                        title="Grade range percentage"
-                        bordered={false}
-                        style={{}}
-                    >
-                        <CustomPie data={data} />
-                    </Card>
-                    {/* <Card hoverable className={cx('large-card')} title="Statistics" bordered={false}>
-                        <p>Total courses</p>
-                        <Divider></Divider>
-                        <p>Total terms</p>
-                        <Divider></Divider>
-                        <p>Total projects</p>
-                        <Divider></Divider>
-                        <p>Total tests</p>
-                    </Card> */}
+                    <div className={cx('large-card')}>
+                        <GradeRange />
+                    </div>
+
                     <div className={cx('large-card')}>
                         <Statistics />
                     </div>

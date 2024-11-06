@@ -1,4 +1,4 @@
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, notification } from 'antd';
 import { RightOutlined } from '@ant-design/icons';
 import classNames from 'classnames/bind';
 import { useNavigate } from 'react-router-dom';
@@ -7,11 +7,15 @@ import { loginApi } from '~/utils/api';
 import styles from './Login.module.scss';
 import { useAuth } from '~/contexts/Auth';
 import PageTitle from '~/components/PageTitle';
+import { useContext } from 'react';
+import NotificationContext from '~/contexts/NotificationContext';
 
 function LoginForm() {
     const cx = classNames.bind(styles);
     const navigate = useNavigate();
     const { login } = useAuth();
+
+    const { showNotification } = useContext(NotificationContext);
 
     const onFinish = async (values) => {
         const { name, password } = values;
@@ -22,10 +26,13 @@ function LoginForm() {
             localStorage.setItem('access_token', res.access_token);
             localStorage.setItem('login_time', currentTime);
             login(true);
-            alert('Login successfully!');
+            showNotification('Login Successful', 'Welcome back!', 'success');
+
             navigate('/dashboard');
         } else {
-            alert('Usename/password not valid!');
+            notification.error({
+                message: 'Usename/password not valid!',
+            });
         }
 
         console.log('Success:', res.access_token);

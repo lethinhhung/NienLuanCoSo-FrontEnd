@@ -29,8 +29,7 @@ function TermGrades() {
 
     const fetchInfo = async () => {
         const termGradesData = await getAllTermGradesApi();
-        const temp = await getUserStatisticsApi();
-        console.log(temp);
+
         setTermGrades(termGradesData);
     };
 
@@ -95,7 +94,7 @@ function TermGrades() {
     const handleSelectTerm = (value) => {
         setSelectedTerm(value);
     };
-    console.log(termOptions);
+
     return (
         <Card
             hoverable

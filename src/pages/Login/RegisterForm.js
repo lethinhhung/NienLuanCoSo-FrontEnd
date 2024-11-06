@@ -1,4 +1,4 @@
-import { Form, Input, Button, Flex } from 'antd';
+import { Form, Input, Button, Flex, notification } from 'antd';
 import { RightOutlined } from '@ant-design/icons';
 import classNames from 'classnames/bind';
 import { useState } from 'react';
@@ -22,13 +22,19 @@ function RegisterForm({ onRegister }) {
             setStatus('success');
             onRegister('success');
         } else if (res.EC === 0) {
-            alert('Duplicated username!');
+            notification.error({
+                message: 'Duplicated username!',
+            });
         } else {
-            alert('Unknown error!');
+            notification.error({
+                message: 'Unknown error!',
+            });
         }
 
         if (status === 'success') {
-            alert('Register successfully!');
+            notification.error({
+                message: 'Register successfully!',
+            });
         }
     };
     const onFinishFailed = (errorInfo) => {
