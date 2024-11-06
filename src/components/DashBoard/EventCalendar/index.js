@@ -17,7 +17,7 @@ import dayjs from 'dayjs';
 import { getAllTestsInfoApi } from '~/utils/api';
 import LoadingSpin from '~/components/LoadingSpin';
 
-function EventCalendar() {
+function EventCalendar({ size = 'large' }) {
     const navigate = useNavigate();
     const cx = classNames.bind(styles);
 
@@ -72,7 +72,7 @@ function EventCalendar() {
                 title={eventDateTitle === '' ? 'Select a date to view tests' : 'On ' + eventDateTitle}
                 bordered={false}
             >
-                <div style={{ height: '130px', overflowY: 'auto' }}>
+                <div style={{ height: size === 'large' ? '130px' : '80px', overflowY: 'auto' }}>
                     <ul style={{ listStyleType: 'none' }}>
                         {event.length === 0 ? (
                             <Flex justify="center">
@@ -108,11 +108,15 @@ function EventCalendar() {
             <Card hoverable className={cx('large-card')} title="Calendar" bordered={false}>
                 <>
                     {loading ? (
-                        <div style={{ height: '500px' }}>
+                        <div style={{ height: size === 'large' ? '500px' : '300px' }}>
                             <LoadingSpin />
                         </div>
                     ) : (
-                        <div hidden={loading} className={cx('calendar')} style={{ height: '500px', overflowY: 'auto' }}>
+                        <div
+                            hidden={loading}
+                            className={cx('calendar')}
+                            style={{ height: size === 'large' ? '500px' : '300px', overflowY: 'auto' }}
+                        >
                             <Calendar cellRender={dateCellRender} onSelect={handleSelectDate} />
                             {/* <CustomCalendar cellRender={dateCellRender} onSelect={handleSelectDate} /> */}
                         </div>

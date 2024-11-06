@@ -1,4 +1,4 @@
-import { Badge, Card, Divider, Flex, Progress, Select, Tooltip } from 'antd';
+import { Badge, Button, Card, Divider, Flex, Progress, Select, Tooltip } from 'antd';
 import CustomBar from '~/components/Charts/Bar';
 import classNames from 'classnames/bind';
 import { DownOutlined } from '@ant-design/icons';
@@ -6,9 +6,12 @@ import { DownOutlined } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
 import { getAllCurrentApi, getAllTermGradesApi } from '~/utils/api';
 import getScoreColor from '~/utils/getScoreColor';
+import { useNavigate } from 'react-router-dom';
+import truncateText from '~/utils/truncateText';
 
 function Current() {
     const [current, setCurrent] = useState([]);
+    const navigate = useNavigate();
 
     const fetchInfo = async () => {
         const currentData = await getAllCurrentApi();
@@ -26,11 +29,20 @@ function Current() {
                 {current.courses ? (
                     current.courses.map((course, index) => (
                         <div key={index} style={{ marginBottom: '15px' }}>
-                            <Tooltip title={course.name}>
-                                <Badge color={'green'} count={course.name}></Badge>
-                                <Progress
-                                    percent={((new Date(course.endDate) - today) / 1000 / 60 / 60 / 24).toFixed(1)}
-                                />
+                            <Tooltip title={'Click to view'}>
+                                <Button
+                                    style={{ marginLeft: '-10px' }}
+                                    onClick={() => navigate('/course/' + course._id)}
+                                    type="text"
+                                >
+                                    <Badge color={'green'} count={truncateText(course.name, 30)}></Badge>
+                                </Button>
+
+                                <div style={{ padding: '0 15px' }}>
+                                    <Progress
+                                        percent={((new Date(course.endDate) - today) / 1000 / 60 / 60 / 24).toFixed(1)}
+                                    />
+                                </div>
                             </Tooltip>
                         </div>
                     ))
@@ -45,10 +57,18 @@ function Current() {
                     current.terms.map((term, index) => (
                         <div key={index}>
                             <Tooltip title={term.name}>
-                                <Badge color={'green'} count={term.name}></Badge>
-                                <Progress
-                                    percent={((new Date(term.endDate) - today) / 1000 / 60 / 60 / 24).toFixed(1)}
-                                />
+                                <Button
+                                    style={{ marginLeft: '-10px' }}
+                                    onClick={() => navigate('/term/' + term._id)}
+                                    type="text"
+                                >
+                                    <Badge color={'green'} count={truncateText(term.name)}></Badge>
+                                </Button>
+                                <div style={{ padding: '0 15px' }}>
+                                    <Progress
+                                        percent={((new Date(term.endDate) - today) / 1000 / 60 / 60 / 24).toFixed(1)}
+                                    />
+                                </div>
                             </Tooltip>
                         </div>
                     ))

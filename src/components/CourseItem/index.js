@@ -9,6 +9,7 @@ import convertAvatarPath from '~/utils/convertAvatarPath';
 import { deleteCourseApi } from '~/utils/api';
 import defaultCourseCover from '../../assets/images/default-course-cover.png';
 import moment from 'moment';
+import truncateText from '~/utils/truncateText';
 
 function CourseItem({ data, loading, onDelete, termsInfo }) {
     const cx = classNames.bind(styles);
@@ -94,10 +95,6 @@ function CourseItem({ data, loading, onDelete, termsInfo }) {
         }
     }
 
-    const truncateDescription = (description) => {
-        return description.length > 55 ? description.substring(0, 55) + '...' : description;
-    };
-
     return (
         <Badge.Ribbon text={`${startDate} ${endDate}`}>
             <Card
@@ -141,7 +138,7 @@ function CourseItem({ data, loading, onDelete, termsInfo }) {
                     <Meta
                         avatar={<h1>{data.emoji}</h1>}
                         title={data.name}
-                        description={truncateDescription(data.description)}
+                        description={truncateText(data.description, 55)}
                     />
                     <div className={cx('tags-drawer')}>
                         <TagsDrawer tagsIds={data.tags} isDefault={false}></TagsDrawer>

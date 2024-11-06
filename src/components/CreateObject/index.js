@@ -138,7 +138,6 @@ function CreateObject({
             alert('Select term...');
             return;
         }
-        console.log(submitStartDate);
         const formData = new FormData();
         formData.append('emoji', submitEmoji);
         formData.append('color', submitColor);
@@ -166,7 +165,7 @@ function CreateObject({
                         alert('Duplicate name. Choose another name!');
                         return;
                     }
-                    console.log('Update successful:', res);
+
                     alert('New ' + type + ' created!');
                     navigate('/courses');
                 } else if (type === 'term' && isEdit === false) {
@@ -175,12 +174,11 @@ function CreateObject({
                         alert('Duplicate name. Choose another name!');
                         return;
                     }
-                    console.log('Update successful:', res);
+
                     alert('New ' + type + ' created!');
                     navigate('/terms');
                 }
             } catch (error) {
-                console.error('Update failed:', error);
                 alert('Unkown error');
             }
         } else {
@@ -188,20 +186,14 @@ function CreateObject({
                 formData.append('courseId', editData._id);
                 try {
                     const res = await updateCourseApi(formData);
-
-                    console.log(res);
                 } catch (error) {
-                    console.error('Update failed:', error);
                     alert('Unkown error');
                 }
             } else if (type === 'term') {
                 formData.append('termId', submitTerm._id);
                 try {
                     const res = await updateTermApi(formData);
-
-                    console.log(res);
                 } catch (error) {
-                    console.error('Update failed:', error);
                     alert('Unkown error');
                 }
             }

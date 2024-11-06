@@ -597,6 +597,18 @@ const getAllCurrentApi = async () => {
     }
 };
 
+const getIncompleteProjectApi = async () => {
+    const URL_API = '/v1/api/get-incomplete-project';
+
+    try {
+        const res = await axios.get(URL_API);
+        return res;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
 export {
     createUserApi,
     loginApi,
@@ -644,4 +656,5 @@ export {
     getAllTermGradesApi,
     getUserStatisticsApi,
     getAllCurrentApi,
+    getIncompleteProjectApi,
 };

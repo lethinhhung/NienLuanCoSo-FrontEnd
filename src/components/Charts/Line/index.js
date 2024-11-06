@@ -8,7 +8,29 @@ function CustomLine() {
     const renderKey = useReRender();
 
     const data = {
-        labels: ['Term 1', 'Term 1', 'Term 1', 'Term 1', 'Term 1', 'Term 1', 'Term 1'],
+        labels: [
+            'Term 1',
+            'Term 1',
+            'Term 1',
+            'Term 1',
+            'Term 1',
+            'Term 1',
+            'Term 1',
+            'Term 1',
+            'Term 1',
+            'Term 1',
+            'Term 1',
+            'Term 1',
+            'Term 1',
+            'Term 1',
+            'Term 1',
+            'Term 1',
+            'Term 1',
+            'Term 1',
+            'Term 1',
+            'Term 1',
+            'Term 1',
+        ],
         datasets: [
             {
                 label: 'Completed',
