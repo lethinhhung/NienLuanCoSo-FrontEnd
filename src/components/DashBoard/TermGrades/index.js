@@ -26,7 +26,13 @@ function TermGrades() {
             },
         ],
     });
-    const [options, setOptions] = useState({});
+    const [options, setOptions] = useState({
+        plugins: {
+            legend: {
+                display: false, // Disable the legend
+            },
+        },
+    });
 
     const fetchInfo = async () => {
         const termGradesData = await getAllTermGradesApi();
@@ -69,12 +75,6 @@ function TermGrades() {
                     },
                 },
                 scales: {
-                    y: {
-                        title: {
-                            display: true,
-                            text: 'Score',
-                        },
-                    },
                     x: {
                         title: {
                             display: true,

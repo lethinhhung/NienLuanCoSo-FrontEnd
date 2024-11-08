@@ -65,21 +65,13 @@ function TestsGrade() {
                     },
                 },
             },
-            scales: {
-                y: {
-                    title: {
-                        display: true,
-                        text: 'Score',
-                    },
-                },
-            },
         };
 
         setOptions(options);
     }, [testsInfo]);
 
     return (
-        <Card hoverable title="Tests grade" bordered={false} loading={loading}>
+        <Card hoverable title="Tests score" bordered={false} loading={loading}>
             <CustomLine data={data} options={options} />
         </Card>
     );
