@@ -16,7 +16,6 @@ function IncompleteProject() {
     const fetchInfo = async () => {
         const incompleteProjectData = await getIncompleteProjectApi();
         setIncompleteProject(incompleteProjectData);
-        console.log(incompleteProjectData);
     };
 
     useEffect(() => {

@@ -1,7 +1,7 @@
 import { ColorPicker, Tag, Flex, Button, Input, Select, Switch, DatePicker, Divider, Alert } from 'antd';
 import classNames from 'classnames/bind';
 import { Link, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { CheckOutlined } from '@ant-design/icons';
 import EmojiPicker from 'emoji-picker-react';
 
@@ -16,6 +16,7 @@ import {
     updateTermApi,
 } from '~/utils/api';
 import LoadingSpin from '../LoadingSpin';
+import NotificationContext from '~/contexts/NotificationContext';
 
 function CreateObject({
     type = 'course',
@@ -32,6 +33,7 @@ function CreateObject({
     isEdit = false,
 }) {
     const cx = classNames.bind(styles);
+    const { showNotification } = useContext(NotificationContext);
     const navigate = useNavigate();
     const { TextArea } = Input;
     const { RangePicker } = DatePicker;
@@ -123,19 +125,22 @@ function CreateObject({
 
     const handleSubmit = async () => {
         if (submitName === '') {
-            alert('Enter name...');
+            showNotification('Missing information', 'Enter name', 'warning');
             return;
         } else if (
             (type === 'term' && submitStartDate === '0000-01-02' && submitEndDate === '0000-01-01') ||
             (type === 'term' && submitStartDate === '' && submitEndDate === '')
         ) {
-            alert('Select time...');
+            showNotification('Missing information', 'Select time', 'warning');
+
             return;
         } else if ((submitStartDate === '' || submitEndDate === '') && !isTerm) {
-            alert('Select time...');
+            showNotification('Missing information', 'Select time', 'warning');
+
             return;
         } else if (submitTerm === '' && isTerm && type === 'course') {
-            alert('Select term...');
+            showNotification('Missing information', 'Select term', 'warning');
+
             return;
         }
         const formData = new FormData();
@@ -162,24 +167,27 @@ function CreateObject({
                 if (type === 'course' && isEdit === false) {
                     const res = await createNewCourseApi(formData);
                     if (res.EC === 0) {
-                        alert('Duplicate name. Choose another name!');
+                        showNotification('Duplicate course name', 'Choose another name', 'error');
+
                         return;
                     }
 
-                    alert('New ' + type + ' created!');
+                    showNotification('New ' + type + ' created!', '', 'success');
+
                     navigate('/courses');
                 } else if (type === 'term' && isEdit === false) {
                     const res = await createNewTermApi(formData);
                     if (res.EC === 0) {
-                        alert('Duplicate name. Choose another name!');
+                        showNotification('Duplicate term name', 'Choose another name', 'error');
+
                         return;
                     }
+                    showNotification('New ' + type + ' created!', '', 'success');
 
-                    alert('New ' + type + ' created!');
                     navigate('/terms');
                 }
             } catch (error) {
-                alert('Unkown error');
+                showNotification('Unknown error', 'Server error', 'error');
             }
         } else {
             if (type === 'course') {
@@ -187,14 +195,14 @@ function CreateObject({
                 try {
                     const res = await updateCourseApi(formData);
                 } catch (error) {
-                    alert('Unkown error');
+                    showNotification('Unknown error', 'Server error', 'error');
                 }
             } else if (type === 'term') {
                 formData.append('termId', submitTerm._id);
                 try {
                     const res = await updateTermApi(formData);
                 } catch (error) {
-                    alert('Unkown error');
+                    showNotification('Unknown error', 'Server error', 'error');
                 }
             }
             window.location.reload();
@@ -271,6 +279,7 @@ function CreateObject({
         } else {
             setIsTerm(false);
             setSubmitTerm('');
+            setTermsOptions([]);
         }
     };
 
@@ -418,6 +427,7 @@ function CreateObject({
                                     style={{ minWidth: '150px', marginTop: '5px' }}
                                     onClick={reRenderTagsAndTerms}
                                     defaultValue={[]}
+                                    value={submitTerm}
                                     onChange={handleSelectTerm}
                                 ></Select>
                                 <Flex align="center" style={{ marginTop: '5px' }}>

@@ -1,4 +1,4 @@
-import { Form, Input, Button, notification } from 'antd';
+import { Form, Input, Button } from 'antd';
 import { RightOutlined } from '@ant-design/icons';
 import classNames from 'classnames/bind';
 import { useNavigate } from 'react-router-dom';
@@ -30,9 +30,7 @@ function LoginForm() {
 
             navigate('/dashboard');
         } else {
-            notification.error({
-                message: 'Usename/password not valid!',
-            });
+            showNotification('Login Failed', 'Usename/password not valid!', 'error');
         }
 
         console.log('Success:', res.access_token);

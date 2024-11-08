@@ -1,5 +1,5 @@
 import { Card, Row, Col, Flex, Image, Button, Modal, Input } from 'antd';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 
 import defaultAvatar from '~/assets/images/default-avatar.png';
@@ -8,11 +8,12 @@ import { updateUserApi, getAccountInfoApi } from '~/utils/api';
 import styles from './Profile.module.scss';
 import LoadingSpin from '~/components/LoadingSpin';
 import PageTitle from '~/components/PageTitle';
+import NotificationContext from '~/contexts/NotificationContext';
 
 function Profile() {
     const cx = classNames.bind(styles);
     const { TextArea } = Input;
-
+    const { showNotification } = useContext(NotificationContext);
     // edit const
     const [file, setFile] = useState(null);
     const [description, setDescription] = useState('');
@@ -58,7 +59,7 @@ function Profile() {
 
     const handleOk = async () => {
         if (!file) {
-            alert('Please upload an avatar!');
+            showNotification('Missing information', 'Please upload an avatar', 'warning');
             return;
         }
         const formData = new FormData();
@@ -71,13 +72,13 @@ function Profile() {
             const res = await updateUserApi(formData);
 
             console.log('Update successful:', res);
-            alert('Update successfully!');
+            showNotification('Update successfully', '', 'success');
             setFile();
             setImagePreview();
             setDescription();
         } catch (error) {
             console.error('Update failed:', error);
-            alert('Unkown error');
+            showNotification('Unknown error', 'Server error', 'error');
         }
 
         setIsModalVisible(false);

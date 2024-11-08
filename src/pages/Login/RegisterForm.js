@@ -1,15 +1,17 @@
 import { Form, Input, Button, Flex, notification } from 'antd';
 import { RightOutlined } from '@ant-design/icons';
 import classNames from 'classnames/bind';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 import styles from './Login.module.scss';
 import { createUserApi } from '~/utils/api';
 import PageTitle from '~/components/PageTitle';
+import NotificationContext from '~/contexts/NotificationContext';
 
 function RegisterForm({ onRegister }) {
     const cx = classNames.bind(styles);
     const [status, setStatus] = useState(null);
+    const { showNotification } = useContext(NotificationContext);
 
     const onFinish = async (values) => {
         const { name, email, password, description } = values;
@@ -22,19 +24,13 @@ function RegisterForm({ onRegister }) {
             setStatus('success');
             onRegister('success');
         } else if (res.EC === 0) {
-            notification.error({
-                message: 'Duplicated username!',
-            });
+            showNotification('Duplicated username!', 'Choose another username', 'error');
         } else {
-            notification.error({
-                message: 'Unknown error!',
-            });
+            showNotification('Unknown error!', '', 'error');
         }
 
         if (status === 'success') {
-            notification.error({
-                message: 'Register successfully!',
-            });
+            showNotification('Register successfully!', 'Now you can login in', 'success');
         }
     };
     const onFinishFailed = (errorInfo) => {

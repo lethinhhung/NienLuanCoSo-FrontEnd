@@ -1,7 +1,7 @@
 import { Tabs, Flex, Image, Row, Col, Card, Button, Tooltip } from 'antd';
 import classNames from 'classnames/bind';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { EditOutlined, FormOutlined, LoginOutlined, RightOutlined } from '@ant-design/icons';
 
 import logo from '~/assets/images/logo.png';
@@ -9,6 +9,7 @@ import styles from './Login.module.scss';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 import { useWindowDimensions } from '~/hooks';
+import NotificationContext from '~/contexts/NotificationContext';
 
 function Login() {
     const cx = classNames.bind(styles);
@@ -16,6 +17,7 @@ function Login() {
     const [form, setForm] = useState(<LoginForm />);
     const [btn, setBtn] = useState(<FormOutlined />);
     const [status, setStatus] = useState('Login');
+    const { showNotification } = useContext(NotificationContext);
 
     const naviagte = useNavigate();
 
@@ -26,7 +28,9 @@ function Login() {
     const handleRegisterStatus = (status) => {
         if (status === 'success') {
             setRegisterSuccess(!registerSuccess);
-            alert('Register Successfully');
+            showNotification('Register successfully!', 'Now you can login in', 'success');
+            setStatus('Register');
+            handleChangeForm();
         }
     };
 
@@ -41,19 +45,6 @@ function Login() {
             setStatus('Login');
         }
     };
-
-    const items = [
-        {
-            key: 'login',
-            label: 'Login',
-            children: <LoginForm />,
-        },
-        {
-            key: 'register',
-            label: 'Register',
-            children: <RegisterForm onRegister={handleRegisterStatus} />,
-        },
-    ];
 
     const { height } = useWindowDimensions();
 
@@ -84,16 +75,6 @@ function Login() {
             )}
 
             <Flex wrap justify="center" className={cx('form-wrapper')}>
-                {/* <Tabs
-                            size="large"
-                            animated
-                            centered
-                            className={cx('tabs')}
-                            type="card"
-                            defaultActiveKey="login"
-                            items={items}
-                            key={registerSuccess}
-                        /> */}
                 <Card
                     title={status}
                     extra={

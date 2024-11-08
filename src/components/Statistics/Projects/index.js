@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import {
     Typography,
     Card,
@@ -26,10 +26,13 @@ import {
     deleteProjectStepApi,
     updateProjectStepApi,
 } from '~/utils/api';
+import NotificationContext from '~/contexts/NotificationContext';
 
 function Projects({ statisticsInfo, projectsInfo, onProjectsChange }) {
     const { Title } = Typography;
     const cx = classNames.bind(styles);
+    const { showNotification } = useContext(NotificationContext);
+
     const [isAddModalVisible, setIsAddModalVisible] = useState(false);
     const [isAddStepModalVisible, setIsAddStepModalVisible] = useState(false);
     const [isEditStepModalVisible, setIsEditStepModalVisible] = useState(false);
@@ -89,7 +92,7 @@ function Projects({ statisticsInfo, projectsInfo, onProjectsChange }) {
     const handleAddOk = async () => {
         //Goi API
         if (submitProject.name === '') {
-            alert('Enter project name...');
+            showNotification('Missing information', 'Enter project name', 'warning');
             return;
         }
         const statisticsId = statisticsInfo._id;
@@ -129,7 +132,7 @@ function Projects({ statisticsInfo, projectsInfo, onProjectsChange }) {
     const handleAddStepOk = async () => {
         //Goi API
         if (submitStep.name === '') {
-            alert('Enter project step name...');
+            showNotification('Missing information', 'Enter project step name', 'warning');
             return;
         }
         const projectId = currentProject._id;
@@ -169,7 +172,7 @@ function Projects({ statisticsInfo, projectsInfo, onProjectsChange }) {
     const handleEditStepOk = async () => {
         //Goi API
         if (submitStep.name === '') {
-            alert('Enter project step name...');
+            showNotification('Missing information', 'Enter project step name', 'warning');
             return;
         }
         const projectStepId = currentStep._id;

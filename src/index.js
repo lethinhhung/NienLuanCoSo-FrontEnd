@@ -3,14 +3,20 @@ import ReactDOM from 'react-dom/client';
 import App from '~/App';
 import reportWebVitals from './reportWebVitals';
 import GlobalStyles from '~/components/GlobalStyles';
+import { App as AntApp, ConfigProvider } from 'antd';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <React.StrictMode>
-        <GlobalStyles>
-            <App />
-        </GlobalStyles>
-    </React.StrictMode>,
+    // <React.StrictMode>
+
+    <ConfigProvider>
+        <AntApp>
+            <GlobalStyles>
+                <App />
+            </GlobalStyles>
+        </AntApp>
+    </ConfigProvider>,
+    // </React.StrictMode>,
 );
 
 // If you want to start measuring performance in your app, pass a function

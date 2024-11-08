@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Button, Modal, Input, Flex, ColorPicker, Tag } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import classNames from 'classnames/bind';
@@ -7,10 +7,12 @@ import styles from './NewTag.module.scss';
 import defaultTagColor from '../DefaultTagColor';
 import TagsDrawer from '../TagsDrawer';
 import { createNewTagApi } from '~/utils/api';
+import NotificationContext from '~/contexts/NotificationContext';
 
 function NewTag() {
     const cx = classNames.bind(styles);
 
+    const { showNotification } = useContext(NotificationContext);
     const [open, setOpen] = useState(false);
     const [confirmLoading, setConfirmLoading] = useState(false);
     const [modalText, setModalText] = useState('');
@@ -19,7 +21,8 @@ function NewTag() {
     };
     const handleOk = async () => {
         if (tagPreviewName === 'Preview') {
-            alert('Enter tag name...');
+            showNotification('Missing information', 'Enter tag name', 'warning');
+
             return;
         }
 
@@ -27,7 +30,8 @@ function NewTag() {
         setConfirmLoading(true);
         const result = await createNewTagApi(tagPreviewName, tagPreviewColor);
         if (result.EC === 0) {
-            alert('Failed. Duplicate tag name.');
+            showNotification('Failed', 'Duplicate tag name', 'error');
+
             setModalText('');
             setConfirmLoading(false);
         } else {

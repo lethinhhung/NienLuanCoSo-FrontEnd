@@ -1,6 +1,6 @@
 import { Image, Card, Flex, Divider, Row, Input, Popconfirm, Button, List, Modal, Badge } from 'antd';
 import classNames from 'classnames/bind';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { CheckOutlined, DeleteOutlined, PlusOutlined, SaveOutlined } from '@ant-design/icons';
 import moment from 'moment';
@@ -25,10 +25,13 @@ import StatisticsOverview from '~/components/StatisticsOverview';
 import LoadingSpin from '~/components/LoadingSpin';
 import PageTitle from '~/components/PageTitle';
 import Note from '~/components/DashBoard/Note';
+import NotificationContext from '~/contexts/NotificationContext';
 
 function Course() {
     const cx = classNames.bind(styles);
     const { courseId } = useParams();
+    const { showNotification } = useContext(NotificationContext);
+
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [inputLessonName, setInputLessonName] = useState('');
     const [inputDescription, setInputDescription] = useState('');
@@ -78,10 +81,10 @@ function Course() {
     const handleOk = async () => {
         //Goi API
         if (inputLessonName === '') {
-            alert('Enter lesson name!');
+            showNotification('Missing information', 'Enter lesson name', 'warning');
             return;
         } else if (inputDescription === '') {
-            alert('Enter lesson description!');
+            showNotification('Missing information', 'Enter lesson description', 'warning');
             return;
         }
         const content = '<p><br></p>';
@@ -117,7 +120,7 @@ function Course() {
         const lessonId = id;
         const result = await deleteLessonApi(lessonId);
         if (result._id) {
-            alert('Lesson deleted');
+            showNotification('Lesson delete successfully', '', 'success');
             setDeleteTrigger(!deleteTrigger);
         }
     };
