@@ -8,14 +8,17 @@ import { getAllCurrentApi, getAllTermGradesApi, getIncompleteProjectApi } from '
 import getScoreColor from '~/utils/getScoreColor';
 import { useNavigate } from 'react-router-dom';
 import truncateText from '~/utils/truncateText';
+import LoadingSpin from '~/components/LoadingSpin';
 
 function IncompleteProject() {
     const [incompleteProject, setIncompleteProject] = useState();
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(true);
 
     const fetchInfo = async () => {
         const incompleteProjectData = await getIncompleteProjectApi();
         setIncompleteProject(incompleteProjectData);
+        setLoading(false);
     };
 
     useEffect(() => {
@@ -23,7 +26,7 @@ function IncompleteProject() {
     }, []);
 
     return (
-        <Card hoverable title="Incomplete projects" bordered={false} style={{}}>
+        <Card hoverable title="Incomplete projects" bordered={false} loading={loading}>
             {incompleteProject ? (
                 incompleteProject.map((data, index) => (
                     <div key={index} style={{ marginBottom: '15px' }}>

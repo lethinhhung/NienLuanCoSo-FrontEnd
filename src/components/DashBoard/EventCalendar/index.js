@@ -109,22 +109,16 @@ function EventCalendar({ size = 'large' }) {
                 </div>
             </Card>
 
-            <Card hoverable className={cx('large-card')} title="Calendar" bordered={false}>
+            <Card hoverable className={cx('large-card')} title="Calendar" bordered={false} loading={loading}>
                 <>
-                    {loading ? (
-                        <div style={{ height: size === 'large' ? '500px' : '300px' }}>
-                            <LoadingSpin />
-                        </div>
-                    ) : (
-                        <div
-                            hidden={loading}
-                            className={cx('calendar')}
-                            style={{ height: size === 'large' ? '500px' : '300px', overflowY: 'auto' }}
-                        >
-                            <Calendar cellRender={dateCellRender} onSelect={handleSelectDate} />
-                            {/* <CustomCalendar cellRender={dateCellRender} onSelect={handleSelectDate} /> */}
-                        </div>
-                    )}
+                    <div
+                        hidden={loading}
+                        className={cx('calendar')}
+                        style={{ height: size === 'large' ? '500px' : '300px', overflowY: 'auto' }}
+                    >
+                        <Calendar cellRender={dateCellRender} onSelect={handleSelectDate} />
+                    </div>
+
                     <Flex justify="center">
                         <DownOutlined className={cx('scrollable')} />
                     </Flex>

@@ -114,10 +114,8 @@ function DefaultLayout({ children }) {
                                 arrow
                             >
                                 <button
-                                    style={{ backgroundColor: 'transparent' }}
-                                    type="text"
+                                    style={{ backgroundColor: 'white', borderRadius: '999px' }}
                                     className={cx('account-btn')}
-                                    shape="circle"
                                 >
                                     <div
                                         style={{

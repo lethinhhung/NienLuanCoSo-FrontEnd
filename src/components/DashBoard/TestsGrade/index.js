@@ -10,6 +10,7 @@ import { ArcElement, Chart } from 'chart.js';
 import CustomLine from '~/components/Charts/Line';
 
 function TestsGrade() {
+    const [loading, setLoading] = useState(true);
     const [testsInfo, setTestsInfo] = useState([]);
     const [data, setData] = useState({
         labels: [],
@@ -29,6 +30,7 @@ function TestsGrade() {
     const fetchInfo = async () => {
         const testsInfoData = await getAllTestsInfoApi();
         setTestsInfo(testsInfoData);
+        setLoading(false);
     };
 
     useEffect(() => {
@@ -77,7 +79,7 @@ function TestsGrade() {
     }, [testsInfo]);
 
     return (
-        <Card hoverable title="Tests grade" bordered={false}>
+        <Card hoverable title="Tests grade" bordered={false} loading={loading}>
             <CustomLine data={data} options={options} />
         </Card>
     );

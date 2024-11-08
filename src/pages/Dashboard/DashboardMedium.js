@@ -1,4 +1,4 @@
-import { Card, Row, Col } from 'antd';
+import { Card, Row, Col, Avatar } from 'antd';
 import classNames from 'classnames/bind';
 
 import Line from '~/components/Charts/Line';
@@ -13,15 +13,20 @@ import GradeRange from '~/components/DashBoard/GradeRange';
 import Current from '~/components/DashBoard/Current';
 import IncompleteProject from '~/components/DashBoard/IncompleteProject';
 import TestsGrade from '~/components/DashBoard/TestsGrade';
+import Profile from '~/components/DashBoard/Profile';
 
 Chart.register(ArcElement);
 function DashboardMedium() {
     const cx = classNames.bind(styles);
+    const { Meta } = Card;
 
     return (
         <div className={cx('large-wrapper')}>
             <Row>
                 <Col className={cx('large-col')} span={12}>
+                    <div className={cx('large-card')}>
+                        <Profile />
+                    </div>
                     <div className={cx('large-card')}>
                         <Note type="user" />
                     </div>

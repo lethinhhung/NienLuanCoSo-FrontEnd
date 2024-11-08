@@ -8,14 +8,17 @@ import { getAllCurrentApi, getAllTermGradesApi } from '~/utils/api';
 import getScoreColor from '~/utils/getScoreColor';
 import { useNavigate } from 'react-router-dom';
 import truncateText from '~/utils/truncateText';
+import LoadingSpin from '~/components/LoadingSpin';
 
 function Current() {
     const [current, setCurrent] = useState([]);
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
     const fetchInfo = async () => {
         const currentData = await getAllCurrentApi();
         setCurrent(currentData);
+        setLoading(false);
     };
 
     useEffect(() => {
@@ -25,8 +28,8 @@ function Current() {
 
     return (
         <div>
-            <Card hoverable title="Current courses" bordered={false}>
-                {current.courses ? (
+            <Card hoverable title="Current courses" bordered={false} loading={loading}>
+                {current.courses && current.courses !== null ? (
                     current.courses.map((course, index) => (
                         <div key={index} style={{ marginBottom: '15px' }}>
                             <Tooltip title={'Click to view'}>
@@ -52,8 +55,8 @@ function Current() {
                     </Flex>
                 )}
             </Card>
-            <Card style={{ marginTop: '10px' }} hoverable title="Current terms" bordered={false}>
-                {current.terms ? (
+            <Card style={{ marginTop: '10px' }} hoverable title="Current terms" bordered={false} loading={loading}>
+                {current.term && current.terms !== null ? (
                     current.terms.map((term, index) => (
                         <div key={index}>
                             <Tooltip title={term.name}>

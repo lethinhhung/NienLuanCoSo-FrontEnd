@@ -12,6 +12,7 @@ import CustomPie from '~/components/Charts/Pie';
 function GradeRange() {
     const cx = classNames.bind(styles);
 
+    const [loading, setLoading] = useState(true);
     const [testsGrade, setTestsGrade] = useState([]);
     const [gradeRange, setGradeRange] = useState([]);
     const [data, setdata] = useState({
@@ -31,6 +32,7 @@ function GradeRange() {
         const testsGradeData = await getAllTestsInfoApi();
 
         setTestsGrade(testsGradeData);
+        setLoading(false);
     };
 
     useEffect(() => {
@@ -87,7 +89,14 @@ function GradeRange() {
     }, [testsGrade]);
 
     return (
-        <Card hoverable className={cx('large-card')} title="Grade range percentage" bordered={false} style={{}}>
+        <Card
+            hoverable
+            className={cx('large-card')}
+            title="Grade range percentage"
+            bordered={false}
+            style={{}}
+            loading={loading}
+        >
             <Flex justify="center" style={{ padding: '10px', height: '300px' }}>
                 <CustomPie data={data} options={options} />
             </Flex>

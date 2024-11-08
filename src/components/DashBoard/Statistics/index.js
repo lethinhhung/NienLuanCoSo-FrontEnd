@@ -13,11 +13,13 @@ function Statistics() {
 
     const { Title } = Typography;
 
+    const [loading, setLoading] = useState(true);
     const [statistics, setStatistics] = useState();
 
     const fetchInfo = async () => {
         const statisticsData = await getUserStatisticsApi();
         setStatistics(statisticsData);
+        setLoading(false);
     };
 
     useEffect(() => {
@@ -25,7 +27,7 @@ function Statistics() {
     }, []);
 
     return (
-        <Card hoverable className={cx('large-card')} title="Total" bordered={false}>
+        <Card hoverable className={cx('large-card')} title="Total" bordered={false} loading={loading}>
             <Flex justify="space-between" align="center">
                 <Title level={5}>📚Courses </Title>
                 <Badge

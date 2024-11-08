@@ -13,17 +13,20 @@ function Note({ type = 'course', courseId }) {
     const [note, setNote] = useState('');
     const [noteIcon, setNoteIcon] = useState(<CheckOutlined />);
     const [noteColor, setNoteColor] = useState('#1677ff');
+    const [loading, setLoading] = useState(true);
 
     const fetchUserInfo = async () => {
         const userData = await getAccountInfoApi();
 
         setNote(userData.info.note);
+        setLoading(false);
     };
 
     const fetchCourseInfo = async () => {
         const courseData = await getCourseInfoApi(courseId);
 
         setNote(courseData.note);
+        setLoading(false);
     };
 
     useEffect(() => {
@@ -66,6 +69,7 @@ function Note({ type = 'course', courseId }) {
                     icon={noteIcon}
                 ></Button>
             }
+            loading={loading}
         >
             <TextArea
                 placeholder="Notes..."

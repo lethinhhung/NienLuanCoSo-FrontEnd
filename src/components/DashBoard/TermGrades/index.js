@@ -11,6 +11,7 @@ import getScoreColor from '~/utils/getScoreColor';
 function TermGrades() {
     const cx = classNames.bind(styles);
 
+    const [loading, setLoading] = useState(true);
     const [termOptions, setTermOptions] = useState([]);
     const [selectedTerm, setSelectedTerm] = useState('-1');
     const [termGrades, setTermGrades] = useState([]);
@@ -31,6 +32,7 @@ function TermGrades() {
         const termGradesData = await getAllTermGradesApi();
 
         setTermGrades(termGradesData);
+        setLoading(false);
     };
 
     useEffect(() => {
@@ -143,6 +145,7 @@ function TermGrades() {
                     options={termOptions}
                 ></Select>
             }
+            loading={loading}
         >
             <CustomBar data={data} options={options} />
         </Card>

@@ -13,6 +13,7 @@ import GradeRange from '~/components/DashBoard/GradeRange';
 import Current from '~/components/DashBoard/Current';
 import IncompleteProject from '~/components/DashBoard/IncompleteProject';
 import TestsGrade from '~/components/DashBoard/TestsGrade';
+import Profile from '~/components/DashBoard/Profile';
 
 Chart.register(ArcElement);
 function DashboardLarge() {
@@ -22,6 +23,9 @@ function DashboardLarge() {
         <div className={cx('large-wrapper')}>
             <Row>
                 <Col className={cx('large-col')} span={8}>
+                    <div className={cx('large-card')}>
+                        <Profile />
+                    </div>
                     <div className={cx('large-card')}>
                         <Note type="user" />
                     </div>
