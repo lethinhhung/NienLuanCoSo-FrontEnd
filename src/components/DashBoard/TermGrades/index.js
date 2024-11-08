@@ -15,16 +15,17 @@ function TermGrades() {
     const [selectedTerm, setSelectedTerm] = useState('-1');
     const [termGrades, setTermGrades] = useState([]);
     const [data, setData] = useState({
-        labels: ['1', '2', '3'],
+        labels: [''],
         datasets: [
             {
-                label: 'My First Dataset',
-                data: [300, 50, 100],
-                backgroundColor: ['#EDF2F7', 'rgb(54, 162, 235)', 'rgb(255, 205, 86)'],
+                label: 'Empty',
+                data: [],
+                backgroundColor: [],
                 hoverOffset: 4,
             },
         ],
     });
+    const [options, setOptions] = useState({});
 
     const fetchInfo = async () => {
         const termGradesData = await getAllTermGradesApi();
@@ -39,16 +40,49 @@ function TermGrades() {
     useEffect(() => {
         if (termGrades[selectedTerm] && termGrades[selectedTerm].courses.length > 0) {
             setData({
-                labels: termGrades[0].courses.map((course) => course.courseName),
+                labels: termGrades[selectedTerm].courses.map((course) => course.courseName),
                 datasets: [
                     {
-                        label: termGrades[0].termName,
-                        data: termGrades[0].courses.map((course) => course.score),
-                        backgroundColor: termGrades[0].courses.map((course) => getScoreColor(course.score / 10)),
+                        label: termGrades[selectedTerm].termName,
+                        data: termGrades[selectedTerm].courses.map((course) => course.score),
+                        backgroundColor: termGrades[selectedTerm].courses.map((course) =>
+                            getScoreColor(course.score / 10),
+                        ),
                         hoverOffset: 4,
                     },
                 ],
             });
+            const options = {
+                plugins: {
+                    legend: {
+                        display: false, // Disable the legend
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (tooltipItem) {
+                                const course = termGrades[selectedTerm].courses[tooltipItem.dataIndex]; // Update to `dataIndex`
+                                return `Current score: ${tooltipItem.raw}%`;
+                            },
+                        },
+                    },
+                },
+                scales: {
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Score',
+                        },
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Courses',
+                        },
+                    },
+                },
+            };
+
+            setOptions(options);
         } else if (termGrades[selectedTerm] && termGrades[selectedTerm].courses.length === 0) {
             setData({
                 labels: [],
@@ -98,7 +132,7 @@ function TermGrades() {
         <Card
             hoverable
             className={cx('large-card')}
-            title="Term grades"
+            title="Term grades (%)"
             bordered={false}
             style={{}}
             extra={
@@ -110,7 +144,7 @@ function TermGrades() {
                 ></Select>
             }
         >
-            <CustomBar data={data} />
+            <CustomBar data={data} options={options} />
         </Card>
     );
 }

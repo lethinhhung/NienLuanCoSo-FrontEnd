@@ -12,6 +12,7 @@ import Statistics from '~/components/DashBoard/Statistics';
 import GradeRange from '~/components/DashBoard/GradeRange';
 import Current from '~/components/DashBoard/Current';
 import IncompleteProject from '~/components/DashBoard/IncompleteProject';
+import TestsGrade from '~/components/DashBoard/TestsGrade';
 
 Chart.register(ArcElement);
 function DashboardLarge() {
@@ -36,9 +37,9 @@ function DashboardLarge() {
                     <div className={cx('large-card')}>
                         <TermGrades />
                     </div>
-                    <Card hoverable className={cx('large-card')} title="Courses grade" bordered={false} style={{}}>
-                        <Line></Line>
-                    </Card>
+                    <div className={cx('large-card')}>
+                        <TestsGrade />
+                    </div>
 
                     <div className={cx('large-card')}>
                         <IncompleteProject />

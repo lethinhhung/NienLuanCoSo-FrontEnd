@@ -43,7 +43,11 @@ function EventCalendar({ size = 'large' }) {
             return moment(test.date).format('YYYY-MM-DD');
         });
 
-        return testDates.includes(date) ? <Badge dot={'success'} /> : null;
+        return testDates.includes(date) ? (
+            <Flex justify="center" align="center">
+                <Badge color="red" />
+            </Flex>
+        ) : null;
     };
 
     const handleSelectDate = (value) => {

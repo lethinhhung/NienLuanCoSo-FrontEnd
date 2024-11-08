@@ -25,6 +25,7 @@ function GradeRange() {
             },
         ],
     });
+    const [options, setOptions] = useState({});
 
     const fetchInfo = async () => {
         const testsGradeData = await getAllTestsInfoApi();
@@ -70,12 +71,25 @@ function GradeRange() {
                 },
             ],
         });
+        const options = {
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function (tooltipItem) {
+                            return `${tooltipItem.raw} test(s)`;
+                        },
+                    },
+                },
+            },
+        };
+
+        setOptions(options);
     }, [testsGrade]);
 
     return (
         <Card hoverable className={cx('large-card')} title="Grade range percentage" bordered={false} style={{}}>
             <Flex justify="center" style={{ padding: '10px', height: '300px' }}>
-                <CustomPie data={data} />
+                <CustomPie data={data} options={options} />
             </Flex>
         </Card>
     );
