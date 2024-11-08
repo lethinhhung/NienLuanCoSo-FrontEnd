@@ -42,7 +42,7 @@ function CreateObject({
 
     const [tagsOptions, setTagsOptions] = useState([]);
     const [termsOptions, setTermsOptions] = useState([]);
-    const [reRender, setReRender] = useState('');
+    const [reRender, setReRender] = useState(false);
     const [tagsInfo, setTagsInfo] = useState([]);
     const [termsInfo, setTermsInfo] = useState([]);
 
@@ -57,7 +57,7 @@ function CreateObject({
     const [submitEndDate, setSubmitEndDate] = useState('');
 
     const reRenderTagsAndTerms = () => {
-        setReRender(reRender + ' ');
+        setReRender(!reRender);
     };
 
     useEffect(() => {
@@ -193,14 +193,14 @@ function CreateObject({
             if (type === 'course') {
                 formData.append('courseId', editData._id);
                 try {
-                    const res = await updateCourseApi(formData);
+                    await updateCourseApi(formData);
                 } catch (error) {
                     showNotification('Unknown error', 'Server error', 'error');
                 }
             } else if (type === 'term') {
                 formData.append('termId', submitTerm._id);
                 try {
-                    const res = await updateTermApi(formData);
+                    await updateTermApi(formData);
                 } catch (error) {
                     showNotification('Unknown error', 'Server error', 'error');
                 }
