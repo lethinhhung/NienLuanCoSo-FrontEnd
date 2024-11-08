@@ -18,17 +18,22 @@ function Terms() {
     const [selectedTime, setSelectedTime] = useState([]);
     const [selectedStatus, setSelectedStatus] = useState('all');
 
+    const fetchTermsInfo = async () => {
+        const termsData = await getTermsInfoApi();
+
+        setTermsInfo(termsData);
+        setFilteredTerms(termsData);
+        setLoading(false);
+    };
+
     useEffect(() => {
-        const fetchCoursesInfo = async () => {
-            const termsData = await getTermsInfoApi();
-
-            setTermsInfo(termsData);
-            setFilteredTerms(termsData);
-            setLoading(false);
-        };
-
-        fetchCoursesInfo();
+        fetchTermsInfo();
     }, []);
+
+    const handleTermDelete = () => {
+        setLoading(true);
+        fetchTermsInfo();
+    };
 
     const applyFilters = (time, status) => {
         let filtered = termsInfo;
@@ -79,6 +84,7 @@ function Terms() {
         setSelectedStatus(value);
         applyFilters(selectedTime, value);
     };
+
     return (
         <div>
             <PageTitle title={'Terms'} />
@@ -110,7 +116,9 @@ function Terms() {
                 <Col offset={2} span={20}>
                     <Flex className={cx('wrapper')} wrap gap="small" justify="space-evenly">
                         {filteredTerms.length > 0 ? (
-                            filteredTerms.map((data, index) => <TermItem key={index} data={data}></TermItem>)
+                            filteredTerms.map((data, index) => (
+                                <TermItem onDelete={handleTermDelete} key={index} data={data}></TermItem>
+                            ))
                         ) : (
                             <>
                                 <div style={{ height: '60vh' }}></div>

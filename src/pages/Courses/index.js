@@ -20,42 +20,28 @@ function Courses() {
     const [searchCourse, setSearchCourse] = useState('');
     const [selectedStatus, setSelectedStatus] = useState('all');
 
-    const handleCourseDelete = () => {
-        setLoading(true);
-    };
-
     const handleSearch = (course) => {
         setSearchCourse(course);
     };
 
-    useEffect(() => {
-        const fetchCoursesInfo = async () => {
-            const coursesData = await getCoursesInfoApi();
-            const termsData = await getTermsInfoApi();
-            const tagsData = await getTagsInfoApi();
-            setCoursesInfo(coursesData);
-            setTermsInfo(termsData);
-            setTagsInfo(tagsData);
-            setLoading(false);
-        };
+    const fetchCoursesInfo = async () => {
+        const coursesData = await getCoursesInfoApi();
+        const termsData = await getTermsInfoApi();
+        const tagsData = await getTagsInfoApi();
+        setCoursesInfo(coursesData);
+        setTermsInfo(termsData);
+        setTagsInfo(tagsData);
+        setLoading(false);
+    };
 
+    useEffect(() => {
         fetchCoursesInfo();
     }, []);
 
-    // const filteredCourses = coursesInfo.filter((course) => {
-    //     const matchesSearchCourse = course.name.toLowerCase().includes(searchCourse.toLowerCase());
-    //     const matchesSelectedTags = selectedTags.every((selectedTag) =>
-    //         course.tags.some((tagId) => {
-    //             const tagName = tagsInfo.find((tag) => tag._id === tagId)?.name;
-    //             return tagName === selectedTag;
-    //         }),
-    //     );
-    //     return matchesSearchCourse && matchesSelectedTags;
-    // });
-
-    // const handleTagsChange = (tags) => {
-    //     setSelectedTags(tags);
-    // };
+    const handleCourseDelete = () => {
+        setLoading(true);
+        fetchCoursesInfo();
+    };
 
     const filteredCourses = coursesInfo.filter((course) => {
         const matchesSearchCourse = course.name.toLowerCase().includes(searchCourse.toLowerCase());

@@ -19,13 +19,12 @@ function CourseItem({ data, loading, onDelete, termsInfo }) {
         navigate('/course/' + data._id);
     };
 
-    const handleDelete = () => {
-        deleteCourseApi(data._id);
+    const handleDelete = async () => {
+        await deleteCourseApi(data._id);
         if (onDelete) {
             onDelete(data._id);
         }
         console.log('Delete course');
-        window.location.reload();
     };
 
     const { Meta } = Card;

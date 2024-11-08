@@ -10,7 +10,7 @@ import { deleteTermApi } from '~/utils/api';
 
 import defaultCourseCover from '../../assets/images/default-term-cover.jpg';
 
-function TermItem({ data, loading }) {
+function TermItem({ data, loading, onDelete }) {
     const cx = classNames.bind(styles);
     const navigate = useNavigate();
 
@@ -42,10 +42,11 @@ function TermItem({ data, loading }) {
         navigate('/term/' + data._id);
     };
 
-    const handleDelete = () => {
-        deleteTermApi(data._id);
-        console.log('Delete term');
-        window.location.reload();
+    const handleDelete = async () => {
+        await deleteTermApi(data._id);
+        if (onDelete) {
+            onDelete();
+        }
     };
 
     const { Meta } = Card;
