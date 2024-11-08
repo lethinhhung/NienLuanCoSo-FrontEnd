@@ -35,8 +35,6 @@ function NewTag() {
             setModalText('');
             setConfirmLoading(false);
         } else {
-            console.log(result);
-
             setOpen(false);
             setConfirmLoading(false);
             setTagPreviewColor('');
@@ -45,7 +43,6 @@ function NewTag() {
         }
     };
     const handleCancel = () => {
-        console.log('Clicked cancel button');
         setOpen(false);
     };
 

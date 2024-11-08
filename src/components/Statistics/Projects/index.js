@@ -97,8 +97,8 @@ function Projects({ statisticsInfo, projectsInfo, onProjectsChange }) {
         }
         const statisticsId = statisticsInfo._id;
         const { name, totalSteps, completedSteps } = submitProject;
-        const result = await createNewProjectApi(name, totalSteps, completedSteps, statisticsId);
-        console.log(result);
+        await createNewProjectApi(name, totalSteps, completedSteps, statisticsId);
+
         setIsAddModalVisible(false);
         setCurrentProject({});
         setSubmitProject({
@@ -137,8 +137,8 @@ function Projects({ statisticsInfo, projectsInfo, onProjectsChange }) {
         }
         const projectId = currentProject._id;
         const { name, status } = submitStep;
-        const result = await createNewProjectStepApi(name, projectId, status);
-        console.log(result);
+        await createNewProjectStepApi(name, projectId, status);
+
         setIsAddStepModalVisible(false);
         setCurrentProject({});
         setSubmitProject({
@@ -177,9 +177,9 @@ function Projects({ statisticsInfo, projectsInfo, onProjectsChange }) {
         }
         const projectStepId = currentStep._id;
         const { name, status } = submitStep;
-        console.log(projectStepId);
-        const result = await updateProjectStepApi(projectStepId, status, name);
-        console.log(result);
+
+        await updateProjectStepApi(projectStepId, status, name);
+
         setIsEditStepModalVisible(false);
         setCurrentProject({});
         setSubmitProject({

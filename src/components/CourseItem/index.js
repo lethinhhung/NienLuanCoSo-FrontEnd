@@ -24,7 +24,6 @@ function CourseItem({ data, loading, onDelete, termsInfo }) {
         if (onDelete) {
             onDelete(data._id);
         }
-        console.log('Delete course');
     };
 
     const { Meta } = Card;

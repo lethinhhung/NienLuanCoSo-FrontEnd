@@ -29,7 +29,6 @@ function TestsGrade() {
     const fetchInfo = async () => {
         const testsInfoData = await getAllTestsInfoApi();
         setTestsInfo(testsInfoData);
-        console.log(testsInfoData);
     };
 
     useEffect(() => {

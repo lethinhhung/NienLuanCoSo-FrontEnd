@@ -23,14 +23,7 @@ function useProcessData(statisticsInfo, testsInfo, projectsInfo) {
             }
         });
     }
-    // let data = {
-    //     completedGradeWeight,
-    //     completedScore,
-    //     completedProjects,
-    //     totalProjects,
-    // };
 
-    console.log(completedGradeWeight, completedScore, completedProjects, totalProjects);
     return data;
 }
 

@@ -205,7 +205,6 @@ const removeCourseFromTermApi = async (termId, courseId) => {
         termId,
         courseId,
     };
-    console.log(data);
 
     return axios.post(URL_API, data);
 };

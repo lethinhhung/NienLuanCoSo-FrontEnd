@@ -69,16 +69,14 @@ function Profile() {
 
         //Goi API
         try {
-            const res = await updateUserApi(formData);
+            await updateUserApi(formData);
 
-            console.log('Update successful:', res);
-            showNotification('Update successfully', '', 'success');
+            showNotification('Update profile successfully', '', 'success');
             setFile();
             setImagePreview();
             setDescription();
         } catch (error) {
-            console.error('Update failed:', error);
-            showNotification('Unknown error', 'Server error', 'error');
+            showNotification('Unknown error', error, 'error');
         }
 
         setIsModalVisible(false);

@@ -36,7 +36,7 @@ function LoginForm() {
         console.log('Success:', res.access_token);
     };
     const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
+        showNotification('Login Failed', errorInfo, 'error');
     };
 
     return (

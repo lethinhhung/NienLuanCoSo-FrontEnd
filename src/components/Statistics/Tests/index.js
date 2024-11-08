@@ -74,8 +74,8 @@ function Tests({ statisticsInfo, testOptions, testsChartData, testsInfo, onTests
         //Goi API
         const testId = currentSubmitTest._id;
         const { name, gradeWeight, maxScore, score, date } = currentSubmitTest;
-        const result = await updateTestInfoApi(testId, name, gradeWeight, maxScore, score, date);
-        console.log(result);
+        await updateTestInfoApi(testId, name, gradeWeight, maxScore, score, date);
+
         setIsTestModalVisible(false);
         setCurrentTest({});
         setCurrentSubmitTest({});
@@ -85,8 +85,8 @@ function Tests({ statisticsInfo, testOptions, testsChartData, testsInfo, onTests
     const handleAddOk = async () => {
         const { name, gradeWeight, maxScore, score, date } = submitTest;
         const statisticsId = statisticsInfo._id;
-        const result = await createNewTestApi(name, gradeWeight, maxScore, score, statisticsId, date);
-        console.log(result);
+        await createNewTestApi(name, gradeWeight, maxScore, score, statisticsId, date);
+
         setIsModalVisible(false);
         setCurrentTest({});
         setCurrentSubmitTest({});
@@ -155,7 +155,6 @@ function Tests({ statisticsInfo, testOptions, testsChartData, testsInfo, onTests
             ...submitTest,
             date: dateString,
         });
-        console.log(submitTest.date);
     };
     // Edit test
 

@@ -19,8 +19,6 @@ function RegisterForm({ onRegister }) {
         const res = await createUserApi(name, email, password, description);
 
         if (res.result) {
-            console.log('Success:', res);
-
             setStatus('success');
             onRegister('success');
         } else if (res.EC === 0) {
@@ -34,7 +32,8 @@ function RegisterForm({ onRegister }) {
         }
     };
     const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
+        showNotification('Unknown error!', errorInfo, 'error');
+
         setStatus('failure');
         onRegister('failure');
     };

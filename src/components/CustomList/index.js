@@ -36,11 +36,10 @@ function CustomList({ title = '', data, id = '', isModalVisible, setIsModalVisib
     const handleAddCourse = async (value) => {
         const courseId = value;
         const termId = id;
-        const result = await addCourseToTermApi(termId, courseId);
+        await addCourseToTermApi(termId, courseId);
         if (fetchData === false) {
             setFetchData(true);
         } else setFetchData(false);
-        console.log(result);
     };
 
     useEffect(() => {
