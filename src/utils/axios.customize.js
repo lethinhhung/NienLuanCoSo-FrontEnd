@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const instance = axios.create({
     baseURL: process.env.REACT_APP_VITE_BACKEND_URL,
+    // baseURL: 'http://192.168.38.139:8080',
 });
 
 // Add a request interceptor

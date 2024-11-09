@@ -1,8 +1,9 @@
 const convertAvatarPath = (avatarPath) => {
     if (!avatarPath) return '';
-    // Replace 'src\\' with 'localhost:8080/' and convert backslashes to forward slashes
+
     let url = avatarPath.replace(/^src\\public\\/, 'localhost:8080/').replace(/\\/g, '/');
-    // Ensure the URL starts with 'http://'
+    // let url = avatarPath.replace(/^src\\public\\/, '192.168.38.139:8080/').replace(/\\/g, '/');
+
     if (!url.startsWith('http://') && !url.startsWith('https://')) {
         url = 'http://' + url;
     }

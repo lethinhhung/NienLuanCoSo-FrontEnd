@@ -9,6 +9,7 @@ import styles from './Profile.module.scss';
 import LoadingSpin from '~/components/LoadingSpin';
 import PageTitle from '~/components/PageTitle';
 import NotificationContext from '~/contexts/NotificationContext';
+import convertAvatarPath from '~/utils/convertAvatarPath';
 
 function Profile() {
     const cx = classNames.bind(styles);
@@ -36,7 +37,7 @@ function Profile() {
         fetchAccountInfo();
     }, [isModalVisible]);
 
-    const avatarPath = useConvertAvatarPath(info.avatarPath);
+    const avatarPath = convertAvatarPath(info.avatarPath);
 
     // functions
     const handleFileChange = (event) => {

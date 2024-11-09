@@ -1,4 +1,4 @@
-import { Tabs, Flex, Image, Row, Col, Card, Button, Tooltip } from 'antd';
+import { Tabs, Flex, Image, Row, Col, Card, Button, Tooltip, Typography } from 'antd';
 import classNames from 'classnames/bind';
 import { useNavigate } from 'react-router-dom';
 import { useContext, useState } from 'react';
@@ -18,6 +18,8 @@ function Login() {
     const [btn, setBtn] = useState(<FormOutlined />);
     const [status, setStatus] = useState('Login');
     const { showNotification } = useContext(NotificationContext);
+
+    const { Title } = Typography;
 
     const naviagte = useNavigate();
 
@@ -51,18 +53,23 @@ function Login() {
     return (
         <Flex vertical justify="center" className={cx('wrapper')}>
             {height > 700 ? (
-                <Flex wrap justify="center" className={cx('logo-wrapper')}>
-                    <Image
-                        onClick={handleToHome}
-                        className={cx('logo')}
-                        preview={false}
-                        width={100}
-                        src={logo}
-                        alt="logo"
-                    />
+                <Flex wrap vertical align="center" justify="center" className={cx('logo-wrapper')}>
+                    <div style={{ marginTop: '10px' }}>
+                        <Image
+                            onClick={handleToHome}
+                            className={cx('logo')}
+                            preview={false}
+                            width={100}
+                            src={logo}
+                            alt="logo"
+                        />
+                    </div>
+                    <div style={{ marginTop: '10px', marginBottom: '-30px' }}>
+                        <Title level={2}>Study</Title>
+                    </div>
                 </Flex>
             ) : (
-                <Flex wrap style={{ height: '50px' }}>
+                <Flex wrap align="center" style={{ height: '50px', width: '100vw' }}>
                     <Image
                         onClick={handleToHome}
                         className={cx('logo-small')}
@@ -71,6 +78,10 @@ function Login() {
                         src={logo}
                         alt="logo"
                     />
+
+                    <Title style={{ margin: '10px 0 0 30px' }} level={2}>
+                        Study
+                    </Title>
                 </Flex>
             )}
 
