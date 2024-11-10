@@ -1,4 +1,4 @@
-import { Badge, Flex, Select } from 'antd';
+import { Badge, Card, Flex, List, Select } from 'antd';
 import classNames from 'classnames/bind';
 import styles from './Courses.module.scss';
 import { useEffect, useState } from 'react';
@@ -98,11 +98,32 @@ function Courses() {
                 />
             </Flex>
             <LoadingSpin loading={loading}></LoadingSpin>
-            <Flex className={cx('wrapper')} wrap gap="large" justify="space-evenly" align="center">
+            <Flex className={cx('wrapper')} justify="center">
                 {filteredCourses.length > 0 ? (
-                    filteredCourses.map((data, index) => (
-                        <CourseItem onDelete={handleCourseDelete} key={index} data={data} termsInfo={termsInfo} />
-                    ))
+                    // filteredCourses.map((data, index) => (
+                    //     <CourseItem onDelete={handleCourseDelete} key={index} data={data} termsInfo={termsInfo} />
+                    // ))
+                    <div style={{ maxWidth: '1500px', width: '100%' }}>
+                        <List
+                            grid={{
+                                gutter: 32,
+                                xs: 1,
+                                sm: 1,
+                                md: 2,
+                                lg: 3,
+                                xl: 3,
+                                xxl: 4,
+                            }}
+                            dataSource={filteredCourses}
+                            renderItem={(item) => (
+                                <List.Item style={{ margin: '10px 20px 30px 20px' }}>
+                                    <Flex justify="center">
+                                        <CourseItem onDelete={handleCourseDelete} data={item} termsInfo={termsInfo} />
+                                    </Flex>
+                                </List.Item>
+                            )}
+                        ></List>
+                    </div>
                 ) : (
                     <div
                         hidden={loading}
