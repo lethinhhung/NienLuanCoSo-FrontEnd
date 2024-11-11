@@ -1,14 +1,16 @@
 import { Button, Card, Input } from 'antd';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { CheckOutlined, SaveOutlined } from '@ant-design/icons';
 import { getAccountInfoApi, getCourseInfoApi, updateCourseNoteApi, updateUserNoteApi } from '~/utils/api';
 import classNames from 'classnames/bind';
 
 import styles from './Note.module.scss';
+import NotificationContext from '~/contexts/NotificationContext';
 
 function Note({ type = 'course', courseId }) {
     const { TextArea } = Input;
     const cx = classNames.bind(styles);
+    const { showNotification } = useContext(NotificationContext);
 
     const [note, setNote] = useState('');
     const [noteIcon, setNoteIcon] = useState(<CheckOutlined />);
@@ -53,6 +55,7 @@ function Note({ type = 'course', courseId }) {
         }
         setNoteColor('#1677ff');
         setNoteIcon(<CheckOutlined />);
+        showNotification('Saved', '', 'success');
     };
     return (
         <Card

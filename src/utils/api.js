@@ -608,6 +608,19 @@ const getIncompleteProjectApi = async () => {
     }
 };
 
+const deleteTagByIdApi = async (tagId) => {
+    const URL_API = '/v1/api/delete-tag-by-id';
+    const data = { tagId };
+
+    try {
+        const res = await axios.post(URL_API, data);
+        return res;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
 export {
     createUserApi,
     loginApi,
@@ -656,4 +669,5 @@ export {
     getUserStatisticsApi,
     getAllCurrentApi,
     getIncompleteProjectApi,
+    deleteTagByIdApi,
 };

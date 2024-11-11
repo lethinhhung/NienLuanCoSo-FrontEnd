@@ -9,7 +9,7 @@ import TagsDrawer from '../TagsDrawer';
 import { createNewTagApi } from '~/utils/api';
 import NotificationContext from '~/contexts/NotificationContext';
 
-function NewTag() {
+function NewTag({ onModalClose }) {
     const cx = classNames.bind(styles);
 
     const { showNotification } = useContext(NotificationContext);
@@ -40,6 +40,9 @@ function NewTag() {
             setTagPreviewColor('');
             setTagPreviewName('');
             setModalText('');
+            if (onModalClose) {
+                onModalClose();
+            }
         }
     };
     const handleCancel = () => {

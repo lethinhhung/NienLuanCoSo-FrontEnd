@@ -60,31 +60,35 @@ function CreateObject({
         setReRender(!reRender);
     };
 
+    const fetchTagsAndTermsInfo = async () => {
+        const tagsData = await getTagsInfoApi();
+        const termsData = await getTermsInfoApi();
+        setTagsInfo(tagsData);
+        setTermsInfo(termsData);
+
+        const newTagsOptions = tagsInfo.map((tag) => ({
+            id: tag._id,
+            value: tag.name,
+            color: tag.color,
+        }));
+
+        const newTermsOptions = termsInfo.map((term) => ({
+            id: term._id,
+            value: term.name,
+            startDate: term.startDate,
+            enđate: term.endDate,
+        }));
+
+        setTagsOptions(newTagsOptions);
+        setTermsOptions(newTermsOptions);
+        setLoading(false);
+    };
+
+    const onModalClose = () => {
+        fetchTagsAndTermsInfo();
+    };
+
     useEffect(() => {
-        const fetchTagsAndTermsInfo = async () => {
-            const tagsData = await getTagsInfoApi();
-            const termsData = await getTermsInfoApi();
-            setTagsInfo(tagsData);
-            setTermsInfo(termsData);
-
-            const newTagsOptions = tagsInfo.map((tag) => ({
-                id: tag._id,
-                value: tag.name,
-                color: tag.color,
-            }));
-
-            const newTermsOptions = termsInfo.map((term) => ({
-                id: term._id,
-                value: term.name,
-                startDate: term.startDate,
-                enđate: term.endDate,
-            }));
-
-            setTagsOptions(newTagsOptions);
-            setTermsOptions(newTermsOptions);
-            setLoading(false);
-        };
-
         fetchTagsAndTermsInfo();
         // eslint-disable-next-line
     }, [reRender]);
@@ -396,7 +400,7 @@ function CreateObject({
                             />
 
                             <div style={{ marginLeft: '5px' }}>
-                                <NewTag />
+                                <NewTag onModalClose={onModalClose} />
                             </div>
                         </Flex>
                     </div>

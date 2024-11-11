@@ -14,6 +14,7 @@ import Current from '~/components/DashBoard/Current';
 import IncompleteProject from '~/components/DashBoard/IncompleteProject';
 import TestsGrade from '~/components/DashBoard/TestsGrade';
 import Profile from '~/components/DashBoard/Profile';
+import TagsManagement from '~/components/DashBoard/TagsManagement';
 
 Chart.register(ArcElement);
 function DashboardSmall() {
@@ -26,12 +27,15 @@ function DashboardSmall() {
                     <div className={cx('large-card')}>
                         <Profile />
                     </div>
+
                     <div className={cx('large-card')}>
                         <Note type="user" />
                     </div>
+
                     <div className={cx('large-card')}>
                         <TermGrades />
                     </div>
+
                     <div className={cx('large-card')}>
                         <TestsGrade />
                     </div>
@@ -47,6 +51,10 @@ function DashboardSmall() {
 
                     <div className={cx('large-card')}>
                         <GradeRange />
+                    </div>
+
+                    <div className={cx('large-card')}>
+                        <TagsManagement />
                     </div>
 
                     <div className={cx('large-card')}>
