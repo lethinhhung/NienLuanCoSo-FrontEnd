@@ -10,9 +10,12 @@ import { deleteCourseApi } from '~/utils/api';
 import defaultCourseCover from '../../assets/images/default-course-cover.png';
 import moment from 'moment';
 import truncateText from '~/utils/truncateText';
+import NotificationContext from '~/contexts/NotificationContext';
+import { useContext } from 'react';
 
 function CourseItem({ data, loading, onDelete, termsInfo }) {
     const cx = classNames.bind(styles);
+    const { showNotification } = useContext(NotificationContext);
     const navigate = useNavigate();
 
     const handleEdit = () => {
@@ -21,6 +24,7 @@ function CourseItem({ data, loading, onDelete, termsInfo }) {
 
     const handleDelete = async () => {
         await deleteCourseApi(data._id);
+        showNotification('Course Deleted Successfully', '', 'success');
         if (onDelete) {
             onDelete(data._id);
         }

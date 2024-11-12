@@ -5,7 +5,13 @@ import { DeleteOutlined, DownOutlined } from '@ant-design/icons';
 
 import styles from './TagsManagement.module.scss';
 import { useContext, useEffect, useState } from 'react';
-import { deleteTagByIdApi, getAllTermGradesApi, getTagsInfoApi, getUserStatisticsApi } from '~/utils/api';
+import {
+    deleteTagByIdApi,
+    getAllTermGradesApi,
+    getTagsInfoApi,
+    getTagsStatisticsApi,
+    getUserStatisticsApi,
+} from '~/utils/api';
 import getScoreColor from '~/utils/getScoreColor';
 import NotificationContext from '~/contexts/NotificationContext';
 import NewTag from '~/components/NewTag';
@@ -20,7 +26,7 @@ function TagsManagement() {
     const [tagsInfo, setTagsInfo] = useState();
 
     const fetchInfo = async () => {
-        const tagsData = await getTagsInfoApi();
+        const tagsData = await getTagsStatisticsApi();
         setTagsInfo(tagsData);
         setLoading(false);
     };
@@ -46,7 +52,7 @@ function TagsManagement() {
             extra={<NewTag onModalClose={onModalClose} />}
             hoverable
             className={cx('large-card')}
-            title="Tags management"
+            title={'Tags'}
             bordered={false}
             loading={loading}
         >
@@ -55,18 +61,23 @@ function TagsManagement() {
                 dataSource={tagsInfo}
                 renderItem={(item) => (
                     <List.Item>
-                        <Tag color={item.color}>{item.name}</Tag>
-                        <Popconfirm
-                            onConfirm={() => handleDeleteTag(item._id)}
-                            title={'Delete this tag'}
-                            description={'Are you sure to remove this tag?'}
-                            okText="Delete"
-                            cancelText={'Cancel'}
-                        >
-                            <Button>
-                                <DeleteOutlined />
-                            </Button>
-                        </Popconfirm>
+                        <Flex style={{ width: '100%' }} wrap align="center" justify="space-between">
+                            <Flex wrap gap={10} align="center">
+                                <Tag color={item.tag.color}>{item.tag.name}</Tag>
+                                <Badge count={item.tagNumber}></Badge>
+                            </Flex>
+                            <Popconfirm
+                                onConfirm={() => handleDeleteTag(item.tag._id)}
+                                title={'Delete this tag'}
+                                description={'Are you sure to remove this tag?'}
+                                okText="Delete"
+                                cancelText={'Cancel'}
+                            >
+                                <Button>
+                                    <DeleteOutlined />
+                                </Button>
+                            </Popconfirm>
+                        </Flex>
                     </List.Item>
                 )}
             ></List>

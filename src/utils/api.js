@@ -621,6 +621,18 @@ const deleteTagByIdApi = async (tagId) => {
     }
 };
 
+const getTagsStatisticsApi = async (tagId) => {
+    const URL_API = '/v1/api/get-tags-statistics';
+
+    try {
+        const res = await axios.get(URL_API);
+        return res;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
 export {
     createUserApi,
     loginApi,
@@ -670,4 +682,5 @@ export {
     getAllCurrentApi,
     getIncompleteProjectApi,
     deleteTagByIdApi,
+    getTagsStatisticsApi,
 };

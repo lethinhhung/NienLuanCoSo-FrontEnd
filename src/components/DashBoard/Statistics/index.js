@@ -56,6 +56,13 @@ function Statistics() {
                     color={statistics && statistics.projects > 0 ? 'blue' : 'red'}
                 ></Badge>
             </Flex>
+            <Flex justify="space-between" align="center">
+                <Title level={5}>🏷️Tags </Title>
+                <Badge
+                    count={statistics && statistics.tags > 0 ? statistics.tags : 'None'}
+                    color={statistics && statistics.tags > 0 ? 'blue' : 'red'}
+                ></Badge>
+            </Flex>
         </Card>
     );
 }
