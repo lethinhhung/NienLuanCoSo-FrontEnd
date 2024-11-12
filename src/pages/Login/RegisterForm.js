@@ -17,25 +17,23 @@ function RegisterForm({ onRegister }) {
         const { name, email, password, description } = values;
 
         const res = await createUserApi(name, email, password, description);
-
+        console.log(res);
         if (res.result) {
             setStatus('success');
-            onRegister('success');
+            onRegister('success', name);
         } else if (res.EC === 0) {
             showNotification('Duplicated username!', 'Choose another username', 'error');
+            return;
         } else {
             showNotification('Unknown error!', '', 'error');
-        }
-
-        if (status === 'success') {
-            showNotification('Register successfully!', 'Now you can login in', 'success');
+            return;
         }
     };
     const onFinishFailed = (errorInfo) => {
         showNotification('Unknown error!', errorInfo, 'error');
 
         setStatus('failure');
-        onRegister('failure');
+        onRegister('failure', '');
     };
 
     return (
@@ -78,6 +76,10 @@ function RegisterForm({ onRegister }) {
                             required: true,
                             message: 'Please input your username!',
                         },
+                        {
+                            min: 8,
+                            message: 'Username must be at least 8 characters long!',
+                        },
                     ]}
                 >
                     <Input className={cx('input')} placeholder="Username" />
@@ -111,6 +113,11 @@ function RegisterForm({ onRegister }) {
                         {
                             required: true,
                             message: 'Please input your password!',
+                        },
+                        {
+                            pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                            message:
+                                'Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character!',
                         },
                     ]}
                 >

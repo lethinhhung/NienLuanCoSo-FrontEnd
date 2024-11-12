@@ -27,12 +27,13 @@ function Login() {
         naviagte('/');
     };
 
-    const handleRegisterStatus = (status) => {
+    const handleRegisterStatus = (status, name) => {
         if (status === 'success') {
-            setRegisterSuccess(!registerSuccess);
             showNotification('Register successfully!', 'Now you can login in', 'success');
-            setStatus('Register');
-            handleChangeForm();
+            setRegisterSuccess(!registerSuccess);
+            setForm(<LoginForm name={name} />);
+            setBtn(<FormOutlined />);
+            setStatus('Login');
         }
     };
 

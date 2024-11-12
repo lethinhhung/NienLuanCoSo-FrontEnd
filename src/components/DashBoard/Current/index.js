@@ -29,7 +29,7 @@ function Current() {
     return (
         <div>
             <Card hoverable title="Current courses" bordered={false} loading={loading}>
-                {current.courses && current.courses !== null ? (
+                {current.courses && current.courses.length > 0 ? (
                     current.courses.map((course, index) => (
                         <div key={index} style={{ marginBottom: '15px' }}>
                             <Tooltip title={'Click to view'}>
@@ -56,7 +56,7 @@ function Current() {
                 )}
             </Card>
             <Card style={{ marginTop: '10px' }} hoverable title="Current terms" bordered={false} loading={loading}>
-                {current.term && current.terms !== null ? (
+                {current.term && current.terms.length > 0 ? (
                     current.terms.map((term, index) => (
                         <div key={index}>
                             <Tooltip title={term.name}>

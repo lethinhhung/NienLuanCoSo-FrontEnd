@@ -1,4 +1,4 @@
-import { Card, Flex, Select } from 'antd';
+import { Badge, Card, Flex, Select } from 'antd';
 import CustomBar from '~/components/Charts/Bar';
 import classNames from 'classnames/bind';
 import { DownOutlined } from '@ant-design/icons';
@@ -14,18 +14,8 @@ function GradeRange() {
 
     const [loading, setLoading] = useState(true);
     const [testsGrade, setTestsGrade] = useState([]);
-    const [gradeRange, setGradeRange] = useState([]);
-    const [data, setdata] = useState({
-        labels: ['0 to 2', '2 to 4', '4 to 6', '6 to 8', '8 to 10'],
-        datasets: [
-            {
-                label: 'Your grade range',
-                data: [0, 0, 0, 0, 0],
-                backgroundColor: ['#EDF2F7', 'rgb(54, 162, 235)', 'rgb(255, 205, 86)'],
-                hoverOffset: 4,
-            },
-        ],
-    });
+    const [isEmpty, setIsEmpty] = useState(true);
+    const [data, setdata] = useState();
     const [options, setOptions] = useState({});
 
     const fetchInfo = async () => {
@@ -62,6 +52,9 @@ function GradeRange() {
                 e++;
             }
         }
+        if (a > 0 && b > 0 && c > 0 && d > 0 && e > 0) {
+            setIsEmpty(false);
+        }
         setdata({
             labels: ['0 to 2', '2 to 4', '4 to 6', '6 to 8', '8 to 10'],
             datasets: [
@@ -97,9 +90,15 @@ function GradeRange() {
             style={{}}
             loading={loading}
         >
-            <Flex justify="center" style={{ padding: '10px', height: '300px' }}>
-                <CustomPie data={data} options={options} />
-            </Flex>
+            {isEmpty === true ? (
+                <Flex justify="center" align="center">
+                    <Badge count={'Empty'}></Badge>
+                </Flex>
+            ) : (
+                <Flex justify="center" style={{ padding: '10px', height: '300px' }}>
+                    <CustomPie data={data} options={options} />
+                </Flex>
+            )}
         </Card>
     );
 }

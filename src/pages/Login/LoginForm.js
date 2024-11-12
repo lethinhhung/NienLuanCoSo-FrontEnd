@@ -10,7 +10,7 @@ import PageTitle from '~/components/PageTitle';
 import { useContext } from 'react';
 import NotificationContext from '~/contexts/NotificationContext';
 
-function LoginForm() {
+function LoginForm({ name = '' }) {
     const cx = classNames.bind(styles);
     const navigate = useNavigate();
     const { login } = useAuth();
@@ -53,6 +53,7 @@ function LoginForm() {
                 }}
                 initialValues={{
                     remember: true,
+                    name: name,
                 }}
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}

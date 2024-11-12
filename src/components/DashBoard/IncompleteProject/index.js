@@ -27,7 +27,7 @@ function IncompleteProject() {
 
     return (
         <Card hoverable title="Incomplete projects" bordered={false} loading={loading}>
-            {incompleteProject ? (
+            {incompleteProject && incompleteProject.length > 0 ? (
                 incompleteProject.map((data, index) => (
                     <div key={index} style={{ marginBottom: '15px' }}>
                         <Tooltip title={data.course.name}>

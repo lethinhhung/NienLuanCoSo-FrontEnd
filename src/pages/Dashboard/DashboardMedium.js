@@ -41,19 +41,20 @@ function DashboardMedium() {
                     <div className={cx('large-card')}>
                         <IncompleteProject />
                     </div>
+
+                    <div className={cx('large-card')}>
+                        <TagsManagement />
+                    </div>
                 </Col>
                 <Col className={cx('large-col')} span={12}>
                     <EventCalendar />
+
                     <div className={cx('large-card')}>
                         <Current />
                     </div>
 
                     <div className={cx('large-card')}>
                         <GradeRange />
-                    </div>
-
-                    <div className={cx('large-card')}>
-                        <TagsManagement />
                     </div>
 
                     <div className={cx('large-card')}>
