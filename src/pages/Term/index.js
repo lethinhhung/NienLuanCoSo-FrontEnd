@@ -38,15 +38,14 @@ function Term() {
 
     //Modal
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const fetchTermInfo = async () => {
+        const termData = await getTermInfoApi(termId);
+
+        setTermInfo(termData);
+        setLoading(false);
+        setNote(termData.note);
+    };
     useEffect(() => {
-        const fetchTermInfo = async () => {
-            const termData = await getTermInfoApi(termId);
-
-            setTermInfo(termData);
-            setLoading(false);
-            setNote(termData.note);
-        };
-
         fetchTermInfo();
     }, [isModalVisible, fetchData, termId]);
 
@@ -61,6 +60,10 @@ function Term() {
         await updateTermNoteApi(termId, newNote);
         setNoteColor('#1677ff');
         setNoteIcon(<CheckOutlined />);
+    };
+
+    const handleUpdated = async () => {
+        fetchTermInfo();
     };
 
     return (
@@ -136,7 +139,14 @@ function Term() {
                             hoverable
                             title="Term overview"
                             bordered={false}
-                            extra={<EditDescription type="term" editData={termInfo} isEdit={true} />}
+                            extra={
+                                <EditDescription
+                                    type="term"
+                                    editData={termInfo}
+                                    isEdit={true}
+                                    onUpdated={handleUpdated}
+                                />
+                            }
                         >
                             <Meta
                                 avatar={<h1>{termInfo.emoji}</h1>}

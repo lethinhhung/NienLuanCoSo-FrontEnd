@@ -31,6 +31,7 @@ function CreateObject({
         endDate: '0000-01-01',
     },
     isEdit = false,
+    onUpdated,
 }) {
     const cx = classNames.bind(styles);
     const { showNotification } = useContext(NotificationContext);
@@ -191,25 +192,28 @@ function CreateObject({
                     navigate('/terms');
                 }
             } catch (error) {
-                showNotification('Unknown error', 'Server error', 'error');
+                showNotification('Unknown error', error, 'error');
             }
         } else {
             if (type === 'course') {
                 formData.append('courseId', editData._id);
                 try {
                     await updateCourseApi(formData);
+                    showNotification('Course updated successfully', '', 'success');
+                    onUpdated();
                 } catch (error) {
-                    showNotification('Unknown error', 'Server error', 'error');
+                    showNotification('Unknown error', error, 'error');
                 }
             } else if (type === 'term') {
-                formData.append('termId', submitTerm._id);
+                formData.append('termId', editData._id);
                 try {
                     await updateTermApi(formData);
+                    showNotification('Term updated successfully', '', 'success');
+                    onUpdated();
                 } catch (error) {
-                    showNotification('Unknown error', 'Server error', 'error');
+                    showNotification('Unknown error', error, 'error');
                 }
             }
-            window.location.reload();
         }
     };
     // Select

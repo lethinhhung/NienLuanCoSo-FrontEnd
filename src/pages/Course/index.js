@@ -32,7 +32,9 @@ function Course() {
     const { courseId } = useParams();
     const { showNotification } = useContext(NotificationContext);
 
+    // Lesson list
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const [isEditModalVisible, setIsEditModalVisible] = useState(false);
     const [inputLessonName, setInputLessonName] = useState('');
     const [inputDescription, setInputDescription] = useState('');
     const [deleteTrigger, setDeleteTrigger] = useState(false);
@@ -54,23 +56,22 @@ function Course() {
             _id: item._id,
         }));
     };
+    const fetchCourseInfo = async () => {
+        const courseData = await getCourseInfoApi(courseId);
+        const lessonsData = await getLessonsInfoByIdsApi(courseData.lessons);
+        const statisticsData = await getStatisticsInfoApi(courseData.statistics);
+        if (courseData.term) {
+            const termData = await getTermInfoApi(courseData.term);
+            setTermInfo(termData);
+        }
+        setCourseInfo(courseData);
+        setTransformedData(transformData(lessonsData));
+        setStatisticsInfo(statisticsData);
+        setNote(courseData.note);
+        setLoading(false);
+    };
 
     useEffect(() => {
-        const fetchCourseInfo = async () => {
-            const courseData = await getCourseInfoApi(courseId);
-            const lessonsData = await getLessonsInfoByIdsApi(courseData.lessons);
-            const statisticsData = await getStatisticsInfoApi(courseData.statistics);
-            if (courseData.term) {
-                const termData = await getTermInfoApi(courseData.term);
-                setTermInfo(termData);
-            }
-            setCourseInfo(courseData);
-            setTransformedData(transformData(lessonsData));
-            setStatisticsInfo(statisticsData);
-            setNote(courseData.note);
-            setLoading(false);
-        };
-
         fetchCourseInfo();
     }, [isModalVisible, courseId, deleteTrigger]);
 
@@ -142,6 +143,14 @@ function Course() {
         setNoteIcon(<CheckOutlined />);
     };
 
+    const handleUpdated = async () => {
+        fetchCourseInfo();
+    };
+
+    const handleEditOk = () => {
+        setIsEditModalVisible(false);
+    };
+
     return (
         <>
             <PageTitle title={courseInfo.name ? courseInfo.name : 'Course'} />
@@ -169,7 +178,7 @@ function Course() {
                         hoverable
                         title="Course overview"
                         bordered={false}
-                        extra={<EditDescription type="course" editData={courseInfo} />}
+                        extra={<EditDescription type="course" editData={courseInfo} onUpdated={handleUpdated} />}
                     >
                         <Meta
                             avatar={<h1>{courseInfo.emoji}</h1>}

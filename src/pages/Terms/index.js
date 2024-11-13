@@ -1,4 +1,4 @@
-import { Row, Col, Flex, Select, DatePicker, Badge } from 'antd';
+import { Row, Col, Flex, Select, DatePicker, Badge, List } from 'antd';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 
@@ -114,11 +114,28 @@ function Terms() {
             <LoadingSpin loading={loading} />
             <Row>
                 <Col offset={2} span={20}>
-                    <Flex className={cx('wrapper')} wrap gap="small" justify="space-evenly">
+                    <Flex className={cx('wrapper')} wrap gap="small" justify="center">
                         {filteredTerms.length > 0 ? (
-                            filteredTerms.map((data, index) => (
-                                <TermItem onDelete={handleTermDelete} key={index} data={data}></TermItem>
-                            ))
+                            <List
+                                style={{ width: '100%' }}
+                                grid={{
+                                    gutter: 32,
+                                    xs: 1,
+                                    sm: 1,
+                                    md: 1,
+                                    lg: 2,
+                                    xl: 2,
+                                    xxl: 2,
+                                }}
+                                dataSource={filteredTerms}
+                                renderItem={(item) => (
+                                    <List.Item style={{ margin: '30px 20px 30px 20px' }}>
+                                        <Flex justify="center">
+                                            <TermItem onDelete={handleTermDelete} data={item}></TermItem>
+                                        </Flex>
+                                    </List.Item>
+                                )}
+                            />
                         ) : (
                             <>
                                 <div style={{ height: '60vh' }}></div>

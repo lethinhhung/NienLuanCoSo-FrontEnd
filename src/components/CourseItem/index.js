@@ -133,16 +133,19 @@ function CourseItem({ data, loading, onDelete, termsInfo }) {
                     </Popconfirm>,
                 ]}
             >
-                <div style={{ minHeight: '150px' }}>
+                <div style={{ height: '210px' }}>
                     <Flex wrap justify="flex-end" style={{ margin: '-10px -10px 20px 0' }}>
                         <Badge count={status.status} color={status.color}></Badge>
                     </Flex>
                     <Meta
                         avatar={<h1>{data.emoji}</h1>}
                         title={data.name}
-                        description={truncateText(data.description, 55)}
+                        description={truncateText(data.description, 45)}
                     />
-                    <div className={cx('tags-drawer')}>
+                    <div
+                        className={cx('tags-drawer')}
+                        style={{ height: '100px', overflowY: 'auto', marginTop: '10px' }}
+                    >
                         <TagsDrawer tagsIds={data.tags} isDefault={false}></TagsDrawer>
                     </div>
                 </div>

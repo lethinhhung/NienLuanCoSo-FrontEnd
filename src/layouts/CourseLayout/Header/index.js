@@ -30,17 +30,16 @@ function Header() {
 
     const { width } = useWindowDimensions();
 
+    const fetchCourseInfo = async () => {
+        const courseData = await getCourseInfoApi(courseId);
+        setCourseInfo(courseData);
+
+        if (lessonId !== undefined) {
+            const lessonData = await getLessonInfoApi(lessonId);
+            setLessonInfo(lessonData);
+        }
+    };
     useEffect(() => {
-        const fetchCourseInfo = async () => {
-            const courseData = await getCourseInfoApi(courseId);
-            setCourseInfo(courseData);
-
-            if (lessonId !== undefined) {
-                const lessonData = await getLessonInfoApi(lessonId);
-                setLessonInfo(lessonData);
-            }
-        };
-
         fetchCourseInfo();
     }, [courseId, lessonId]);
 

@@ -6,7 +6,7 @@ import { EditOutlined } from '@ant-design/icons';
 import styles from './EditDescription.module.scss';
 import CreateObject from '~/components/CreateObject';
 
-function EditDescription({ type = 'course', editData }) {
+function EditDescription({ type = 'course', editData, onUpdated }) {
     const cx = classNames.bind(styles);
 
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -40,7 +40,16 @@ function EditDescription({ type = 'course', editData }) {
                 ]}
             >
                 <div className={cx('panel')}>
-                    <CreateObject editData={editData} type={type} action="edit" isEdit={true} />
+                    <CreateObject
+                        editData={editData}
+                        type={type}
+                        action="edit"
+                        isEdit={true}
+                        onUpdated={() => {
+                            onUpdated();
+                            setIsModalVisible(false);
+                        }}
+                    />
                 </div>
             </Modal>
         </div>
