@@ -56,7 +56,7 @@ function Current() {
                 )}
             </Card>
             <Card style={{ marginTop: '10px' }} hoverable title="Current terms" bordered={false} loading={loading}>
-                {current.term && current.terms.length > 0 ? (
+                {current.terms && current.terms.length > 0 ? (
                     current.terms.map((term, index) => (
                         <div key={index}>
                             <Tooltip title={term.name}>

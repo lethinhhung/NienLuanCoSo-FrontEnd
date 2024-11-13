@@ -9,11 +9,14 @@ import convertAvatarPath from '~/utils/convertAvatarPath';
 import { deleteTermApi } from '~/utils/api';
 
 import defaultCourseCover from '../../assets/images/default-term-cover.jpg';
+import NotificationContext from '~/contexts/NotificationContext';
+import { useContext } from 'react';
 
 function TermItem({ data, loading, onDelete }) {
     const cx = classNames.bind(styles);
     const navigate = useNavigate();
 
+    const { showNotification } = useContext(NotificationContext);
     const currentDate = new Date();
     const termStartDate = new Date(data.startDate);
     const termEndDate = new Date(data.endDate);
@@ -47,6 +50,7 @@ function TermItem({ data, loading, onDelete }) {
         if (onDelete) {
             onDelete();
         }
+        showNotification('Term Deleted Successfully', '', 'success');
     };
 
     const { Meta } = Card;

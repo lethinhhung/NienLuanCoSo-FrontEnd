@@ -8,6 +8,7 @@ import { getAllTermGradesApi, getAllTestsInfoApi } from '~/utils/api';
 import getScoreColor from '~/utils/getScoreColor';
 import { ArcElement, Chart } from 'chart.js';
 import CustomLine from '~/components/Charts/Line';
+import truncateText from '~/utils/truncateText';
 
 function TestsGrade() {
     const [loading, setLoading] = useState(true);
@@ -39,7 +40,7 @@ function TestsGrade() {
 
     useEffect(() => {
         setData({
-            labels: testsInfo.filter((test) => test.score !== -1).map((test) => test.name),
+            labels: testsInfo.filter((test) => test.score !== -1).map((test) => truncateText(test.name, 10)),
             datasets: [
                 {
                     label: 'Score',
@@ -60,7 +61,7 @@ function TestsGrade() {
                     callbacks: {
                         label: function (tooltipItem) {
                             const test = testsInfo[tooltipItem.dataIndex]; // Update to `dataIndex`
-                            return `${test.courseName}: ${tooltipItem.raw} `;
+                            return `${test.name} - ${test.courseName}: ${tooltipItem.raw} `;
                         },
                     },
                 },

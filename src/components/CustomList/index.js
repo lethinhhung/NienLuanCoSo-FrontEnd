@@ -50,6 +50,7 @@ function CustomList({ title = '', data, id = '', isModalVisible, setIsModalVisib
             const filteredCoursesData = allCoursesData.filter((course) => course.term !== id && course.term === null);
             setTransformedCoursesData(transformData(filteredCoursesData));
             setTransformedData(transformData(coursesData));
+            setLoading(false);
         };
 
         fetchCourseInfo();
@@ -65,6 +66,7 @@ function CustomList({ title = '', data, id = '', isModalVisible, setIsModalVisib
 
     return (
         <Card
+            loading={loading}
             className={cx('lessons-list')}
             hoverable
             title={title}

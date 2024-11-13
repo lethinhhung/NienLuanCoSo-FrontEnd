@@ -52,9 +52,9 @@ function GradeRange() {
                 e++;
             }
         }
-        if (a > 0 && b > 0 && c > 0 && d > 0 && e > 0) {
+        if (a > 0 || b > 0 || c > 0 || d > 0 || e > 0) {
             setIsEmpty(false);
-        }
+        } else setIsEmpty(true);
         setdata({
             labels: ['0 to 2', '2 to 4', '4 to 6', '6 to 8', '8 to 10'],
             datasets: [

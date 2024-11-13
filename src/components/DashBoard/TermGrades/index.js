@@ -7,6 +7,7 @@ import styles from './TermGrades.module.scss';
 import { useEffect, useState } from 'react';
 import { getAllTermGradesApi } from '~/utils/api';
 import getScoreColor from '~/utils/getScoreColor';
+import truncateText from '~/utils/truncateText';
 
 function TermGrades() {
     const cx = classNames.bind(styles);
@@ -48,7 +49,7 @@ function TermGrades() {
     useEffect(() => {
         if (termGrades[selectedTerm] && termGrades[selectedTerm].courses.length > 0) {
             setData({
-                labels: termGrades[selectedTerm].courses.map((course) => course.courseName),
+                labels: termGrades[selectedTerm].courses.map((course) => truncateText(course.courseName, 10)),
                 datasets: [
                     {
                         label: termGrades[selectedTerm].termName,
@@ -68,8 +69,8 @@ function TermGrades() {
                     tooltip: {
                         callbacks: {
                             label: function (tooltipItem) {
-                                const course = termGrades[selectedTerm].courses[tooltipItem.dataIndex]; // Update to `dataIndex`
-                                return `Current score: ${tooltipItem.raw}%`;
+                                const course = termGrades[selectedTerm].courses[tooltipItem.dataIndex].courseName; // Update to `dataIndex`
+                                return ` ${course}: ${tooltipItem.raw}%`;
                             },
                         },
                     },

@@ -1,7 +1,7 @@
-import { Badge, Card, Divider, Flex, Select, Typography } from 'antd';
+import { Badge, Button, Card, Divider, Flex, Select, Typography } from 'antd';
 import CustomBar from '~/components/Charts/Bar';
 import classNames from 'classnames/bind';
-import { DownOutlined } from '@ant-design/icons';
+import { DownOutlined, ReloadOutlined } from '@ant-design/icons';
 
 import styles from './Statistics.module.scss';
 import { useEffect, useState } from 'react';
@@ -27,7 +27,18 @@ function Statistics() {
     }, []);
 
     return (
-        <Card hoverable className={cx('large-card')} title="Total" bordered={false} loading={loading}>
+        <Card
+            extra={
+                <Button shape="circle" onClick={fetchInfo}>
+                    <ReloadOutlined />
+                </Button>
+            }
+            hoverable
+            className={cx('large-card')}
+            title="Total"
+            bordered={false}
+            loading={loading}
+        >
             <Flex justify="space-between" align="center">
                 <Title level={5}>📚Courses </Title>
                 <Badge

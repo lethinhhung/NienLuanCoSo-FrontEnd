@@ -2,7 +2,7 @@ import { Fragment } from 'react';
 import { ConfigProvider, notification, App as AntApp } from 'antd';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-import { AuthProvider } from './contexts/Auth';
+import { AuthProvider, useAuth } from './contexts/Auth';
 import PrivateRoute from './components/PrivateRoute';
 import { publicRoutes } from './routes';
 import DefaultLayout from '~/layouts';

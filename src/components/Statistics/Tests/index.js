@@ -361,7 +361,8 @@ function Tests({ statisticsInfo, testOptions, testsChartData, testsInfo, onTests
                                             </Flex>
                                             <p style={{ color: 'white' }}>{test.name}</p>
                                         </Flex>
-                                        <Flex gap={5}>
+                                        <Flex gap={5} align="center">
+                                            <Badge count={moment(test.date).format('DD/MM/YYYY')}></Badge>
                                             <Button size="small" onClick={() => showTestModal(test)}>
                                                 <EditOutlined />
                                             </Button>
