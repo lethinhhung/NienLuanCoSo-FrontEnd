@@ -45,7 +45,7 @@ function CourseItemFake({ data }) {
         >
             <div style={{ minHeight: '150px' }}>
                 <Flex wrap justify="flex-end" style={{ margin: '-10px -10px 20px 0' }}>
-                    <Badge count={'On progress'} color={data.badgeColor}></Badge>
+                    <Badge count={'In progress'} color={data.badgeColor}></Badge>
                 </Flex>
                 <Meta avatar={<h1>{data.emoji}</h1>} title={data.name} description={data.description} />
                 <div className={cx('tags-drawer')}>

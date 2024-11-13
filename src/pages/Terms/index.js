@@ -50,7 +50,7 @@ function Terms() {
             });
         }
 
-        if (status === 'onprogress') {
+        if (status === 'inprogress') {
             const currentDate = new Date();
             filtered = filtered.filter((term) => {
                 const termStartDate = new Date(term.startDate);
@@ -103,7 +103,7 @@ function Terms() {
                                 options={[
                                     { value: 'all', label: 'All' },
                                     { value: 'completed', label: 'Completed' },
-                                    { value: 'onprogress', label: 'On Progress' },
+                                    { value: 'inprogress', label: 'In progress' },
                                     { value: 'incoming', label: 'Incoming' },
                                 ]}
                             />

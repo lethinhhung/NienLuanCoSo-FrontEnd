@@ -57,7 +57,7 @@ function Courses() {
             const courseStartDate = new Date(course.startDate);
             const courseEndDate = new Date(course.endDate);
 
-            if (selectedStatus === 'onprogress') {
+            if (selectedStatus === 'inprogress') {
                 return courseStartDate <= currentDate && courseEndDate >= currentDate;
             } else if (selectedStatus === 'completed') {
                 return courseEndDate < currentDate;
@@ -92,7 +92,7 @@ function Courses() {
                     options={[
                         { value: 'all', label: 'All' },
                         { value: 'completed', label: 'Completed' },
-                        { value: 'onprogress', label: 'On Progress' },
+                        { value: 'inprogress', label: 'In progress' },
                         { value: 'incoming', label: 'Incoming' },
                     ]}
                 />

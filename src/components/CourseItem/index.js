@@ -69,7 +69,7 @@ function CourseItem({ data, loading, onDelete, termsInfo }) {
             };
         } else if (currentDate <= courseEndDate && currentDate >= courseStartDate) {
             status = {
-                status: 'On progress',
+                status: 'In progress',
                 color: 'red',
             };
         } else {
@@ -86,7 +86,7 @@ function CourseItem({ data, loading, onDelete, termsInfo }) {
             };
         } else if (currentDate <= termEndDate && currentDate >= termStartDate) {
             status = {
-                status: 'On progress',
+                status: 'In progress',
                 color: 'red',
             };
         } else {

@@ -31,7 +31,7 @@ function TermItem({ data, loading, onDelete }) {
         };
     } else if (currentDate <= termEndDate && currentDate >= termStartDate) {
         status = {
-            status: 'On progress',
+            status: 'In progress',
             color: 'red',
         };
     } else {
