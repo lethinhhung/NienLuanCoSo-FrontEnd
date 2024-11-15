@@ -8,6 +8,7 @@ import Editor from '~/components/Editor';
 import { getContentFromLessonApi, getLessonInfoApi } from '~/utils/api';
 import PageTitle from '~/components/PageTitle';
 import LoadingSpin from '~/components/LoadingSpin';
+import EditDescription from '~/components/EditDescription';
 
 function Lesson() {
     const cardColor = '#624e88';
@@ -24,31 +25,21 @@ function Lesson() {
 
     const [color, setColor] = useState('red');
 
+    const fetchLessonInfo = async () => {
+        const lessonData = await getLessonInfoApi(lessonId);
+        const lessonContentData = await getContentFromLessonApi(lessonId);
+
+        setLessonContent(lessonContentData);
+        setLessonInfo(lessonData);
+        setLoading(false);
+    };
+
     useEffect(() => {
-        const fetchLessonInfo = async () => {
-            const lessonData = await getLessonInfoApi(lessonId);
-            const lessonContentData = await getContentFromLessonApi(lessonId);
-
-            setLessonContent(lessonContentData);
-            setLessonInfo(lessonData);
-            setLoading(false);
-        };
-
         fetchLessonInfo();
     }, [lessonId]);
 
-    const [isModalVisible, setIsModalVisible] = useState(false);
-    const showModal = () => {
-        setIsModalVisible(true);
-    };
-
-    const handleOk = () => {
-        //Goi API
-        setIsModalVisible(false);
-    };
-
-    const handleCancel = () => {
-        setIsModalVisible(false);
+    const handleUpdated = async () => {
+        fetchLessonInfo();
     };
 
     return (
@@ -64,15 +55,11 @@ function Lesson() {
                             title={<h2>{lessonInfo.name}</h2>}
                             bordered={false}
                             extra={
-                                <div>
-                                    <Button onClick={showModal}>Edit</Button>
-                                    <Modal
-                                        title={<h2>{'Edit lesson details'}</h2>}
-                                        open={isModalVisible}
-                                        onOk={handleOk}
-                                        onCancel={handleCancel}
-                                    ></Modal>
-                                </div>
+                                <EditDescription
+                                    type="lesson"
+                                    editData={lessonInfo}
+                                    onUpdated={handleUpdated}
+                                ></EditDescription>
                             }
                         >
                             <Meta title="Description" description={lessonInfo.description} />

@@ -101,7 +101,10 @@ function Course() {
         formData.append('description', inputDescription);
         formData.append('course', courseInfo._id);
 
-        await createNewLessonApi(formData);
+        const result = await createNewLessonApi(formData);
+        if (result && result.result) {
+            navigate('/course/' + courseId + '/' + result.result._id);
+        }
         setInputLessonName('');
         setInputDescription('');
         setIsModalVisible(false);

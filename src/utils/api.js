@@ -313,6 +313,17 @@ const deleteLessonApi = async (lessonId) => {
     }
 };
 
+const updateLessonInfoApi = async (lessonId, name, description) => {
+    const URL_API = '/v1/api/update-lesson-info';
+    const data = {
+        lessonId,
+        name,
+        description,
+    };
+
+    return axios.post(URL_API, data);
+};
+
 // Statistics
 
 const getStatisticsInfoApi = async (statisticsId) => {
@@ -660,6 +671,7 @@ export {
     addContentToLessonApi,
     getContentFromLessonApi,
     deleteLessonApi,
+    updateLessonInfoApi,
     getStatisticsInfoApi,
     createNewProjectApi,
     createNewProjectStepApi,
