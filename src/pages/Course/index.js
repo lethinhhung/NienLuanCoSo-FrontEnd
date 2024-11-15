@@ -1,7 +1,7 @@
-import { Image, Card, Flex, Divider, Row, Input, Popconfirm, Button, List, Modal, Badge } from 'antd';
+import { Image, Card, Flex, Divider, Row, Input, Popconfirm, Button, List, Modal, Badge, Tooltip } from 'antd';
 import classNames from 'classnames/bind';
 import { useContext, useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { CheckOutlined, DeleteOutlined, PlusOutlined, SaveOutlined } from '@ant-design/icons';
 import moment from 'moment';
 
@@ -11,6 +11,7 @@ import EditDescription from '~/components/EditDescription';
 
 import {
     createNewLessonApi,
+    deleteCourseApi,
     deleteLessonApi,
     getCourseInfoApi,
     getLessonsInfoByIdsApi,
@@ -31,6 +32,7 @@ function Course() {
     const cx = classNames.bind(styles);
     const { courseId } = useParams();
     const { showNotification } = useContext(NotificationContext);
+    const navigate = useNavigate();
 
     // Lesson list
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -151,6 +153,12 @@ function Course() {
         setIsEditModalVisible(false);
     };
 
+    const handleDelete = async () => {
+        await deleteCourseApi(courseId);
+        showNotification('Course Deleted Successfully', '', 'success');
+        navigate('/courses');
+    };
+
     return (
         <>
             <PageTitle title={courseInfo.name ? courseInfo.name : 'Course'} />
@@ -178,7 +186,23 @@ function Course() {
                         hoverable
                         title="Course overview"
                         bordered={false}
-                        extra={<EditDescription type="course" editData={courseInfo} onUpdated={handleUpdated} />}
+                        extra={
+                            <Flex wrap gap={5}>
+                                <EditDescription type="course" editData={courseInfo} onUpdated={handleUpdated} />
+
+                                <Popconfirm
+                                    title="Delete the course"
+                                    description="Are you sure to delete this course?"
+                                    onConfirm={handleDelete}
+                                    okText="Yes"
+                                    cancelText="No"
+                                >
+                                    <Button>
+                                        <DeleteOutlined style={{ color: 'red' }} />
+                                    </Button>
+                                </Popconfirm>
+                            </Flex>
+                        }
                     >
                         <Meta
                             avatar={<h1>{courseInfo.emoji}</h1>}

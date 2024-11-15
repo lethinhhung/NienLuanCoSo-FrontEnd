@@ -1,14 +1,16 @@
 import { Modal, Card, List, Button, Tooltip } from 'antd';
 import classNames from 'classnames/bind';
 import { CloseOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import styles from './LessonsList.module.scss';
 import { addCourseToTermApi, getCoursesInfoApi, getCoursesInfoByIdsApi, removeCourseFromTermApi } from '~/utils/api';
+import NotificationContext from '~/contexts/NotificationContext';
 
 function CustomList({ title = '', data, id = '', isModalVisible, setIsModalVisible, fetchData, setFetchData }) {
     const cx = classNames.bind(styles);
+    const { showNotification } = useContext(NotificationContext);
 
     const transformData = (inputData) => {
         return inputData.map((item) => ({
@@ -37,6 +39,7 @@ function CustomList({ title = '', data, id = '', isModalVisible, setIsModalVisib
         const courseId = value;
         const termId = id;
         await addCourseToTermApi(termId, courseId);
+        showNotification('Course added', '', 'success');
         if (fetchData === false) {
             setFetchData(true);
         } else setFetchData(false);
@@ -59,6 +62,7 @@ function CustomList({ title = '', data, id = '', isModalVisible, setIsModalVisib
     const handleRemoveFromTerm = async (courseId) => {
         const termId = id;
         await removeCourseFromTermApi(termId, courseId);
+        showNotification('Course removed', '', 'success');
         if (fetchData === false) {
             setFetchData(true);
         } else setFetchData(false);
@@ -130,7 +134,7 @@ function CustomList({ title = '', data, id = '', isModalVisible, setIsModalVisib
                             <>
                                 <Tooltip title="Delete this course">
                                     <Button style={{ marginRight: '2px' }}>
-                                        <DeleteOutlined />
+                                        <DeleteOutlined style={{ color: 'red' }} />
                                     </Button>
                                 </Tooltip>
                                 <Tooltip title="Remove this course from this term">

@@ -1,21 +1,24 @@
-import { Image, Card, Flex, Input, Progress, Tooltip, Badge, Button } from 'antd';
+import { Image, Card, Flex, Input, Progress, Tooltip, Badge, Button, Popconfirm } from 'antd';
 import classNames from 'classnames/bind';
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { CheckOutlined, SaveOutlined } from '@ant-design/icons';
+import { useContext, useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { CheckOutlined, DeleteOutlined, SaveOutlined } from '@ant-design/icons';
 
 import styles from './Term.module.scss';
 import convertAvatarPath from '~/utils/convertAvatarPath';
 import CustomList from '~/components/CustomList';
 import EditDescription from '~/components/EditDescription';
-import { getTermInfoApi, updateCourseNoteApi, updateTermNoteApi } from '~/utils/api';
+import { deleteTermApi, getTermInfoApi, updateCourseNoteApi, updateTermNoteApi } from '~/utils/api';
 import defaultCourseCover from '../../assets/images/default-term-cover.jpg';
 import LoadingSpin from '~/components/LoadingSpin';
 import moment from 'moment';
 import PageTitle from '~/components/PageTitle';
+import NotificationContext from '~/contexts/NotificationContext';
 
 function Term() {
     const cx = classNames.bind(styles);
+    const { showNotification } = useContext(NotificationContext);
+    const navigate = useNavigate();
 
     const { termId } = useParams();
 
@@ -58,12 +61,19 @@ function Term() {
     const handleSaveNote = async () => {
         const newNote = note;
         await updateTermNoteApi(termId, newNote);
+        showNotification('Saved', '', 'success');
         setNoteColor('#1677ff');
         setNoteIcon(<CheckOutlined />);
     };
 
     const handleUpdated = async () => {
         fetchTermInfo();
+    };
+
+    const handleDelete = async () => {
+        await deleteTermApi(termId);
+        showNotification('Term Deleted Successfully', '', 'success');
+        navigate('/terms');
     };
 
     return (
@@ -140,12 +150,25 @@ function Term() {
                             title="Term overview"
                             bordered={false}
                             extra={
-                                <EditDescription
-                                    type="term"
-                                    editData={termInfo}
-                                    isEdit={true}
-                                    onUpdated={handleUpdated}
-                                />
+                                <Flex wrap gap={5}>
+                                    <EditDescription
+                                        type="term"
+                                        editData={termInfo}
+                                        isEdit={true}
+                                        onUpdated={handleUpdated}
+                                    />
+                                    <Popconfirm
+                                        title="Delete the term"
+                                        description="Are you sure to delete this term?"
+                                        onConfirm={handleDelete}
+                                        okText="Yes"
+                                        cancelText="No"
+                                    >
+                                        <Button>
+                                            <DeleteOutlined style={{ color: 'red' }} />
+                                        </Button>
+                                    </Popconfirm>
+                                </Flex>
                             }
                         >
                             <Meta

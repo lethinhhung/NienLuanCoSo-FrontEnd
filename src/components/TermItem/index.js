@@ -86,7 +86,7 @@ function TermItem({ data, loading, onDelete }) {
                         >
                             <Tooltip title="Delete this term" placement="bottom">
                                 <Button type="text">
-                                    <DeleteOutlined />
+                                    <DeleteOutlined style={{ color: 'red' }} />
                                 </Button>
                             </Tooltip>
                         </Popconfirm>,

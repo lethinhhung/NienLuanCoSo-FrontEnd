@@ -127,7 +127,7 @@ function CourseItem({ data, loading, onDelete, termsInfo }) {
                     >
                         <Tooltip title="Delete this course" placement="bottom">
                             <Button type="text">
-                                <DeleteOutlined />
+                                <DeleteOutlined style={{ color: 'red' }} />
                             </Button>
                         </Tooltip>
                     </Popconfirm>,
