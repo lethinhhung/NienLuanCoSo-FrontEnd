@@ -30,13 +30,13 @@ function LoginForm({ name = '' }) {
 
             navigate('/dashboard');
         } else {
-            showNotification('Login Failed', 'Usename/password not valid!', 'error');
+            showNotification('Login Failed', 'Invalid usename/password!', 'error');
         }
 
         console.log('Success:', res.access_token);
     };
     const onFinishFailed = (errorInfo) => {
-        showNotification('Login Failed', errorInfo, 'error');
+        showNotification('Validation failed', 'Please enter all the required information.', 'error');
     };
 
     return (

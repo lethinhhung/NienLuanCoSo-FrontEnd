@@ -14,6 +14,10 @@ function RegisterForm({ onRegister }) {
     const { showNotification } = useContext(NotificationContext);
 
     const onFinish = async (values) => {
+        if (!values) {
+            showNotification('Please enter all the required information.', '', 'warning');
+            return;
+        }
         const { name, email, password, description } = values;
 
         const res = await createUserApi(name, email, password, description);
@@ -30,7 +34,7 @@ function RegisterForm({ onRegister }) {
         }
     };
     const onFinishFailed = (errorInfo) => {
-        showNotification('Unknown error!', errorInfo, 'error');
+        showNotification('Validation failed', 'Please enter all the required information.', 'error');
 
         setStatus('failure');
         onRegister('failure', '');
