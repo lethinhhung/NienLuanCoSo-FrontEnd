@@ -72,7 +72,7 @@ function HomeLarge({ data, handleNext }) {
                         size="large"
                         color="primary"
                         shape="circle"
-                        icon={<RightOutlined />}
+                        icon={<RightOutlined className={cx('next')} />}
                         onClick={handleNext}
                     ></Button>
                 </Flex>

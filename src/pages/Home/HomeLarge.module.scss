@@ -41,3 +41,25 @@
 .btn {
     width: var(--default-floating-button-size);
 }
+
+@keyframes moveBackAndForth {
+    0% {
+        transform: translateX(0px);
+    }
+    30% {
+        transform: translateX(0px);
+    }
+    50% {
+        transform: translateX(7px);
+    }
+    70% {
+        transform: translateX(0px);
+    }
+    100% {
+        transform: translateX(0px);
+    }
+}
+
+.next {
+    animation: moveBackAndForth 2s infinite;
+}

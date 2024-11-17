@@ -58,7 +58,7 @@ function HomeSmall({ data, handleNext }) {
                     className={cx('btn')}
                     color="primary"
                     shape="circle"
-                    icon={<RightOutlined />}
+                    icon={<RightOutlined className={cx('next')} />}
                     onClick={handleNext}
                 ></FloatButton>
             </Flex>
