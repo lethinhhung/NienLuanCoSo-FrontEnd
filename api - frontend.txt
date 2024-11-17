@@ -1,0 +1,279 @@
+1. API Xác thực người dùng (Authentication APIs)
+- createUserApi(name, email, password, description)
+  - Tạo tài khoản người dùng mới.
+  - Tham số:
+    - name (string): Tên người dùng.
+    - email (string): Email người dùng.
+    - password (string): Mật khẩu.
+    - description (string): Mô tả ngắn gọn.
+
+- loginApi(name, password)
+  - Đăng nhập người dùng.
+  - Tham số:
+    - name (string): Tên người dùng.
+    - password (string): Mật khẩu.
+
+2. API Tài khoản (Account APIs)
+- getAccountInfoApi()
+  - Lấy thông tin tài khoản.
+  - Không có tham số.
+
+- updateUserApi(formData)
+  - Cập nhật thông tin tài khoản.
+  - Tham số:
+    - formData (FormData): Dữ liệu cập nhật.
+
+3. API Tags
+- createNewTagApi(name, color)
+  - Tạo tag mới.
+  - Tham số:
+    - name (string): Tên tag.
+    - color (string): Màu của tag.
+
+- getTagsInfoApi()
+  - Lấy thông tin tất cả các tag.
+  - Không có tham số.
+
+- getTagsInfoByIdsApi(tagsIds)
+  - Lấy thông tin tag theo danh sách ID.
+  - Tham số:
+    - tagsIds (array): Danh sách ID của tag.
+
+- deleteTagByIdApi(tagId)
+  - Xóa tag theo ID.
+  - Tham số:
+    - tagId (string): ID của tag.
+
+- getTagsStatisticsApi(tagId)
+  - Lấy thống kê liên quan đến tag.
+  - Tham số:
+    - tagId (string): ID của tag.
+
+4. API Khóa học (Course APIs)
+- createNewCourseApi(formData)
+  - Tạo khóa học mới.
+  - Tham số:
+    - formData (FormData): Dữ liệu khóa học.
+
+- getCourseInfoApi(courseId)
+  - Lấy thông tin chi tiết của một khóa học.
+  - Tham số:
+    - courseId (string): ID của khóa học.
+
+- getCoursesInfoApi()
+  - Lấy thông tin tất cả các khóa học.
+  - Không có tham số.
+
+- getCoursesInfoByIdsApi(coursesIds)
+  - Lấy thông tin các khóa học theo danh sách ID.
+  - Tham số:
+    - coursesIds (array): Danh sách ID khóa học.
+
+- deleteCourseApi(courseId)
+  - Xóa một khóa học theo ID.
+  - Tham số:
+    - courseId (string): ID của khóa học.
+
+- updateCourseApi(formData)
+  - Cập nhật thông tin khóa học.
+  - Tham số:
+    - formData (FormData): Dữ liệu cập nhật.
+
+- updateCourseNoteApi(courseId, newNote)
+  - Cập nhật ghi chú của khóa học.
+  - Tham số:
+    - courseId (string): ID của khóa học.
+    - newNote (string): Nội dung ghi chú mới.
+
+5. API Học kỳ (Term APIs)
+- createNewTermApi(formData)
+  - Tạo học kỳ mới.
+  - Tham số:
+    - formData (FormData): Dữ liệu học kỳ.
+
+- getTermsInfoApi()
+  - Lấy thông tin tất cả các học kỳ.
+  - Không có tham số.
+
+- getTermInfoApi(termId)
+  - Lấy thông tin chi tiết của một học kỳ.
+  - Tham số:
+    - termId (string): ID của học kỳ.
+
+- deleteTermApi(termId)
+  - Xóa học kỳ theo ID.
+  - Tham số:
+    - termId (string): ID của học kỳ.
+
+- addCourseToTermApi(termId, courseId)
+  - Thêm khóa học vào học kỳ.
+  - Tham số:
+    - termId (string): ID của học kỳ.
+    - courseId (string): ID của khóa học.
+
+- removeCourseFromTermApi(termId, courseId)
+  - Gỡ khóa học khỏi học kỳ.
+  - Tham số:
+    - termId (string): ID của học kỳ.
+    - courseId (string): ID của khóa học.
+
+- updateTermApi(formData)
+  - Cập nhật thông tin học kỳ.
+  - Tham số:
+    - formData (FormData): Dữ liệu cập nhật.
+
+- updateTermNoteApi(termId, newNote)
+  - Cập nhật ghi chú của học kỳ.
+  - Tham số:
+    - termId (string): ID của học kỳ.
+    - newNote (string): Ghi chú mới.
+6. API Bài học (Lesson APIs)
+- createNewLessonApi(formData)
+  - Tạo bài học mới.
+  - Tham số:
+    - formData (FormData): Dữ liệu bài học.
+
+- getLessonInfoApi(lessonId)
+  - Lấy thông tin chi tiết của một bài học.
+  - Tham số:
+    - lessonId (string): ID của bài học.
+
+- getLessonsInfoByIdsApi(lessonsIds)
+  - Lấy thông tin các bài học theo danh sách ID.
+  - Tham số:
+    - lessonsIds (array): Danh sách ID bài học.
+
+- addContentToLessonApi(formData)
+  - Thêm nội dung vào bài học.
+  - Tham số:
+    - formData (FormData): Nội dung bài học.
+
+- getContentFromLessonApi(lessonId)
+  - Lấy nội dung của một bài học.
+  - Tham số:
+    - lessonId (string): ID của bài học.
+
+- deleteLessonApi(lessonId)
+  - Xóa bài học theo ID.
+  - Tham số:
+    - lessonId (string): ID của bài học.
+
+- updateLessonInfoApi(lessonId, name, description)
+  - Cập nhật thông tin bài học.
+  - Tham số:
+    - lessonId (string): ID của bài học.
+    - name (string): Tên bài học mới.
+    - description (string): Mô tả mới.
+
+7. API Thống kê (Statistics APIs)
+- getStatisticsInfoApi(statisticsId)
+  - Lấy thông tin thống kê.
+  - Tham số:
+    - statisticsId (string): ID của thống kê.
+
+- getUserStatisticsApi()
+  - Lấy thông tin thống kê của người dùng.
+  - Không có tham số.
+
+8. API Dự án (Project APIs)
+- createNewProjectApi(name, totalSteps, completedSteps, statisticsId)
+  - Tạo dự án mới.
+  - Tham số:
+    - name (string): Tên dự án.
+    - totalSteps (number): Tổng số bước.
+    - completedSteps (number): Số bước hoàn thành.
+    - statisticsId (string): ID thống kê liên quan.
+
+- getProjectsInfoByIdsApi(projectsIds)
+  - Lấy thông tin các dự án theo danh sách ID.
+  - Tham số:
+    - projectsIds (array): Danh sách ID dự án.
+
+- deleteProjectApi(projectId)
+  - Xóa dự án theo ID.
+  - Tham số:
+    - projectId (string): ID của dự án.
+
+9. API Bước dự án (Project Step APIs)
+- createNewProjectStepApi(name, projectId, status)
+  - Tạo bước mới trong dự án.
+  - Tham số:
+    - name (string): Tên bước.
+    - projectId (string): ID của dự án.
+    - status (string): Trạng thái bước.
+
+- getProjectStepsInfoByIdsApi(projectStepsIds)
+  - Lấy thông tin các bước trong dự án theo danh sách ID.
+  - Tham số:
+    - projectStepsIds (array): Danh sách ID bước.
+
+- deleteProjectStepApi(projectStepId)
+  - Xóa bước trong dự án.
+  - Tham số:
+    - projectStepId (string): ID bước dự án.
+
+- updateProjectStepApi(projectStepId, status, name)
+  - Cập nhật thông tin bước trong dự án.
+  - Tham số:
+    - projectStepId (string): ID bước dự án.
+    - status (string): Trạng thái mới.
+    - name (string): Tên mới.
+
+10. API Bài kiểm tra (Test APIs)
+- createNewTestApi(name, gradeWeight, maxScore, score, statisticsId, date)
+  - Tạo bài kiểm tra mới.
+  - Tham số:
+    - name (string): Tên bài kiểm tra.
+    - gradeWeight (number): Trọng số điểm.
+    - maxScore (number): Điểm tối đa.
+    - score (number): Điểm đạt được.
+    - statisticsId (string): ID thống kê liên quan.
+    - date (string): Ngày kiểm tra.
+
+- getTestsInfoByIdsApi(testsIds)
+  - Lấy thông tin bài kiểm tra theo danh sách ID.
+  - Tham số:
+    - testsIds (array): Danh sách ID bài kiểm tra.
+
+- deleteTestApi(testId)
+  - Xóa bài kiểm tra theo ID.
+  - Tham số:
+    - testId (string): ID bài kiểm tra.
+
+- updateTestScoreApi(testId, newScore)
+  - Cập nhật điểm số bài kiểm tra.
+  - Tham số:
+    - testId (string): ID bài kiểm tra.
+    - newScore (number): Điểm mới.
+
+- updateTestInfoApi(testId, name, gradeWeight, maxScore, score, date)
+  - Cập nhật thông tin bài kiểm tra.
+  - Tham số:
+    - testId (string): ID bài kiểm tra.
+    - name (string): Tên bài kiểm tra mới.
+    - gradeWeight (number): Trọng số mới.
+    - maxScore (number): Điểm tối đa mới.
+    - score (number): Điểm mới.
+    - date (string): Ngày mới.
+
+- getAllTestsInfoApi()
+  - Lấy thông tin tất cả các bài kiểm tra.
+  - Không có tham số.
+
+11. API Khác (Miscellaneous APIs)
+- updateUserNoteApi(newNote)
+  - Cập nhật ghi chú của người dùng.
+  - Tham số:
+    - newNote (string): Nội dung ghi chú mới.
+
+- getAllTermGradesApi()
+  - Lấy thông tin điểm của tất cả học kỳ.
+  - Không có tham số.
+
+- getAllCurrentApi()
+  - Lấy tất cả dữ liệu hiện tại của người dùng.
+  - Không có tham số.
+
+- getIncompleteProjectApi()
+  - Lấy thông tin các dự án chưa hoàn thành.
+  - Không có tham số.

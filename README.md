@@ -1,70 +1,89 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Dự án Quản lý Học tập Cá nhân - Frontend
 
-## Available Scripts
+Dự án này là một ứng dụng web giúp người dùng quản lý việc học tập cá nhân, bao gồm các tính năng như quản lý khóa học, bài học, dự án, bài kiểm tra và thống kê tiến độ học tập.
 
-In the project directory, you can run:
 
-### `npm start`
+## Tính năng
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Đăng ký và đăng nhập: Cho phép người dùng tạo tài khoản và đăng nhập vào hệ thống.
+- Quản lý hồ sơ cá nhân: Người dùng có thể cập nhật thông tin cá nhân và ảnh đại diện.
+- Ghi chú cá nhân: Tạo và quản lý các ghi chú phục vụ cho việc học tập.
+- Quản lý thẻ (Tags): Tạo và quản lý các thẻ để phân loại khóa học, dự án, bài học.
+- Quản lý kỳ học (Terms): Tạo và quản lý các kỳ học, liên kết với các khóa học và bài học.
+- Quản lý dự án: Tạo và theo dõi tiến độ các dự án học tập, bao gồm các bước thực hiện.
+- Quản lý bài kiểm tra: Tạo và quản lý các bài kiểm tra, cập nhật điểm số.
+- Thống kê học tập: Cung cấp các thống kê về tiến độ học tập, số lượng dự án hoàn thành, điểm số trung bình, v.v.
+- Lịch sự kiện: Hiển thị lịch các sự kiện quan trọng liên quan đến việc học tập.
+## Công nghệ sử dụng
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+**Frontend:** ReactJS, Ant Design, Chart.js, Axios, Classnames.
 
-### `npm test`
+**Backend:** Node.js, Express.js, MongoDB (mongoose), Multer, bcrypt, dotenv.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+**Authentication:** JSON Web Token (JWT).
 
-### `npm run build`
+**Styling:** SASS (SCSS Modules), CSS.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Links
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+[Frontend](https://github.com/lethinhhung/NienLuanCoSo-FrontEnd)
 
-### `npm run eject`
+[Backend](https://github.com/lethinhhung/NienLuanCoSo-BackEnd)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Cài đặt
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Yêu cầu hệ thống
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- Node.js (>=12.x)
+- npm hoặc yarn
+- MongoDB
 
-## Learn More
+Clone repository
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```bash
+git clone project-link
+cd project-name
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Cài đặt các package
 
-### Code Splitting
+```bash
+npm install
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Cấu hình biến môi trường - tạo file .env ở thư mục gốc với nội dung
 
-### Analyzing the Bundle Size
+```bash
+REACT_APP_VITE_BACKEND_URL=your_backend_url
+//your_backend_url là url của backend, ví dụ http://localhost:8080
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Making a Progressive Web App
+## Triển khai ứng dụng
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```bash
+  npm start
+```
 
-### Advanced Configuration
+Ứng dụng sẽ chạy tại địa chỉ http://localhost:3000
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Lưu ý cần chạy backend trước
 
-### Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Sử dụng
 
-### `npm run build` fails to minify
+- Truy cập vào trang chủ và tạo tài khoản mới hoặc đăng nhập nếu đã có tài khoản.
+- Sau khi đăng nhập, người dùng sẽ được chuyển đến bảng điều khiển (Dashboard) nơi hiển thị tổng quan về tiến độ học tập.
+- Người dùng có thể truy cập các mục như Khóa học, Kỳ học, Dự án, Bài kiểm tra để quản lý chi tiết.
+## APIs
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+[Frontend](https://github.com/lethinhhung/NienLuanCoSo-FrontEnd)
+
+[Backend](https://github.com/lethinhhung/NienLuanCoSo-BackEnd)
+## Authors
+
+[@thinghunggg](https://github.com/lethinhhung)
+
