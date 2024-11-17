@@ -11,25 +11,29 @@ function TagsDrawerClosable({ border = true, onTagsChange }) {
     const [options, setOptions] = useState([]);
     const [tagsInfo, setTagsInfo] = useState([]);
     const [selectClicked, setSelectClicked] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     const handleSelectTags = (value) => {
         if (onTagsChange) {
             onTagsChange(value);
         }
     };
+
+    const fetchTagsInfo = async () => {
+        const data = await getTagsInfoApi();
+        setTagsInfo(data);
+
+        const newOptions = tagsInfo.map((tag) => ({
+            id: tag._id,
+            value: tag.name,
+            color: tag.color,
+        }));
+        setOptions(newOptions);
+        setLoading(false);
+    };
+
     useEffect(() => {
-        const fetchTagsInfo = async () => {
-            const data = await getTagsInfoApi();
-            setTagsInfo(data);
-
-            const newOptions = tagsInfo.map((tag) => ({
-                id: tag._id,
-                value: tag.name,
-                color: tag.color,
-            }));
-            setOptions(newOptions);
-        };
-
+        setLoading(true);
         fetchTagsInfo();
         // eslint-disable-next-line
     }, [selectClicked]);
@@ -63,6 +67,7 @@ function TagsDrawerClosable({ border = true, onTagsChange }) {
 
     return (
         <Select
+            loading={loading}
             className={cx('tags-drawer')}
             placeholder="Tags"
             mode="multiple"

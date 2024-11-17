@@ -106,8 +106,7 @@ function Term() {
                             id={termInfo._id}
                             isModalVisible={isModalVisible}
                             setIsModalVisible={setIsModalVisible}
-                            fetchData={fetchData}
-                            setFetchData={setFetchData}
+                            fetchData={fetchTermInfo}
                         />
                     </div>
                     <div className={cx('component-wrapper')}>

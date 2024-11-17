@@ -8,7 +8,7 @@ import styles from './LessonsList.module.scss';
 import { addCourseToTermApi, getCoursesInfoApi, getCoursesInfoByIdsApi, removeCourseFromTermApi } from '~/utils/api';
 import NotificationContext from '~/contexts/NotificationContext';
 
-function CustomList({ title = '', data, id = '', isModalVisible, setIsModalVisible, fetchData, setFetchData }) {
+function CustomList({ title = '', data, id = '', isModalVisible, setIsModalVisible, fetchData }) {
     const cx = classNames.bind(styles);
     const { showNotification } = useContext(NotificationContext);
 
@@ -40,22 +40,23 @@ function CustomList({ title = '', data, id = '', isModalVisible, setIsModalVisib
         const termId = id;
         await addCourseToTermApi(termId, courseId);
         showNotification('Course added', '', 'success');
-        if (fetchData === false) {
-            setFetchData(true);
-        } else setFetchData(false);
+        fetchData();
+        // if (fetchData === false) {
+        //     setFetchData(true);
+        // } else setFetchData(false);
     };
 
+    const fetchCourseInfo = async () => {
+        setLoading(true);
+        const coursesData = await getCoursesInfoByIdsApi(data);
+        const allCoursesData = await getCoursesInfoApi();
+
+        const filteredCoursesData = allCoursesData.filter((course) => course.term !== id && course.term === null);
+        setTransformedCoursesData(transformData(filteredCoursesData));
+        setTransformedData(transformData(coursesData));
+        setLoading(false);
+    };
     useEffect(() => {
-        const fetchCourseInfo = async () => {
-            const coursesData = await getCoursesInfoByIdsApi(data);
-            const allCoursesData = await getCoursesInfoApi();
-
-            const filteredCoursesData = allCoursesData.filter((course) => course.term !== id && course.term === null);
-            setTransformedCoursesData(transformData(filteredCoursesData));
-            setTransformedData(transformData(coursesData));
-            setLoading(false);
-        };
-
         fetchCourseInfo();
     }, [data, isModalVisible, fetchData, id]);
 
@@ -63,9 +64,7 @@ function CustomList({ title = '', data, id = '', isModalVisible, setIsModalVisib
         const termId = id;
         await removeCourseFromTermApi(termId, courseId);
         showNotification('Course removed', '', 'success');
-        if (fetchData === false) {
-            setFetchData(true);
-        } else setFetchData(false);
+        fetchData();
     };
 
     return (

@@ -43,9 +43,6 @@ function CreateObject({
 
     const [tagsOptions, setTagsOptions] = useState([]);
     const [termsOptions, setTermsOptions] = useState([]);
-    const [reRender, setReRender] = useState(false);
-    const [tagsInfo, setTagsInfo] = useState([]);
-    const [termsInfo, setTermsInfo] = useState([]);
 
     const [submitEmoji, setSubmitEmoji] = useState(editData.emoji);
     const [submitColor, setSubmitColor] = useState(editData.color);
@@ -57,23 +54,17 @@ function CreateObject({
     const [submitStartDate, setSubmitStartDate] = useState('');
     const [submitEndDate, setSubmitEndDate] = useState('');
 
-    const reRenderTagsAndTerms = () => {
-        setReRender(!reRender);
-    };
-
     const fetchTagsAndTermsInfo = async () => {
         const tagsData = await getTagsInfoApi();
         const termsData = await getTermsInfoApi();
-        setTagsInfo(tagsData);
-        setTermsInfo(termsData);
 
-        const newTagsOptions = tagsInfo.map((tag) => ({
+        const newTagsOptions = tagsData.map((tag) => ({
             id: tag._id,
             value: tag.name,
             color: tag.color,
         }));
 
-        const newTermsOptions = termsInfo.map((term) => ({
+        const newTermsOptions = termsData.map((term) => ({
             id: term._id,
             value: term.name,
             startDate: term.startDate,
@@ -92,11 +83,11 @@ function CreateObject({
     useEffect(() => {
         fetchTagsAndTermsInfo();
         // eslint-disable-next-line
-    }, [reRender]);
+    }, []);
 
     const tagRender = (props) => {
         const { value, closable, onClose } = props;
-        let color = tagsOptions.find((option) => option.value === value)?.color;
+        const color = tagsOptions.find((option) => option.value === value)?.color;
 
         if (color === '#ffffff') {
             color = '';
@@ -287,7 +278,6 @@ function CreateObject({
         } else {
             setIsTerm(false);
             setSubmitTerm('');
-            setTermsOptions([]);
         }
     };
 
@@ -392,7 +382,6 @@ function CreateObject({
                         <h2 className={cx('title-alone')}>Tags</h2>
                         <Flex justify="space-between" align="center">
                             <Select
-                                onClick={reRenderTagsAndTerms}
                                 style={{ width: '100%' }}
                                 className={cx('tags-drawer')}
                                 placeholder="Tags"
@@ -401,6 +390,7 @@ function CreateObject({
                                 defaultValue={[]}
                                 options={tagsOptions}
                                 onChange={handleSelectTags}
+                                loading={loading}
                             />
 
                             <div style={{ marginLeft: '5px' }}>
@@ -430,10 +420,10 @@ function CreateObject({
                             <Flex wrap align="center">
                                 <p style={{ minWidth: '80px', marginTop: '5px' }}>Pick a term</p>
                                 <Select
+                                    loading={loading}
                                     options={termsOptions}
                                     required
                                     style={{ minWidth: '150px', marginTop: '5px' }}
-                                    onClick={reRenderTagsAndTerms}
                                     defaultValue={[]}
                                     value={submitTerm}
                                     onChange={handleSelectTerm}

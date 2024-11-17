@@ -3,11 +3,6 @@ import DashboardLarge from './DashboardLarge';
 import DashboardMedium from './DashboardMedium';
 import DashboardSmall from './DashboardSmall';
 import { useWindowDimensions } from '~/hooks';
-import { useEffect, useState } from 'react';
-import { getAccountInfoApi, getAllTestsInfoApi } from '~/utils/api';
-import moment from 'moment';
-import { Badge } from 'antd';
-import { InfoCircleOutlined } from '@ant-design/icons';
 
 function Dashboard() {
     const { width } = useWindowDimensions();
