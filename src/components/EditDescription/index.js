@@ -22,9 +22,17 @@ function EditDescription({ type = 'course', editData, onUpdated }) {
         //Goi API
 
         if (type === 'lesson') {
+            if (lessonName === '' || lessonDescription === '') {
+                showNotification('Missing information', 'Enter name and description', 'warning');
+                return;
+            }
             const result = await updateLessonInfoApi(editData._id, lessonName, lessonDescription);
-            onUpdated();
-            showNotification('Lesson info updated', '', 'success');
+            if (result._id) {
+                onUpdated();
+                showNotification('Lesson info updated', '', 'success');
+            } else {
+                showNotification('Failed', '', 'error');
+            }
         }
         setIsModalVisible(false);
     };

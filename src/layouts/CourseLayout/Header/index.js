@@ -74,7 +74,11 @@ function Header() {
             ),
         },
         {
-            title: <Link to={'/course/' + courseInfo._id}>{courseInfo.emoji + ' ' + courseInfo.name}</Link>,
+            title: (
+                <Link to={courseInfo._id ? '/course/' + courseInfo._id : ''}>
+                    {courseInfo.emoji && courseInfo.name ? courseInfo.emoji + ' ' + courseInfo.name : 'Course'}
+                </Link>
+            ),
         },
     ];
 

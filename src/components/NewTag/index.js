@@ -35,6 +35,7 @@ function NewTag({ onModalClose }) {
             setModalText('');
             setConfirmLoading(false);
         } else {
+            showNotification('New tag created', '', 'success');
             setOpen(false);
             setConfirmLoading(false);
             setTagPreviewColor('');

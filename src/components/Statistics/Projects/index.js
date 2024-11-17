@@ -99,6 +99,7 @@ function Projects({ statisticsInfo, projectsInfo, onProjectsChange }) {
         const { name, totalSteps, completedSteps } = submitProject;
         await createNewProjectApi(name, totalSteps, completedSteps, statisticsId);
 
+        showNotification('Project created', '', 'success');
         setIsAddModalVisible(false);
         setCurrentProject({});
         setSubmitProject({
@@ -139,6 +140,7 @@ function Projects({ statisticsInfo, projectsInfo, onProjectsChange }) {
         const { name, status } = submitStep;
         await createNewProjectStepApi(name, projectId, status);
 
+        showNotification('Step added', '', 'success');
         setIsAddStepModalVisible(false);
         setCurrentProject({});
         setSubmitProject({
@@ -180,6 +182,7 @@ function Projects({ statisticsInfo, projectsInfo, onProjectsChange }) {
 
         await updateProjectStepApi(projectStepId, status, name);
 
+        showNotification('Step updated', '', 'success');
         setIsEditStepModalVisible(false);
         setCurrentProject({});
         setSubmitProject({
@@ -204,6 +207,7 @@ function Projects({ statisticsInfo, projectsInfo, onProjectsChange }) {
     const handleDeleteStep = async () => {
         const projectStepId = currentStep._id;
         await deleteProjectStepApi(projectStepId);
+        showNotification('Step deleted', '', 'success');
         onProjectsChange();
     };
 
@@ -215,6 +219,7 @@ function Projects({ statisticsInfo, projectsInfo, onProjectsChange }) {
 
     const handleDeleteProject = async () => {
         const projectId = currentProject._id;
+        showNotification('Project deleted', '', 'success');
         await deleteProjectApi(projectId);
         onProjectsChange();
     };
