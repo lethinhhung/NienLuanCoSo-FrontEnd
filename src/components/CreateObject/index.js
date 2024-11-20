@@ -431,7 +431,9 @@ function CreateObject({
                                 <Flex align="center" style={{ marginTop: '5px' }}>
                                     <p>or</p>
                                     <Button>
-                                        <Link to="/create-new-term">Create a new Term</Link>
+                                        <Link to="/create-new-term" target="_blank">
+                                            Create a new Term
+                                        </Link>
                                     </Button>
                                 </Flex>
                             </Flex>
