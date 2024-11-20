@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/NienLuanCoSo-FrontEnd/static/css/main.f477da87.css",
+    "main.js": "/NienLuanCoSo-FrontEnd/static/js/main.eefb9388.js",
+    "static/js/453.d855a71b.chunk.js": "/NienLuanCoSo-FrontEnd/static/js/453.d855a71b.chunk.js",
+    "static/media/react-cover.png": "/NienLuanCoSo-FrontEnd/static/media/react-cover.70d440643ae25322f179.png",
+    "static/media/default-term-cover.jpg": "/NienLuanCoSo-FrontEnd/static/media/default-term-cover.f1ee67ab28a1c15d600d.jpg",
+    "static/media/iot-cover.jpg": "/NienLuanCoSo-FrontEnd/static/media/iot-cover.1a8e8968458653662d37.jpg",
+    "static/media/default-avatar.png": "/NienLuanCoSo-FrontEnd/static/media/default-avatar.ab004c1864f74b3f7156.png",
+    "static/media/default-course-cover.png": "/NienLuanCoSo-FrontEnd/static/media/default-course-cover.ffac856b49faca7f50c3.png",
+    "static/media/git-cover.png": "/NienLuanCoSo-FrontEnd/static/media/git-cover.12214116248ec5dedd74.png",
+    "static/media/logo.png": "/NienLuanCoSo-FrontEnd/static/media/logo.6e880f84c59a479464fa.png",
+    "static/media/book.svg": "/NienLuanCoSo-FrontEnd/static/media/book.d971671ffc52d9f3c60b6fc25868a947.svg",
+    "index.html": "/NienLuanCoSo-FrontEnd/index.html",
+    "main.f477da87.css.map": "/NienLuanCoSo-FrontEnd/static/css/main.f477da87.css.map",
+    "main.eefb9388.js.map": "/NienLuanCoSo-FrontEnd/static/js/main.eefb9388.js.map",
+    "453.d855a71b.chunk.js.map": "/NienLuanCoSo-FrontEnd/static/js/453.d855a71b.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f477da87.css",
+    "static/js/main.eefb9388.js"
+  ]
+}
