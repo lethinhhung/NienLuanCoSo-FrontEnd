@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import { Card, Popconfirm, Button, Tooltip, Row, Col, Divider, Badge } from 'antd';
+import { Card, Popconfirm, Button, Tooltip, Row, Col, Divider, Badge, Flex } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 
@@ -92,17 +92,25 @@ function TermItem({ data, loading, onDelete }) {
                         </Popconfirm>,
                     ]}
                 >
-                    <Row style={{ marginTop: '10px', minHeight: '80px' }}>
-                        <Col span={20}>
+                    <Row className={cx('top-row')}>
+                        <Col span={24}>
+                            <Flex wrap justify="flex-end">
+                                <Badge count={status.status} color={status.color}></Badge>
+                            </Flex>
+                        </Col>
+                    </Row>
+
+                    <Row style={{ minHeight: '80px', paddingTop: '10px' }}>
+                        <Col span={24}>
                             <Meta
                                 avatar={<h1>{data.emoji}</h1>}
                                 title={<h3>{data.name}</h3>}
                                 description={truncateDescription(data.description)}
                             />
                         </Col>
-                        <Col span={4}>
+                        {/* <Col span={4}>
                             <Badge count={status.status} color={status.color}></Badge>
-                        </Col>
+                        </Col> */}
                     </Row>
 
                     <Divider orientation="left"></Divider>

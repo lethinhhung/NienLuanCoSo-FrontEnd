@@ -83,11 +83,11 @@ function GradeRange() {
 
     return (
         <Card
+            style={{ cursor: 'default' }}
             hoverable
             className={cx('large-card')}
             title="Grade range percentage"
             bordered={false}
-            style={{}}
             loading={loading}
         >
             {isEmpty === true ? (

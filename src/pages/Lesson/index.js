@@ -50,6 +50,7 @@ function Lesson() {
                 <Flex className={cx('wrapper')} wrap vertical align="center">
                     <Flex wrap justify="center" className={cx('overview-wrapper')}>
                         <Card
+                            style={{ cursor: 'default' }}
                             className={cx('overview')}
                             hoverable
                             title={<h2>{lessonInfo.name}</h2>}

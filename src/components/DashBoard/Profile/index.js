@@ -1,11 +1,10 @@
-import { Card, Flex, Typography } from 'antd';
+import { Card, Flex } from 'antd';
 import { useEffect, useState } from 'react';
 import { getAccountInfoApi } from '~/utils/api';
 import getGreeting from '~/utils/getGreetings';
 
 function Profile() {
     const { Meta } = Card;
-    const { Title } = Typography;
     const [loading, setLoading] = useState(true);
     const [info, setInfo] = useState({});
     const [currentTime, setCurrentTime] = useState(
@@ -32,7 +31,7 @@ function Profile() {
     }, []);
 
     return (
-        <Card hoverable loading={loading} style={{ backgroundColor: '#cb80ab' }}>
+        <Card hoverable loading={loading} style={{ backgroundColor: '#cb80ab', cursor: 'default' }}>
             <Flex justify="left">
                 <div
                     style={{

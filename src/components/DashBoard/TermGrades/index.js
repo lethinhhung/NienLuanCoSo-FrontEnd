@@ -133,11 +133,11 @@ function TermGrades() {
 
     return (
         <Card
+            style={{ cursor: 'default' }}
             hoverable
             className={cx('large-card')}
             title="Term grades (%)"
             bordered={false}
-            style={{}}
             extra={
                 <Select
                     onChange={handleSelectTerm}

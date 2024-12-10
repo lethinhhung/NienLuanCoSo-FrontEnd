@@ -49,6 +49,7 @@ function TagsManagement() {
 
     return (
         <Card
+            style={{ cursor: 'default' }}
             extra={<NewTag onModalClose={onModalClose} />}
             hoverable
             className={cx('large-card')}

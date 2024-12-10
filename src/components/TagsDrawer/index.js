@@ -35,7 +35,7 @@ function TagsDrawer({ tagsIds, isClickable = false, onTagClick, isDefault = true
         <Flex justify="flex-end" wrap gap="5px 0" className={cx('wrapper')}>
             {tagsInfo.map((result) => (
                 <Tag
-                    style={{ cursor: 'pointer' }}
+                    style={{ cursor: 'default' }}
                     onClick={handleClicked}
                     key={result._id || result.key}
                     color={result.color}

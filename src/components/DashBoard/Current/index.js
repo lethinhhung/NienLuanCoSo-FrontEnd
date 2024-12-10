@@ -28,7 +28,7 @@ function Current() {
 
     return (
         <div>
-            <Card hoverable title="Current courses" bordered={false} loading={loading}>
+            <Card style={{ cursor: 'default' }} hoverable title="Current courses" bordered={false} loading={loading}>
                 {current.courses && current.courses.length > 0 ? (
                     current.courses.map((course, index) => (
                         <div key={index} style={{ marginBottom: '15px' }}>
@@ -55,7 +55,13 @@ function Current() {
                     </Flex>
                 )}
             </Card>
-            <Card style={{ marginTop: '10px' }} hoverable title="Current terms" bordered={false} loading={loading}>
+            <Card
+                style={{ marginTop: '10px', cursor: 'default' }}
+                hoverable
+                title="Current terms"
+                bordered={false}
+                loading={loading}
+            >
                 {current.terms && current.terms.length > 0 ? (
                     current.terms.map((term, index) => (
                         <div key={index}>

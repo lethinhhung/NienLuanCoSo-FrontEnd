@@ -110,7 +110,13 @@ function Term() {
                         />
                     </div>
                     <div className={cx('component-wrapper')}>
-                        <Card className={cx('notes')} hoverable title="Progession" bordered={false}>
+                        <Card
+                            style={{ cursor: 'default' }}
+                            className={cx('notes')}
+                            hoverable
+                            title="Progession"
+                            bordered={false}
+                        >
                             <Flex justify="space-between">
                                 <Badge
                                     color={currentDate > termEndDate ? 'blue' : 'red'}
@@ -144,6 +150,7 @@ function Term() {
                     </div>
                     <div className={cx('component-wrapper')}>
                         <Card
+                            style={{ cursor: 'default' }}
                             className={cx('notes')}
                             hoverable
                             title="Term overview"
@@ -180,6 +187,7 @@ function Term() {
 
                     <div className={cx('component-wrapper')}>
                         <Card
+                            style={{ cursor: 'default' }}
                             hoverable
                             className={cx('notes')}
                             title="Notes"

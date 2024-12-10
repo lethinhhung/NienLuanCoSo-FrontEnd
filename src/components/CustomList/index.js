@@ -69,6 +69,7 @@ function CustomList({ title = '', data, id = '', isModalVisible, setIsModalVisib
 
     return (
         <Card
+            style={{ cursor: 'default' }}
             loading={loading}
             className={cx('lessons-list')}
             hoverable

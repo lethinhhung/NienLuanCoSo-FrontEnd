@@ -1,6 +1,12 @@
 .wrapper {
     margin-bottom: 10px;
-    max-width: 450px;
+    min-width: 300px;
+    max-width: 600px;
+    cursor: default;
+}
+
+.top-row {
+    margin-top: 10px;
 }
 
 .cover-img {

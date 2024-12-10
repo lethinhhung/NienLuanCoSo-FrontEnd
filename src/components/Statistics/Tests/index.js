@@ -224,6 +224,7 @@ function Tests({ statisticsInfo, testOptions, testsChartData, testsInfo, onTests
             hoverable
             title="Tests"
             bordered={false}
+            style={{ cursor: 'default' }}
             extra={
                 <>
                     <Button onClick={showModal}>

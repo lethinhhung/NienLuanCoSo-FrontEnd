@@ -226,6 +226,7 @@ function Projects({ statisticsInfo, projectsInfo, onProjectsChange }) {
 
     return (
         <Card
+            style={{ cursor: 'default' }}
             className={cx('overview')}
             hoverable
             title="Projects"
@@ -287,7 +288,7 @@ function Projects({ statisticsInfo, projectsInfo, onProjectsChange }) {
                         {statisticsInfo.totalProjects !== 0 ? (
                             projectsInfo.map((project, index) => (
                                 <Card
-                                    style={{ marginBottom: '10px' }}
+                                    style={{ marginBottom: '10px', cursor: 'default' }}
                                     key={index}
                                     hoverable
                                     title={project.name}

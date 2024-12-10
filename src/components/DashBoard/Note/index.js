@@ -59,6 +59,7 @@ function Note({ type = 'course', courseId }) {
     };
     return (
         <Card
+            style={{ cursor: 'default' }}
             className={cx('notes')}
             hoverable
             title="Notes"

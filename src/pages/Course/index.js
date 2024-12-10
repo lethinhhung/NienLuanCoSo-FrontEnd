@@ -185,6 +185,7 @@ function Course() {
                         </div>
                     </div>
                     <Card
+                        style={{ cursor: 'default' }}
                         className={cx('overview')}
                         hoverable
                         title="Course overview"

@@ -72,7 +72,7 @@ function TestsGrade() {
     }, [testsInfo]);
 
     return (
-        <Card hoverable title="Tests score" bordered={false} loading={loading}>
+        <Card style={{ cursor: 'default' }} hoverable title="Tests score" bordered={false} loading={loading}>
             <CustomLine data={data} options={options} />
         </Card>
     );

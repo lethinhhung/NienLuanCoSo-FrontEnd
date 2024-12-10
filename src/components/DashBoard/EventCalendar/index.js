@@ -71,6 +71,7 @@ function EventCalendar({ size = 'large' }) {
     return (
         <>
             <Card
+                style={{ cursor: 'default' }}
                 className={cx('large-card')}
                 hoverable
                 title={eventDateTitle === '' ? 'Select a date to view tests' : 'On ' + eventDateTitle}
@@ -88,6 +89,7 @@ function EventCalendar({ size = 'large' }) {
                                     <div
                                         onClick={() => handleSelectTest(e)}
                                         style={{
+                                            cursor: 'pointer',
                                             borderRadius: '5px',
                                             padding: '5px 10px',
                                             marginBottom: '5px',
@@ -109,7 +111,14 @@ function EventCalendar({ size = 'large' }) {
                 </div>
             </Card>
 
-            <Card hoverable className={cx('large-card')} title="Calendar" bordered={false} loading={loading}>
+            <Card
+                style={{ cursor: 'default' }}
+                hoverable
+                className={cx('large-card')}
+                title="Calendar"
+                bordered={false}
+                loading={loading}
+            >
                 <>
                     <div
                         hidden={loading}

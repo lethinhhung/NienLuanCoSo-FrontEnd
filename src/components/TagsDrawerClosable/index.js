@@ -58,6 +58,7 @@ function TagsDrawerClosable({ border = true, onTagsChange }) {
                 onClose={onClose}
                 style={{
                     marginInlineEnd: 4,
+                    cursor: 'default',
                 }}
             >
                 {value}

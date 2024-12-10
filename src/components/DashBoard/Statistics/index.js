@@ -28,6 +28,7 @@ function Statistics() {
 
     return (
         <Card
+            style={{ cursor: 'default' }}
             extra={
                 <Button shape="circle" onClick={fetchInfo}>
                     <ReloadOutlined />

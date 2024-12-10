@@ -26,7 +26,7 @@ function IncompleteProject() {
     }, []);
 
     return (
-        <Card hoverable title="Incomplete projects" bordered={false} loading={loading}>
+        <Card style={{ cursor: 'default' }} hoverable title="Incomplete projects" bordered={false} loading={loading}>
             {incompleteProject && incompleteProject.length > 0 ? (
                 incompleteProject.map((data, index) => (
                     <div key={index} style={{ marginBottom: '15px' }}>

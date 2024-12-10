@@ -106,7 +106,13 @@ function Statistics() {
             <LoadingSpin loading={loading} />
             <div hidden={loading}>
                 <Flex className={cx('wrapper')} wrap vertical align="center">
-                    <Card className={cx('overview')} hoverable title="Progression" bordered={false}>
+                    <Card
+                        style={{ cursor: 'default' }}
+                        className={cx('overview')}
+                        hoverable
+                        title="Progression"
+                        bordered={false}
+                    >
                         <Row>
                             <Flex justify="space-between" style={{ width: '100%' }}>
                                 <p>{moment(courseInfo.startDate).format('DD/MM/YYYY')}</p>
