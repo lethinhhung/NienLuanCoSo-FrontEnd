@@ -1,14 +1,9 @@
-import { Badge, Button, Card, Col, Divider, Flex, Progress, Row, Select, Tooltip } from 'antd';
-import CustomBar from '~/components/Charts/Bar';
-import classNames from 'classnames/bind';
-import { DownOutlined } from '@ant-design/icons';
-
+import { Badge, Button, Card, Divider, Flex, Progress, Tooltip } from 'antd';
 import { useEffect, useState } from 'react';
-import { getAllCurrentApi, getAllTermGradesApi, getIncompleteProjectApi } from '~/utils/api';
-import getScoreColor from '~/utils/getScoreColor';
 import { useNavigate } from 'react-router-dom';
+
+import { getIncompleteProjectApi } from '~/utils/api';
 import truncateText from '~/utils/truncateText';
-import LoadingSpin from '~/components/LoadingSpin';
 
 function IncompleteProject() {
     const [incompleteProject, setIncompleteProject] = useState();

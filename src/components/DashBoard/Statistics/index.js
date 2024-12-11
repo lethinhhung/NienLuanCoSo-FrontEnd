@@ -1,12 +1,10 @@
-import { Badge, Button, Card, Divider, Flex, Select, Typography } from 'antd';
-import CustomBar from '~/components/Charts/Bar';
+import { Badge, Button, Card, Flex, Typography } from 'antd';
 import classNames from 'classnames/bind';
-import { DownOutlined, ReloadOutlined } from '@ant-design/icons';
+import { ReloadOutlined } from '@ant-design/icons';
+import { useEffect, useState } from 'react';
 
 import styles from './Statistics.module.scss';
-import { useEffect, useState } from 'react';
-import { getAllTermGradesApi, getUserStatisticsApi } from '~/utils/api';
-import getScoreColor from '~/utils/getScoreColor';
+import { getUserStatisticsApi } from '~/utils/api';
 
 function Statistics() {
     const cx = classNames.bind(styles);

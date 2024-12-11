@@ -6,14 +6,13 @@ import { BarChartOutlined } from '@ant-design/icons';
 
 import styles from './StatisticsOverview.module.scss';
 import moment from 'moment';
-import { format } from 'path-browserify';
 
 const StatisticsOverview = ({ data, courseInfo }) => {
     const cx = classNames.bind(styles);
     const currentDate = new Date();
     const courseStartDate = new Date(courseInfo.startDate);
     const courseEndDate = new Date(courseInfo.endDate);
-    const progression = (courseEndDate - currentDate) / 1000 / 60 / 60 / 24;
+    const progression = ((currentDate - courseStartDate) / (courseEndDate - courseStartDate)) * 100;
 
     const navigate = useNavigate();
 

@@ -8,7 +8,7 @@ import styles from './Term.module.scss';
 import convertAvatarPath from '~/utils/convertAvatarPath';
 import CustomList from '~/components/CustomList';
 import EditDescription from '~/components/EditDescription';
-import { deleteTermApi, getTermInfoApi, updateCourseNoteApi, updateTermNoteApi } from '~/utils/api';
+import { deleteTermApi, getTermInfoApi, updateTermNoteApi } from '~/utils/api';
 import defaultCourseCover from '../../assets/images/default-term-cover.jpg';
 import LoadingSpin from '~/components/LoadingSpin';
 import moment from 'moment';
@@ -28,12 +28,11 @@ function Term() {
 
     const [loading, setLoading] = useState(true);
     const [termInfo, setTermInfo] = useState({});
-    const [fetchData, setFetchData] = useState(false);
 
     const currentDate = new Date();
     const termStartDate = new Date(termInfo.startDate);
     const termEndDate = new Date(termInfo.endDate);
-    const progression = (termEndDate - currentDate) / 1000 / 60 / 60 / 24;
+    const progression = ((currentDate - termStartDate) / (termEndDate - termStartDate)) * 100;
 
     const [note, setNote] = useState('');
     const [noteIcon, setNoteIcon] = useState(<CheckOutlined />);
@@ -50,7 +49,7 @@ function Term() {
     };
     useEffect(() => {
         fetchTermInfo();
-    }, [isModalVisible, fetchData, termId]);
+    }, [isModalVisible, termId]);
 
     const handleChangeNote = (e) => {
         setNoteColor('#F5222D');

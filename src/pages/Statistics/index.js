@@ -52,7 +52,7 @@ function Statistics() {
     const currentDate = new Date();
     const courseStartDate = new Date(courseInfo.startDate);
     const courseEndDate = new Date(courseInfo.endDate);
-    const progression = (courseEndDate - currentDate) / 1000 / 60 / 60 / 24;
+    const progression = ((currentDate - courseStartDate) / (courseEndDate - courseStartDate)) * 100;
 
     const fetchInfo = async () => {
         const statisticsData = await getStatisticsInfoApi(statisticsId);

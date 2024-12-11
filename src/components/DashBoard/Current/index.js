@@ -1,14 +1,9 @@
-import { Badge, Button, Card, Divider, Flex, Progress, Select, Tooltip } from 'antd';
-import CustomBar from '~/components/Charts/Bar';
-import classNames from 'classnames/bind';
-import { DownOutlined } from '@ant-design/icons';
-
+import { Badge, Button, Card, Flex, Progress, Tooltip } from 'antd';
 import { useEffect, useState } from 'react';
-import { getAllCurrentApi, getAllTermGradesApi } from '~/utils/api';
-import getScoreColor from '~/utils/getScoreColor';
+import { getAllCurrentApi } from '~/utils/api';
 import { useNavigate } from 'react-router-dom';
+
 import truncateText from '~/utils/truncateText';
-import LoadingSpin from '~/components/LoadingSpin';
 
 function Current() {
     const [current, setCurrent] = useState([]);
@@ -43,7 +38,11 @@ function Current() {
 
                                 <div style={{ padding: '0 15px' }}>
                                     <Progress
-                                        percent={((new Date(course.endDate) - today) / 1000 / 60 / 60 / 24).toFixed(1)}
+                                        percent={(
+                                            ((today - new Date(course.startDate)) /
+                                                (new Date(course.endDate) - new Date(course.startDate))) *
+                                            100
+                                        ).toFixed(1)}
                                     />
                                 </div>
                             </Tooltip>
@@ -75,7 +74,11 @@ function Current() {
                                 </Button>
                                 <div style={{ padding: '0 15px' }}>
                                     <Progress
-                                        percent={((new Date(term.endDate) - today) / 1000 / 60 / 60 / 24).toFixed(1)}
+                                        percent={(
+                                            ((today - new Date(term.startDate)) /
+                                                (new Date(term.endDate) - new Date(term.startDate))) *
+                                            100
+                                        ).toFixed(1)}
                                     />
                                 </div>
                             </Tooltip>

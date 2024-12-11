@@ -1,12 +1,7 @@
-import { Card, Select } from 'antd';
-import CustomBar from '~/components/Charts/Bar';
-import classNames from 'classnames/bind';
-import { DownOutlined } from '@ant-design/icons';
-
+import { Card } from 'antd';
 import { useEffect, useState } from 'react';
-import { getAllTermGradesApi, getAllTestsInfoApi } from '~/utils/api';
-import getScoreColor from '~/utils/getScoreColor';
-import { ArcElement, Chart } from 'chart.js';
+
+import { getAllTestsInfoApi } from '~/utils/api';
 import CustomLine from '~/components/Charts/Line';
 import truncateText from '~/utils/truncateText';
 

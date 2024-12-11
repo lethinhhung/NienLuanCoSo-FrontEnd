@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Card, Flex, Button, Modal, Badge } from 'antd';
+import { Card, Flex, Badge } from 'antd';
 import classNames from 'classnames/bind';
 import { useParams } from 'react-router-dom';
 

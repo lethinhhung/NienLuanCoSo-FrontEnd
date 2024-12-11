@@ -1,21 +1,12 @@
-import { Calendar, Card, Row, Col, Divider, Progress, Flex, Select, Input, Badge, Button } from 'antd';
+import { Calendar, Card, Flex, Badge } from 'antd';
 import classNames from 'classnames/bind';
-import Doughnut from '~/components/Charts/Doughnut';
-import Pie from '~/components/Charts/Pie';
-import Line from '~/components/Charts/Line';
-import { Chart, ArcElement } from 'chart.js';
 import { DownOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
+import moment from 'moment';
+import { useEffect, useState } from 'react';
 
 import styles from './EventCalendar.module.scss';
-import { Link, useNavigate } from 'react-router-dom';
-import CustomBar from '~/components/Charts/Bar';
-import CustomPie from '~/components/Charts/Pie';
-import moment from 'moment';
-import CustomCalendar from '~/components/CustomCalendar';
-import { useEffect, useState } from 'react';
-import dayjs from 'dayjs';
 import { getAllTestsInfoApi } from '~/utils/api';
-import LoadingSpin from '~/components/LoadingSpin';
 
 function EventCalendar({ size = 'large' }) {
     const navigate = useNavigate();

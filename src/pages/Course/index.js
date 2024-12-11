@@ -1,8 +1,8 @@
-import { Image, Card, Flex, Divider, Row, Input, Popconfirm, Button, List, Modal, Badge, Tooltip } from 'antd';
+import { Image, Card, Flex, Divider, Row, Input, Popconfirm, Button, List, Modal, Badge } from 'antd';
 import classNames from 'classnames/bind';
 import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { CheckOutlined, DeleteOutlined, PlusOutlined, SaveOutlined } from '@ant-design/icons';
+import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import moment from 'moment';
 
 import styles from './Course.module.scss';
@@ -17,7 +17,6 @@ import {
     getLessonsInfoByIdsApi,
     getStatisticsInfoApi,
     getTermInfoApi,
-    updateCourseNoteApi,
 } from '~/utils/api';
 
 import convertAvatarPath from '~/utils/convertAvatarPath';
@@ -36,7 +35,6 @@ function Course() {
 
     // Lesson list
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const [isEditModalVisible, setIsEditModalVisible] = useState(false);
     const [inputLessonName, setInputLessonName] = useState('');
     const [inputDescription, setInputDescription] = useState('');
     const [deleteTrigger, setDeleteTrigger] = useState(false);
@@ -69,7 +67,6 @@ function Course() {
         setCourseInfo(courseData);
         setTransformedData(transformData(lessonsData));
         setStatisticsInfo(statisticsData);
-        setNote(courseData.note);
         setLoading(false);
     };
 
@@ -131,29 +128,8 @@ function Course() {
         }
     };
 
-    const [note, setNote] = useState('');
-    const [noteIcon, setNoteIcon] = useState(<CheckOutlined />);
-    const [noteColor, setNoteColor] = useState('#1677ff');
-
-    const handleChangeNote = (e) => {
-        setNoteColor('#F5222D');
-        setNoteIcon(<SaveOutlined />);
-        setNote(e.target.value);
-    };
-
-    const handleSaveNote = async () => {
-        const newNote = note;
-        await updateCourseNoteApi(courseId, newNote);
-        setNoteColor('#1677ff');
-        setNoteIcon(<CheckOutlined />);
-    };
-
     const handleUpdated = async () => {
         fetchCourseInfo();
-    };
-
-    const handleEditOk = () => {
-        setIsEditModalVisible(false);
     };
 
     const handleDelete = async () => {

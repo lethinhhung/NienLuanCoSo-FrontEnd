@@ -1,12 +1,9 @@
-import { Badge, Card, Flex, Select } from 'antd';
-import CustomBar from '~/components/Charts/Bar';
+import { Badge, Card, Flex } from 'antd';
 import classNames from 'classnames/bind';
-import { DownOutlined } from '@ant-design/icons';
+import { useEffect, useState } from 'react';
 
 import styles from './GradeRange.module.scss';
-import { useEffect, useState } from 'react';
-import { getAllTermGradesApi, getAllTestsInfoApi, getUserStatisticsApi } from '~/utils/api';
-import getScoreColor from '~/utils/getScoreColor';
+import { getAllTestsInfoApi } from '~/utils/api';
 import CustomPie from '~/components/Charts/Pie';
 
 function GradeRange() {

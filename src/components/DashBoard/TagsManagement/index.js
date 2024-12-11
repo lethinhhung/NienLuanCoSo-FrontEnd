@@ -1,26 +1,16 @@
-import { Badge, Button, Card, Divider, Flex, List, Popconfirm, Select, Tag, Typography } from 'antd';
-import CustomBar from '~/components/Charts/Bar';
+import { Badge, Button, Card, Flex, List, Popconfirm, Tag } from 'antd';
+import { useContext, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
-import { DeleteOutlined, DownOutlined } from '@ant-design/icons';
+import { DeleteOutlined } from '@ant-design/icons';
 
 import styles from './TagsManagement.module.scss';
-import { useContext, useEffect, useState } from 'react';
-import {
-    deleteTagByIdApi,
-    getAllTermGradesApi,
-    getTagsInfoApi,
-    getTagsStatisticsApi,
-    getUserStatisticsApi,
-} from '~/utils/api';
-import getScoreColor from '~/utils/getScoreColor';
+import { deleteTagByIdApi, getTagsStatisticsApi } from '~/utils/api';
 import NotificationContext from '~/contexts/NotificationContext';
 import NewTag from '~/components/NewTag';
 
 function TagsManagement() {
     const cx = classNames.bind(styles);
     const { showNotification } = useContext(NotificationContext);
-
-    const { Title } = Typography;
 
     const [loading, setLoading] = useState(true);
     const [tagsInfo, setTagsInfo] = useState();
